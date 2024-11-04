@@ -7,8 +7,8 @@ export default {
 <template>
     <section class="d-flex justify-content-center align-items-center">
         <div class="text-center">
-            <h1 class="text-warning">404 - Pagina Non Trovata</h1>
-            <p class="text-white">La pagina che stai cercando non esiste.</p>
+            <h1>404 - Pagina Non Trovata</h1>
+            <p>La pagina che stai cercando non esiste.</p>
             <router-link to="/">Torna alla Home</router-link>
         </div>
     </section>
