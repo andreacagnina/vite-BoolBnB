@@ -1,15 +1,15 @@
 <script>
-import HellloWorld from './components/HellloWorld.vue'
+import HelloWorld from './pages/HelloWorld.vue'
 export default {
   components: {
-    HellloWorld,
+    HelloWorld,
   }
 
 }
 </script>
 
 <template>
-  <HellloWorld />
+  <HelloWorld />
 </template>
 
 <style lang="scss">
