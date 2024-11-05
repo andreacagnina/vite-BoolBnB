@@ -1,9 +1,13 @@
 <script>
-import HelloWorld from './pages/HelloWorld.vue'
+import AppHeader from './layouts/AppHeader.vue';
+import AppBottomHeader from './layouts/AppBottomHeader.vue';
+import AppFooter from './layouts/AppFooter.vue';
 import { router } from './router';
 export default {
   components: {
-    HelloWorld,
+    AppHeader,
+    AppBottomHeader,
+    AppFooter,
   }
 
 }
@@ -11,7 +15,10 @@ export default {
 
 <template>
   <main>
+    <AppHeader />
     <router-view></router-view>
+
+    <AppBottomHeader />
   </main>
 </template>
 
