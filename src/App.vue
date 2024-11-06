@@ -1,28 +1,51 @@
 <script>
-import HelloWorld from './pages/HelloWorld.vue'
-import { router } from './router';
-export default {
-  components: {
-    HelloWorld,
-  }
+import Header from './layouts/Header.vue'
+import Sidebar from './layouts/Sidebar.vue';
+import Footer from './layouts/Footer.vue'
 
+export default {
+  components:{
+    Header,
+    Sidebar,
+    Footer
+  }
 }
 </script>
 
 <template>
-  <main>
-    <router-view></router-view>
-  </main>
+<div id="app">
+
+  <!-- Header -->
+  <Header />
+
+  <!-- Sidebar -->
+  <Sidebar />
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-view />
+  </div>
+
+  <!-- Footer -->
+  <Footer />
+
+</div>
 </template>
 
 <style lang="scss">
-@use './styles/generals.scss';
+#app 
+  {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-main {
-  height: 100vh;
-}
+  .main-content {
+    flex: 1;
+    overflow: auto;
+  }
 
-section {
-  height: 100%;
-}
+  footer {
+    margin-top: auto;
+  }
 </style>
