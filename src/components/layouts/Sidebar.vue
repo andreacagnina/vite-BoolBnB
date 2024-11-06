@@ -20,7 +20,8 @@
             {{ isSidebarOpen ? '>' : '<' }}
         </button>
 
-        <!-- Sidebar a sinistra -->
+        <!-- Sidebar -->
+        
         <transition name="expand">
             <div v-if="isSidebarOpen" class="sidebar">
                 <ul>
@@ -54,7 +55,7 @@
         top: 100px; 
         right: 0;
         height: calc(100% - 60px);
-        width: 250px;
+        width: 25%;
         background-color: #333;
         color: white;
         padding: 20px;

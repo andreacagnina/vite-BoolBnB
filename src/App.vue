@@ -1,14 +1,20 @@
 <script>
-import Header from './layouts/Header.vue'
-import Sidebar from './layouts/Sidebar.vue';
-import Footer from './layouts/Footer.vue'
+import Header from './components/layouts/Header.vue'
+import Sidebar from './components/layouts/Sidebar.vue';
+import Footer from './components/layouts/Footer.vue'
+import { store } from './store';
 
 export default {
   components:{
     Header,
     Sidebar,
     Footer
-  }
+  },
+  data() {
+    return {
+      store
+    }
+  },
 }
 </script>
 
