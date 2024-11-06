@@ -1,35 +1,51 @@
 <script>
-import AppHeader from './layouts/AppHeader.vue';
-import AppBottomHeader from './layouts/AppBottomHeader.vue';
-import AppFooter from './layouts/AppFooter.vue';
-import { router } from './router';
-export default {
-  components: {
-    AppHeader,
-    AppBottomHeader,
-    AppFooter,
-  }
+import Header from './layouts/Header.vue'
+import Sidebar from './layouts/Sidebar.vue';
+import Footer from './layouts/Footer.vue'
 
+export default {
+  components:{
+    Header,
+    Sidebar,
+    Footer
+  }
 }
 </script>
 
 <template>
-  <main>
-    <AppHeader />
-    <router-view></router-view>
+<div id="app">
 
-    <AppBottomHeader />
-  </main>
+  <!-- Header -->
+  <Header />
+
+  <!-- Sidebar -->
+  <Sidebar />
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-view />
+  </div>
+
+  <!-- Footer -->
+  <Footer />
+
+</div>
 </template>
 
 <style lang="scss">
-@use './styles/generals.scss';
+#app 
+  {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
 
-main {
-  height: 100vh;
-}
+  .main-content {
+    flex: 1;
+    overflow: auto;
+  }
 
-section {
-  height: 100%;
-}
+  footer {
+    margin-top: auto;
+  }
 </style>
