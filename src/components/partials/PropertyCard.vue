@@ -70,7 +70,8 @@ export default {
     }
     .card-body{
     padding: 10px;
-    height: 100px;
+    height: 150px;
+    overflow: scroll;
     h3{
         font-weight: bolder;
         font-size: 1.1rem;

@@ -55,7 +55,11 @@ name: 'AppHeader',
             outline: none;
             border-radius: 25px;
             transition: all .5s ease-in-out;
-            background-color: #84a59d;
+            background: linear-gradient(
+                45deg,
+                #49919d,
+                #84a59d
+            );
             padding-right: 40px;
             color:#f7ede2;
         }
@@ -86,14 +90,14 @@ name: 'AppHeader',
         .btn-search:focus ~ .input-search{
             width: 450px;
             border-radius: 0px;
-            background-color: transparent;
+            background: transparent;
             border-bottom:1px solid #f7ede2;
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
         .input-search:focus{
             width: 450px;
             border-radius: 0px;
-            background-color: transparent;
+            background: transparent;
             border-bottom:1px solid #f7ede2;
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }

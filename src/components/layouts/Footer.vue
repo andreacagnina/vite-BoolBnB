@@ -21,10 +21,10 @@ export default {
         <div class="footer-content" @click="toggleFooter">
 
             <h3 class="footer-toggle-text">
-                {{ isFooterOpen ? 'Nascondi Menu Aggiuntivo' : 'Mostra Menu Aggiuntivo' }}
+                {{ isFooterOpen ? 'View less!' : 'View more!' }}
             </h3>
 
-            <p>&copy; 2024 Airbnb Clone. All rights reserved.</p>
+            <p>&copy; 2024 BoolBnB. All rights reserved.</p>
 
         </div>
 
@@ -32,12 +32,21 @@ export default {
         <transition name="expand">
 
             <div v-if="isFooterOpen" class="additional-footer-menu">
-                <ul>
-                    <li>Link 1</li>
-                    <li>Link 2</li>
-                    <li>Link 3</li>
-                    <li>Link 4</li>
-                </ul>
+                <div class="container">
+                    <div class="row">
+                    <div class="col-12 text-center my-3">  
+                        <router-link class="footer-link" >Link placeholder 1</router-link>
+                        <router-link class="footer-link" >Link placeholder 2</router-link>
+                        <router-link class="footer-link" >Link placeholder 3</router-link>
+                        <router-link class="footer-link" >Link placeholder 4</router-link>
+                    </div>
+                    <div class="col-12 text-center my-3 social-icon">
+                        <p>Follow us on:</p>
+                        <p><i class="fab fa-facebook-f"></i> <i class="fab fa-twitter"></i> <i class="fab fa-instagram"></i> <i class="fa-brands fa-linkedin"></i></p>
+                        
+                    </div>
+                </div>
+                </div>
             </div>
 
         </transition>
@@ -45,11 +54,11 @@ export default {
         <!-- Menu per mobile -->
         <div class="footer-menu">
             <ul>
-                <li>Home</li>
-                <li>Destinations</li>
-                <li>Experiences</li>
-                <li>Host</li>
-                <li>Help</li>
+                <li> <router-link class="footer-link" >Home</router-link></li>
+                <li> <router-link class="footer-link" >Destinations</router-link></li>
+                <li> <router-link class="footer-link" >Experiences</router-link></li>
+                <li> <router-link class="footer-link" >About us</router-link></li>
+                <li> <router-link class="footer-link" >Help</router-link></li>
             </ul>
         </div>
 
@@ -58,7 +67,7 @@ export default {
 
 <style scoped lang="scss">
     .app-footer {
-        background-color: #f7f7f7;
+        background-color: transparent;
         padding: 20px;
         text-align: center;
         position: relative;
@@ -66,62 +75,93 @@ export default {
     }
 
     .footer-content {
-        margin-bottom: 50px;
+        margin-bottom: 10px;
         cursor: pointer;
         font-size: 1.2rem;
-        color: #333;
+        color: #f7ede2;
     }
 
     /* Pulsante per aprire il Menu aggiuntivo */
     .footer-toggle-text {
         margin-top: 10px;
         font-size: 1rem;
-        color: #ff5a5f;
-        text-decoration: underline;
+        color: #f7ede2;
+        text-decoration: none;
         cursor: pointer;
+        &:hover {
+            color: #f6bd60;
+            transform: scale(1.2);
+            transition: all 0.3s ease-in-out;
+        }
     }
 
     /* Menu aggiuntivo che si espande verso l'alto */
     .additional-footer-menu {
-        background-color: #ff5a5f;
+        background: linear-gradient(
+		45deg,
+		#49919d,
+		#84a59d
+	);
         position: absolute;
         bottom: 100%;
         left: 0;
         width: 100%;
+        height: 200px;
         padding: 10px 0;
         z-index: 5;
         display: flex;
         justify-content: center;
     }
 
+    .social-icon{
+        color: #f7ede2;
+        cursor: pointer;   
+        i{
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: #f7ede2;
+            cursor: pointer;
+            &:hover{
+                color: #f6bd60;
+                transform: scale(1.2);
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
     /* Contenuto del menu aggiuntivo */
     .additional-footer-menu ul {
         list-style: none;
         margin: 0;
         padding: 0;
         display: flex;
-        justify-content: space-around;
     }
 
     .additional-footer-menu li {
-        color: white;
+        margin: auto 20px;
+        color: #f7ede2;
         cursor: pointer;
     }
 
     /* Animazione di espansione */
     .expand-enter-active, .expand-leave-active {
-        transition: all 0.5s ease;
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease, transform 0.5s ease;  
     }
 
     .expand-enter, .expand-leave-to {
         opacity: 0;
-        transform: translateY(20px); /* Effetto di spostamento verso l'alto */
+        transform: translateY(20px);/* Effetto di spostamento verso l'alto */
     }
 
     /* Menu mobile */
     .footer-menu {
         display: block;
-        background-color: #ff5a5f;
+        background: linear-gradient(
+		45deg,
+		#49919d,
+		#84a59d
+	);
         position: fixed;
         bottom: 0;
         left: 0;
@@ -131,14 +171,22 @@ export default {
 
     .footer-menu ul {
         display: flex;
-        justify-content: space-around;
         list-style: none;
         margin: 0;
     }
 
     .footer-menu li {
-        color: white;
+        color: #f7ede2;
         cursor: pointer;
+    }
+
+    .footer-link {
+        text-decoration: none;
+        color: #f7ede2;
+        margin: 20px 20px;
+        &:hover {
+            color: #f6bd60;
+        }
     }
 
     /* MEDIA QUERIES */
