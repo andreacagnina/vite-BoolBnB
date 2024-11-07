@@ -17,28 +17,28 @@ export default {
 
                 <div class="card-img-top">
                     <!-- Carosello di immagini -->
-                <div id="carousel-{{ property.id }}" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <!-- Cover come prima immagine del carosello -->
-                        <div class="carousel-item active">
-                            <img :src="property.cover_image" class="d-block w-100" alt="Cover Image">
+                    <div id="carousel-{{ property.id }}" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <!-- Cover come prima immagine del carosello -->
+                            <div class="carousel-item active">
+                                <img :src="property.cover_image" class="d-block w-100" alt="Cover Image">
+                            </div>
+
+                            <!-- Le immagini aggiuntive provenienti dalla tabella 'images' -->
+                            <div v-for="image in property.images" :key="image.id" class="carousel-item">
+                                <img :src="image.image_url" class="d-block w-100" alt="Property Image">
+                            </div>
                         </div>
 
-                        <!-- Le immagini aggiuntive provenienti dalla tabella 'images' -->
-                        <div v-for="image in property.images" :key="image.id" class="carousel-item">
-                            <img :src="image.image_url" class="d-block w-100" alt="Property Image">
-                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
                 </div>
 
                 <div class="card-body">
