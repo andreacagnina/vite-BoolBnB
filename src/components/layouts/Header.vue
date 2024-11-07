@@ -12,18 +12,18 @@ name: 'AppHeader',
                     <img class="logo" src="../../../public/logo.png" alt="Logo">
                 </div>
 
-                <div class="col-12 col-md-4"> 
+                <div class="col-sm-12 col-md-4"> 
                     <div class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
                         <input type="text" class="input-search" placeholder="Cerca un BnB...">
                     </div>
                 </div>
 
-                <div class="col-sm-hide col-md-2 justify-content-center">
+                <div class="col-sm-hide col-md-4 col-lg-2 justify-content-center">
                     <a href="#">Login</a>
                     <a href="#">Register</a>
                 </div>
-                <div class="col-sm-hide col-md-2 col-md-hide justify-content-start">
+                <div class="col-sm-hide col-lg-2 col-md-hide justify-content-start">
                     <div class="user-img">
                         <img src="../../../public/user-key-svgrepo-com.svg" alt="User"> 
                     </div>
@@ -36,7 +36,7 @@ name: 'AppHeader',
 <style lang="scss" scoped>
 .app-header{
     padding-top: 20px;
-    .col-12{
+    .col-sm-12{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -108,7 +108,7 @@ name: 'AppHeader',
             height: 100px;
         }
     }
-    .col-md-2{
+    .col-lg-2{
         display: flex;
         align-items: center;
         a{
@@ -143,45 +143,27 @@ name: 'AppHeader',
         .col-sm-hide {
             display: none !important;
         }
-        .col-12{
-            padding: 0px;
-            .btn-search:focus ~ .input-search{
-                width: 300px;
-                border-radius: 0px;
-                background-color: transparent;
-                border-bottom:1px solid #f7ede2;
-                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-            }
-            .input-search:focus{
-                width: 300px;
-                border-radius: 0px;
-                background-color: transparent;
-                border-bottom:1px solid #f7ede2;
-                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-            }
+        .search-box .btn-search:focus ~ .input-search,
+        .search-box .input-search:focus {
+            width: 450px !important;
+            border-radius: 0px;
+            background-color: transparent;
+            border-bottom: 1px solid #f7ede2;
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
     }
     /* Su dispositivi tablet (da 768px a 991px) */
     @media (min-width: 768px) and (max-width: 991px) {
-        .col-sm-hide {
-            display: block !important;
+        .col-md-hide {
+            display: none !important;
         }
-        .col-md-4 {
-            padding: 0px 20px;
-            .btn-search:focus ~ .input-search{
-                width: 300px;
-                border-radius: 0px;
-                background-color: transparent;
-                border-bottom:1px solid #f7ede2;
-                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-            }
-            .input-search:focus{
-                width: 300px;
-                border-radius: 0px;
-                background-color: transparent;
-                border-bottom:1px solid #f7ede2;
-                transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-            }
+        .search-box .btn-search:focus ~ .input-search,
+        .search-box .input-search:focus {
+            width: 300px !important;
+            border-radius: 0px;
+            background-color: transparent;
+            border-bottom: 1px solid #f7ede2;
+            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
-    }
+}
 </style>
