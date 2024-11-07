@@ -82,9 +82,6 @@ export default {
 };
 </script>
 
-
-
-
 <template>
     <section class="homepage">
         <div class="container-fluid px-4">
