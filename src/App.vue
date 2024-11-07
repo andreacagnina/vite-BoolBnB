@@ -25,7 +25,7 @@ export default {
   <Header />
 
   <!-- Sidebar -->
-  <Sidebar />
+  <!--<Sidebar />-->
 
   <!-- Main Content -->
   <main class="main-content">

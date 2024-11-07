@@ -44,34 +44,21 @@ export default {
 <template>
     <section class="homepage">
         <div class="container-fluid">
-
             <div class="row">
-
                 <div class="col-sm-12">
-
                     <div class="square-c d-flex justify-content-center align-items-center">filtro</div>
-
                 </div>
-
             </div>
-
             <div class="row g-3">
-
                 <PropertyCard v-for="property in properties" :key="property.id" :property="property"/>
-
             </div>
-
             <div class=row>
                 <div class="col-12">
                     <nav aria-label="Page navigation example"  class="d-flex justify-content-center py-3">
-                        <ul class="pagination">
-                            
+                        <ul class="pagination">  
                             <li class="page-item"><a class="page-link" :class="current_page == 1 ? 'disabled' : ''" href="#" @click="goToPage(current_page - 1)">Previous</a></li>
-        
                             <li class="page-item" v-for="index in last_page"><a class="page-link" href="#" @click="goToPage(index)">{{ index }}</a></li>
-        
                             <li class="page-item"><a class="page-link" :class="current_page == last_page ? 'disabled' : ''" href="#" @click="goToPage(current_page + 1)">Next</a></li>
-        
                         </ul>
                     </nav>
                 </div>
