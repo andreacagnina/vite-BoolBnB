@@ -19,15 +19,15 @@ name: 'AppHeader',
                     </div>
                 </div>
 
-                <div class="col-sm-hide col-md-4">
+                <div class="col-sm-hide col-md-2 justify-content-center">
                     <a href="#">Login</a>
                     <a href="#">Register</a>
+                </div>
+                <div class="col-sm-hide col-md-2 col-md-hide justify-content-start">
                     <div class="user-img">
                         <img src="../../../public/user-key-svgrepo-com.svg" alt="User"> 
                     </div>
-                    
                 </div>
-                
             </div>
         </div>
     </header>
@@ -107,6 +107,10 @@ name: 'AppHeader',
             width: 150px;
             height: 100px;
         }
+    }
+    .col-md-2{
+        display: flex;
+        align-items: center;
         a{
             color: #f7ede2;
             text-decoration: none;
@@ -124,6 +128,7 @@ name: 'AppHeader',
             width: 60px;
             border-radius: 50%;
             background-color: #f7ede2;
+            padding: 5px;
             img{
                 height: 100%;
                 width: 100%;
