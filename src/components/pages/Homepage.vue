@@ -54,7 +54,7 @@ export default {
             </div>
             <div class=row>
                 <div class="col-12">
-                    <nav aria-label="Page navigation example"  class="d-flex justify-content-center py-3">
+                    <nav aria-label="Page navigation example"  class="d-flex justify-content-center py-3 mt-4">
                         <ul class="pagination">  
                             <li class="page-item"><a class="page-link" :class="current_page == 1 ? 'disabled' : ''" href="#" @click="goToPage(current_page - 1)">Previous</a></li>
                             <li class="page-item" v-for="index in last_page"><a class="page-link" href="#" @click="goToPage(index)">{{ index }}</a></li>
