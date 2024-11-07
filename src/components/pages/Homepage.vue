@@ -73,22 +73,39 @@ export default {
     .homepage {
         padding: 30px 0;    
     }
+    ul.pagination {
+    background-color: transparent !important;
+    background: linear-gradient(
+		45deg,
+		#ce6a6c,
+		#ebada2
+	);
+    border-radius: 10px;
+}
+
+    ul.pagination .page-item {
+        background-color: transparent !important;
+    }
+
+    ul.pagination .page-item .page-link {
+        background-color: transparent !important;
+        color: #f6bd60 !important;
+        border: none !important;
+        margin: 0 5px !important;
+    }
+
     
-    .square {
-        height: 100px;
-        width: 100%;
-        background-color: rgb(0, 255, 106);
+    ul.pagination .page-item {
+        background-color: transparent !important;
     }
 
-    .square-b {
-        height: 100px;
-        width: 100%;
-        background-color: rgb(0, 17, 255);
+    
+    ul.pagination .page-item .page-link {
+        color: #f7ede2 !important;
     }
 
-    .square-c {
-        height: 100px;
-        width: 100%;
-        background-color: rgb(208, 255, 0);
+    
+    ul.pagination .page-item .page-link:hover {
+        color: #192033 !important;
     }
 </style>
