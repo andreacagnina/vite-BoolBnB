@@ -5,7 +5,15 @@ export const store = reactive({
     menuItems: [
         {
             name: 'homepage',
-            label: 'HOME',
+            label: 'Home',
+        },
+        {
+            name: 'UserProperties',
+            label: 'My Properties',
+        },
+        {
+            name: '',
+            label: 'Statistics',
         },
     ]
 });

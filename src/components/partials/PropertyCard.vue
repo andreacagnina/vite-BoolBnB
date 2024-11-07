@@ -1,35 +1,56 @@
 <script>
 export default {
     name: 'PropertyCard',
-    props:{
+    props: {
         property: Object
-    }, 
-
-    methods: {
-
     },
+    methods: {
+        
+    }
 }
 </script>
 
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-3">
+    <div class="col-sm-12 col-md-3 col-lg-2">
         <div class="card h-100">
+            <router-link class="text-reset text-decoration-none" :to="{ name: 'property', params: { slug: property.slug } }">
 
-            <div class="card_img">
-                <img class="card-img-top img-fluid" :src="property.cover_image != null ? `http://127.0.0.1:8000/storage/${property.cover_image}` : 'https://placehold.co/600x400?text=Hello+World'">
-            </div>
+                <!-- Carosello di immagini -->
+                <div id="carousel-{{ property.id }}" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <!-- Cover come prima immagine del carosello -->
+                        <div class="carousel-item active">
+                            <img :src="property.cover_image" class="d-block w-100" alt="Cover Image">
+                        </div>
 
-            <div class="card-body">
+                        <!-- Le immagini aggiuntive provenienti dalla tabella 'images' -->
+                        <div v-for="image in property.images" :key="image.id" class="carousel-item">
+                            <img :src="image.image_url" class="d-block w-100" alt="Property Image">
+                        </div>
+                    </div>
 
-                <h3>{{ property.title }}</h3>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-{{ property.id }}" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
 
-            </div>
+                <div class="card-body">
+                    <h3>{{ property.title }}</h3>
+                </div>
 
+            </router-link>
         </div>
-
     </div>
 </template>
 
-<style lang="scss">
-    
+<style scoped lang="scss">
+.card-img-top {
+    height: 200px; 
+    object-fit: cover;
+}
 </style>

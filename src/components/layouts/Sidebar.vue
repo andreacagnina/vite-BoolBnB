@@ -50,7 +50,7 @@ export default {
 </script>
 
 <template>
-  	<header>
+	<header>
 		<div class="hamburger-icon" id="icon">
 			<div class="icon-1" id="a"></div>
 			<div class="icon-2" id="b"></div>
@@ -59,43 +59,8 @@ export default {
 		</div>
 		<nav id="nav">
 			<ul>
-				<li>
-					<router-link to="/">
-						<i class="me-3 fa-solid fa-dice-d20" v-if="$route.path === '/'"></i
-						>Home
-					</router-link>
-				</li>
-				<li>
-					<router-link to="/characters">
-						<i
-							class="me-3 fa-solid fa-dice-d20"
-							v-if="$route.path === '/characters'"></i
-						>Personaggi
-					</router-link>
-				</li>
-				<li>
-					<router-link to="/items">
-						<i
-							class="me-3 fa-solid fa-dice-d20"
-							v-if="$route.path === '/items'"></i
-						>Oggetti
-					</router-link>
-				</li>
-				<li>
-					<router-link to="/game-two">
-						<i
-							class="me-3 fa-solid fa-dice-d20"
-							v-if="$route.path === '/game-two'"></i
-						>Gioca
-					</router-link>
-				</li>
-				<li>
-					<router-link to="/who-we-are">
-						<i
-							class="me-3 fa-solid fa-dice-d20"
-							v-if="$route.path === '/who-we-are'"></i
-						>Chi siamo
-					</router-link>
+				<li class="me-4" v-for="(item, index) in menuItems" :key="index">
+					<router-link :to="{ name: item.name }">{{item.label}}</router-link>
 				</li>
 			</ul>
 		</nav>
