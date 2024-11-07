@@ -8,22 +8,22 @@ name: 'AppHeader',
     <header class="app-header">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-hide col-md-4 py-4">
+                <div class="col-sm-hide col-md-4">
                     <img class="logo" src="../../../public/logo.png" alt="Logo">
                 </div>
 
-                <div class="col-12 col-md-4 py-4"> 
+                <div class="col-12 col-md-4"> 
                     <div class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
                         <input type="text" class="input-search" placeholder="Cerca un BnB...">
                     </div>
                 </div>
 
-                <div class="col-sm-hide col-md-4 py-4">
+                <div class="col-sm-hide col-md-4">
                     <a href="#">Login</a>
                     <a href="#">Register</a>
                     <div class="user-img">
-                        <img src="../../../public/user-key-svgrepo-com.svg" alt=""> 
+                        <img src="../../../public/user-key-svgrepo-com.svg" alt="User"> 
                     </div>
                     
                 </div>
@@ -34,13 +34,13 @@ name: 'AppHeader',
 </template>
 
 <style lang="scss" scoped>
+.app-header{
+    padding-top: 20px;
     .col-12{
-        padding: 0px;
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
-        background-color: #192033;
         .search-box{
             width: fit-content;
             height: fit-content;
@@ -102,8 +102,7 @@ name: 'AppHeader',
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: #192033;
-        padding: 0px 80px;
+        padding: 0px 50px;
         .logo{
             width: 150px;
             height: 100px;
@@ -133,11 +132,11 @@ name: 'AppHeader',
             }
         }
     }
-    
+}
     /* Su dispositivi mobile (fino a 767px) */
     @media (max-width: 767px) {
         .col-sm-hide {
-            display: none;
+            display: none !important;
         }
         .col-12{
             padding: 0px;
@@ -159,6 +158,9 @@ name: 'AppHeader',
     }
     /* Su dispositivi tablet (da 768px a 991px) */
     @media (min-width: 768px) and (max-width: 991px) {
+        .col-sm-hide {
+            display: block !important;
+        }
         .col-md-4 {
             padding: 0px 20px;
             .btn-search:focus ~ .input-search{

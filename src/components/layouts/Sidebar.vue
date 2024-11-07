@@ -50,7 +50,7 @@ export default {
 </script>
 
 <template>
-	<header>
+	<div class="sidebar">
 		<div class="hamburger-icon" id="icon">
 			<div class="icon-1" id="a"></div>
 			<div class="icon-2" id="b"></div>
@@ -65,11 +65,11 @@ export default {
 			</ul>
 		</nav>
 		<div class="dark-overlay" id="blue"></div>
-	</header>
+	</div>
 </template>
 
-<style scoped lang="scss">
-    header {
+<style lang="scss" scoped>
+    .sidebar{
 	width: 30%;
 	height: 100%;
 	position: absolute;
@@ -102,7 +102,7 @@ export default {
 	position: absolute;
 	height: 60px;
 	width: 60px;
-	top: 10%;
+	top: 20%;
 	left: 3%;
 	z-index: 1000;
 	cursor: pointer;
