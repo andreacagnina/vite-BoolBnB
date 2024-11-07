@@ -55,7 +55,7 @@ export default {
 <style lang="scss" scoped>
 @import "../../styles/partials/partials.scss";
 .card-img-top img {
-    height: 300px;
+    height: 280px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px;

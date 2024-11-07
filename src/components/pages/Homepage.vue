@@ -43,7 +43,7 @@ export default {
 
 <template>
     <section class="homepage">
-        <div class="container-fluid">
+        <div class="container-fluid px-4">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="square-c d-flex justify-content-center align-items-center">filtro</div>

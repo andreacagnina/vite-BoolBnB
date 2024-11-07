@@ -21,7 +21,7 @@ export default {
         <div class="footer-content" @click="toggleFooter">
 
             <h3 class="footer-toggle-text">
-                {{ isFooterOpen ? 'View less!' : 'View more!' }}
+                <strong>{{ isFooterOpen ? 'View less!' : 'View more!' }}</strong>
             </h3>
 
             <p>&copy; 2024 BoolBnB. All rights reserved.</p>
@@ -41,7 +41,7 @@ export default {
                         <router-link class="footer-link" >Link placeholder 4</router-link>
                     </div>
                     <div class="col-12 text-center my-3 social-icon">
-                        <p>Follow us on:</p>
+                        <p><strong>Follow us on:</strong></p>
                         <p><i class="fab fa-facebook-f"></i> <i class="fab fa-twitter"></i> <i class="fab fa-instagram"></i> <i class="fa-brands fa-linkedin"></i></p>
                         
                     </div>
@@ -67,7 +67,7 @@ export default {
 
 <style scoped lang="scss">
     .app-footer {
-        background-color: transparent;
+        background-color: #49919d;
         padding: 20px;
         text-align: center;
         position: relative;
@@ -75,10 +75,12 @@ export default {
     }
 
     .footer-content {
-        margin-bottom: 10px;
         cursor: pointer;
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: #f7ede2;
+        p{
+            margin-bottom: 0;
+        }
     }
 
     /* Pulsante per aprire il Menu aggiuntivo */
@@ -98,15 +100,15 @@ export default {
     /* Menu aggiuntivo che si espande verso l'alto */
     .additional-footer-menu {
         background: linear-gradient(
-		45deg,
-		#49919d,
-		#84a59d
-	);
+            360deg,
+            #49919d,
+            #84a59d
+        );
         position: absolute;
         bottom: 100%;
         left: 0;
         width: 100%;
-        height: 200px;
+        height: 150px;
         padding: 10px 0;
         z-index: 5;
         display: flex;

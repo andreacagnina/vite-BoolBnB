@@ -18,6 +18,7 @@ name: 'AppHeader',
                         <input type="text" class="input-search" placeholder="Cerca un BnB...">
                     </div>
                 </div>
+                
 
                 <div class="col-sm-hide col-md-4 col-lg-2 justify-content-center">
                     <a href="#">Login</a>
@@ -57,8 +58,8 @@ name: 'AppHeader',
             transition: all .5s ease-in-out;
             background: linear-gradient(
                 45deg,
-                #49919d,
-                #84a59d
+                #ce6a6c,
+                #ebada2
             );
             padding-right: 40px;
             color:#f7ede2;
