@@ -89,8 +89,8 @@ export default {
     <section class="homepage">
         <div class="container-fluid px-4">
             <div class="row">
-                <div class="col-sm-12">
-                    <div class="square-c d-flex justify-content-center align-items-center">
+                <div class="col-sm-12 mb-4">
+                    <div class="d-flex justify-content-center align-items-center">
                         <!-- Lista per il filtro -->
                         <ul class="filter-list">
                             <!-- Aggiungi l'opzione "Tutti" -->
@@ -111,7 +111,7 @@ export default {
             <!-- Paginazione -->
             <div class="row">
                 <div class="col-12">
-                    <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3">
+                    <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3 mt-4">
                         <ul class="pagination">
                             <li class="page-item">
                                 <a class="page-link" :class="{ disabled: current_page === 1 }" href="#" @click.prevent="goToPage(current_page - 1)">Previous</a>
@@ -136,13 +136,44 @@ export default {
     .homepage {
         padding: 30px 0;    
     }
+   
+    .filter-list {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .filter-list li {
+        margin-right: 15px;
+        padding: 5px 10px;
+        background: linear-gradient(
+            360deg,
+            #ce6a6c,
+            #ebada2
+        );
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;    
+        &:hover {
+            transform: scale(1.15);
+                transition: all 0.3s ease-in-out;
+                color: #f7ede2;
+        }
+    }
+
+    .filter-list li.active {
+        color: #f7ede2;
+        transform: scale(1.15);
+    }
+
     ul.pagination {
     background-color: transparent !important;
     background: linear-gradient(
-		45deg,
-		#ce6a6c,
-		#ebada2
-	);
+        45deg,
+        #ce6a6c,
+        #ebada2
+    );
     border-radius: 10px;
 }
 
@@ -157,28 +188,19 @@ export default {
         margin: 0 5px !important;
     }
 
-    
+
     ul.pagination .page-item {
         background-color: transparent !important;
     }
 
-    
+
     ul.pagination .page-item .page-link {
         color: #f7ede2 !important;
     }
 
-    
+
     ul.pagination .page-item .page-link:hover {
         color: #192033 !important;
     }
-
-    .filter-list li:hover {
-        background-color: #f0f0f0;
-    }
-
-    .filter-list li.active {
-        background-color: #007bff;
-        color: white;
-        border-color: #007bff;
-    }
+    
 </style>
