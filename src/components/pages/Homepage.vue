@@ -1,111 +1,69 @@
 <script>
-import PropertyCard from '../partials/PropertyCard.vue';
 import { store } from '../../store';
+import PropertyCard from '../partials/PropertyCard.vue';
+import Filter from '../partials/Filter.vue';
 import axios from 'axios';
 
 export default {
-    components: {
-        PropertyCard
-    },
-
+    components: { Filter, PropertyCard },
     data() {
         return {
             store,
-            properties: [],
-            last_page: null,
-            current_page: 1,  // Imposta la pagina corrente a 1 inizialmente
-            filterType: '',   // Valore iniziale vuoto, nessun filtro applicato
-            propertyTypes: [],  // Array vuoto inizialmente, da riempire con i tipi dinamicamente
+            propertyTypes: [],
         };
     },
-
     created() {
-        this.getProperties();  // Carica le proprietà al momento della creazione del componente
-        this.getPropertyTypes();  // Carica i tipi di proprietà dal backend
+        this.getProperties();
+        this.getPropertyTypes();
     },
-
+    watch: {
+        'store.searchTerm': 'getProperties',
+        'store.filterType': 'getProperties',
+        'store.current_page': 'getProperties',
+        'store.num_rooms': 'getProperties', // Aggiungi il watch per le stanze
+    },
     methods: {
-        setFilter(type) {
-            // Se l'utente seleziona "Tutti", il tipo di filtro sarà una stringa vuota
-            this.filterType = type;   
-            this.current_page = 1;    // Resetta alla prima pagina
-            this.getProperties();     // Carica le proprietà con il filtro applicato
-        },
-
         getProperties() {
-            // Parametri della richiesta, inclusi il tipo di filtro e la pagina corrente
             const params = {
-                page: this.current_page,
-                type: this.filterType || null,  // Passa il tipo solo se è impostato, altrimenti nessun filtro
+                page: store.current_page,
+                type: store.filterType || null,
+                search: store.searchTerm || null,
+                num_rooms: store.num_rooms || null, // Aggiungi il filtro num_rooms
             };
-
             axios.get(`${store.baseUrl}/properties`, { params })
-                .then((response) => {
-                    this.properties = response.data.results.data;
-                    this.last_page = response.data.results.last_page;
-                    this.current_page = response.data.results.current_page;
-                })
-                .catch((error) => {
-                    console.error("Errore durante il recupero delle proprietà:", error);
+                .then(response => {
+                    store.properties = response.data.results.data;
+                    store.last_page = response.data.results.last_page;
                 });
         },
-
-        goToPage(page) {
-            if (page > 0 && page <= this.last_page) {
-                this.current_page = page;  // Aggiorna la pagina corrente
-                this.getProperties();      // Ricarica le proprietà per la nuova pagina
-            }
-        },
-
-        // Funzione per ottenere il nome visualizzato per ogni tipo
-        getDisplayName(type) {
-            const typeNames = {
-                apartment: 'Appartamento',
-                house: 'Casa',
-                office: 'Ufficio',
-            };
-            return typeNames[type] || type;  // Restituisce il nome visualizzato, o il tipo se non definito
-        },
-
-        // Ottieni i tipi di proprietà dal backend
         getPropertyTypes() {
-            axios.get(`${store.baseUrl}/properties`)  // Effettua la richiesta al backend
+            axios.get(`${store.baseUrl}/properties`)
                 .then((response) => {
-                    // Memorizza i tipi di proprietà disponibili
                     this.propertyTypes = response.data.types.map(type => type.type);
                 })
-                .catch((error) => {
-                    console.error("Errore durante il recupero dei tipi di proprietà:", error);
-                });
-        }
+        },
+        goToPage(page) {
+            if (page > 0 && page <= store.last_page) {
+                store.current_page = page;
+            }
+        },
     },
 };
 </script>
 
-
-
-
 <template>
     <section class="homepage">
         <div class="container-fluid px-4">
+            <!-- Filtro sopra le schede -->
             <div class="row">
-                <div class="col-sm-12 mb-4">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <!-- Lista per il filtro -->
-                        <ul class="filter-list">
-                            <!-- Aggiungi l'opzione "Tutti" -->
-                            <li @click="setFilter('')" :class="{ active: filterType === '' }">Tutti</li>
-                            <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: filterType === type }">
-                                {{ getDisplayName(type) }}
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col-12 mb-4">
+                    <Filter :propertyTypes="propertyTypes" />
                 </div>
             </div>
 
-            <!-- Mostra le proprietà -->
+            <!-- Contenuto delle schede -->
             <div class="row g-3">
-                <PropertyCard v-for="property in properties" :key="property.id" :property="property"/>
+                <PropertyCard v-for="property in store.properties" :key="property.id" :property="property" />
             </div>
 
             <!-- Paginazione -->
@@ -114,13 +72,13 @@ export default {
                     <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3 mt-4">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" :class="{ disabled: current_page === 1 }" href="#" @click.prevent="goToPage(current_page - 1)">Previous</a>
+                                <a class="page-link" :class="{ disabled: store.current_page === 1 }" href="#" @click.prevent="goToPage(store.current_page - 1)">Previous</a>
                             </li>
-                            <li class="page-item" v-for="index in last_page" :key="index">
+                            <li class="page-item" v-for="index in store.last_page" :key="index">
                                 <a class="page-link" href="#" @click.prevent="goToPage(index)">{{ index }}</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" :class="{ disabled: current_page === last_page }" href="#" @click.prevent="goToPage(current_page + 1)">Next</a>
+                                <a class="page-link" :class="{ disabled: store.current_page === store.last_page }" href="#" @click.prevent="goToPage(store.current_page + 1)">Next</a>
                             </li>
                         </ul>
                     </nav>
@@ -129,14 +87,12 @@ export default {
         </div>
     </section>
 </template>
-
-
-
 <style lang="scss" scoped>
+
     .homepage {
         padding: 30px 0;    
     }
-   
+
     .filter-list {
         display: flex;
         list-style: none;
@@ -147,18 +103,15 @@ export default {
     .filter-list li {
         margin-right: 15px;
         padding: 5px 10px;
-        background: linear-gradient(
-            360deg,
-            #ce6a6c,
-            #ebada2
-        );
+        background: linear-gradient(360deg, #ce6a6c, #ebada2);
         border: none;
         border-radius: 5px;
-        cursor: pointer;    
+        cursor: pointer;
+
         &:hover {
             transform: scale(1.15);
-                transition: all 0.3s ease-in-out;
-                color: #f7ede2;
+            transition: all 0.3s ease-in-out;
+            color: #f7ede2;
         }
     }
 
@@ -168,14 +121,10 @@ export default {
     }
 
     ul.pagination {
-    background-color: transparent !important;
-    background: linear-gradient(
-        45deg,
-        #ce6a6c,
-        #ebada2
-    );
-    border-radius: 10px;
-}
+        background-color: transparent !important;
+        background: linear-gradient(45deg, #ce6a6c, #ebada2);
+        border-radius: 10px;
+    }
 
     ul.pagination .page-item {
         background-color: transparent !important;
@@ -188,19 +137,11 @@ export default {
         margin: 0 5px !important;
     }
 
-
-    ul.pagination .page-item {
-        background-color: transparent !important;
-    }
-
-
     ul.pagination .page-item .page-link {
         color: #f7ede2 !important;
     }
 
-
     ul.pagination .page-item .page-link:hover {
         color: #192033 !important;
     }
-    
 </style>
