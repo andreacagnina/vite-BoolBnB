@@ -1,8 +1,22 @@
 <script>
+import { store } from '../../store';
+
 export default {
-name: 'AppHeader',
-}
+    name: 'Header',
+    setup() {
+        const onSearch = () => {
+            store.current_page = 1; // Resetto alla prima pagina
+        };
+        return { store, onSearch };
+    },
+};
 </script>
+<input
+v-model="store.searchTerm"
+@keyup.enter="onSearch"
+placeholder="Cerca una BnB..."
+class="search-input"
+/>
 
 <template>
     <header class="app-header">
@@ -15,19 +29,18 @@ name: 'AppHeader',
                 <div class="col-sm-12 col-md-4"> 
                     <div class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
-                        <input type="text" class="input-search" placeholder="Cerca un BnB...">
+                        <input
+                        v-model="store.searchTerm"
+                        @keyup.enter="onSearch"
+                        placeholder="Cerca una BnB..."
+                        class="input-search"
+                    />
                     </div>
                 </div>
                 
-
-                <div class="col-sm-hide col-md-4 col-lg-2 justify-content-center">
+                <div class="col-sm-hide col-md-4 col-lg-4 justify-content-center">
                     <a href="#">Login</a>
                     <a href="#">Register</a>
-                </div>
-                <div class="col-sm-hide col-lg-2 col-md-hide justify-content-start">
-                    <div class="user-img">
-                        <img src="../../../public/user-key-svgrepo-com.svg" alt="User"> 
-                    </div>
                 </div>
             </div>
         </div>
@@ -58,8 +71,8 @@ name: 'AppHeader',
             transition: all .5s ease-in-out;
             background: linear-gradient(
                 45deg,
-                #ce6a6c,
-                #ebada2
+                #49919d,
+                #84a59d
             );
             padding-right: 40px;
             color:#f7ede2;
@@ -113,7 +126,7 @@ name: 'AppHeader',
             height: 100px;
         }
     }
-    .col-lg-2{
+    .col-lg-4{
         display: flex;
         align-items: center;
         a{
@@ -128,19 +141,7 @@ name: 'AppHeader',
                 transition: all 0.3s ease-in-out;
             }
         }
-        .user-img{
-            height: 60px;
-            width: 60px;
-            border-radius: 50%;
-            background-color: #f7ede2;
-            padding: 5px;
-            img{
-                height: 100%;
-                width: 100%;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-        }
+
     }
 }
     /* Su dispositivi mobile (fino a 767px) */
@@ -159,9 +160,7 @@ name: 'AppHeader',
     }
     /* Su dispositivi tablet (da 768px a 991px) */
     @media (min-width: 768px) and (max-width: 991px) {
-        .col-md-hide {
-            display: none !important;
-        }
+
         .search-box .btn-search:focus ~ .input-search,
         .search-box .input-search:focus {
             width: 300px !important;

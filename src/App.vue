@@ -1,41 +1,41 @@
 <script>
-import Header from './components/layouts/Header.vue'
-import Sidebar from './components/layouts/Sidebar.vue';
-import Footer from './components/layouts/Footer.vue'
-import { store } from './store';
+  import Header from './components/layouts/Header.vue'
+  import Sidebar from './components/layouts/Sidebar.vue';
+  import Footer from './components/layouts/Footer.vue'
+  import { store } from './store';
 
-export default {
-  components:{
-    Header,
-    Sidebar,
-    Footer
-  },
-  data() {
-    return {
-      store
-    }
-  },
-}
+  export default {
+    components:{
+      Header,
+      Sidebar,
+      Footer
+    },
+    data() {
+      return {
+        store
+      }
+    },
+  }
 </script>
 
 <template>
-<div id="app">
+  <div id="app">
 
-  <!-- Header -->
-  <Header />
+    <!-- Header -->
+    <Header />
 
-  <!-- Sidebar -->
-  <!--<Sidebar />-->
+    <!-- Sidebar -->
+    <!--<Sidebar />-->
 
-  <!-- Main Content -->
-  <main class="main-content">
-    <router-view />
-  </main>
+    <!-- Main Content -->
+    <main class="main-content">
+      <router-view />
+    </main>
 
-  <!-- Footer -->
-  <Footer />
+    <!-- Footer -->
+    <Footer />
 
-</div>
+  </div>
 </template>
 
 <style lang="scss">
