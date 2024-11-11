@@ -51,16 +51,29 @@ export default {
 
         </transition>
         
-        <!-- Menu per mobile -->
-        <div class="footer-menu">
-            <ul>
-                <li> <router-link class="footer-link" >Home</router-link></li>
-                <li> <router-link class="footer-link" >Destinations</router-link></li>
-                <li> <router-link class="footer-link" >Experiences</router-link></li>
-                <li> <router-link class="footer-link" >About us</router-link></li>
-                <li> <router-link class="footer-link" >Help</router-link></li>
-            </ul>
-        </div>
+    <!-- Menu per mobile -->
+    <div class="footer-menu">
+        <ul>
+            <li>
+                <router-link to="/" class="footer-link" active-class="active">
+                    <i class="fa-solid fa-house"></i>
+                    <p>Explore</p>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/favorites" class="footer-link" active-class="active">
+                    <i class="fa-regular fa-heart"></i>
+                    <p>Favorites</p>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/profile" class="footer-link" active-class="active">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <p>Profile</p>
+                </router-link>
+            </li>
+        </ul>
+    </div>
 
     </footer>
 </template>
@@ -168,25 +181,37 @@ export default {
         bottom: 0;
         left: 0;
         width: 100%;
-        padding: 10px 0;
+        padding: 5px 0;
+        font-size: 2rem
     }
 
     .footer-menu ul {
         display: flex;
+        align-items: center;
+        justify-content: space-evenly;
         list-style: none;
         margin: 0;
+        padding: 0;
     }
 
     .footer-menu li {
+        text-align: center;
         color: #f7ede2;
         cursor: pointer;
     }
 
     .footer-link {
+        text-align: center;
         text-decoration: none;
         color: #f7ede2;
-        margin: 20px 20px;
+        p {
+            font-size: 1.2rem;
+            margin: 0;
+        }
         &:hover {
+            color: #f6bd60;
+        }
+        &.active {
             color: #f6bd60;
         }
     }
