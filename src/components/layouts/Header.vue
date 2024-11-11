@@ -38,7 +38,7 @@ class="search-input"
                     </div>
                 </div>
                 
-                <div class="col-sm-hide col-md-4 col-lg-4 justify-content-center">
+                <div class="col-sm-hide col-md-4 col-lg-4 justify-content-end">
                     <a href="#">Login</a>
                     <a href="#">Register</a>
                 </div>
@@ -118,12 +118,11 @@ class="search-input"
     }
     .col-md-4{
         display: flex;
-        justify-content: center;
         align-items: center;
         padding: 0px 50px;
         .logo{
-            width: 150px;
-            height: 100px;
+            width: 100px;
+            height: 67px;
         }
     }
     .col-lg-4{

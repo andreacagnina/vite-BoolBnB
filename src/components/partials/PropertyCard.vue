@@ -14,7 +14,7 @@ export default {
 </script>
 
 <template>
-    <div class="col-sm-12 col-md-6 col-lg-3 px-2 my-3">
+    <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3 px-2 my-3">
         <div class="card h-100 d-flex flex-column">
             <span v-if="property.sponsored" class="badge-sponsor">SPONSORED</span>
 
