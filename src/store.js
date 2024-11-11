@@ -10,9 +10,11 @@ export const store = reactive({
     ],
 
     properties: [],
+    property:[],
     last_page: null,
     current_page: 1,
     filterType: '',
     searchTerm: '',
     num_rooms: null, // Nuovo parametro per il filtro delle stanze
+    num_beds: null, // Nuovo parametro per il filtro delle stanze
 });

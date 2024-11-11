@@ -12,11 +12,12 @@ const router = createRouter({
             component: Homepage
         },
         {
-            path: '/properties/:slug',
+            path: '/property/:slug',
             name: 'property',
             component:
                 SingleProperty,
         },
+
         {
             path: '/:pathMatch(.*)*',
             name: 'not-found',
