@@ -74,7 +74,7 @@ export default {
       <div class="row">
         <div class="col-12">
             <div class="row">
-                <div class="col-8">
+                <div class="col-8 text-center">
                     <h3 class="text-center">Description</h3>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                     <h3 class="text-center">Info</h3>
