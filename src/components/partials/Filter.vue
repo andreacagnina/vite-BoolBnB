@@ -17,7 +17,21 @@ export default {
             store.current_page = 1;
         };
 
-        return { store, setFilter, setRoomsFilter };
+        // filtro num_beds
+        const setBedsFilter = (numBeds) => {
+            store.num_beds = numBeds;
+            store.current_page = 1;
+        };
+
+        // Funzione per resettare tutti i filtri
+        const resetFilters = () => {
+            store.filterType = '';
+            store.num_rooms = '';
+            store.num_beds = '';
+            store.current_page = 1;
+        };
+
+        return { store, setFilter, setRoomsFilter, setBedsFilter, resetFilters };
     },
 };
 </script>
@@ -52,18 +66,42 @@ export default {
     <!-- Offcanvas per il filtro avanzato -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
         <div class="offcanvas-header">
-            <h5 id="roomsOffcanvasLabel">Rooms</h5>
+            <h5 id="roomsOffcanvasLabel">Filtri</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <!-- num_rooms options -->
-            <ul class="list-group">
-                <li class="list-group-item" @click="setRoomsFilter('')" :class="{ active: store.num_rooms === '' }">Not Selected</li>
-                <li class="list-group-item" v-for="i in 6" :key="i" @click="setRoomsFilter(i)" :class="{ active: store.num_rooms === i }">
-                    {{ i }}
-                </li>
-                <li class="list-group-item" @click="setRoomsFilter('7')" :class="{ active: store.num_rooms >= 7 }">7+</li>
-            </ul>
+            <!-- Filtro per numero di stanze -->
+            <div class="mb-3">
+                <label for="numRoomsInput" class="form-label">Numero di stanze</label>
+                <input
+                    id="numRoomsInput"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    v-model="store.num_rooms"
+                    @input="setRoomsFilter(store.num_rooms)"
+                    placeholder="Inserisci il numero di stanze">
+            </div>
+            
+            <!-- Filtro per numero di letti -->
+            <div class="mb-3">
+                <label for="numBedsInput" class="form-label">Numero di letti</label>
+                <input
+                    id="numBedsInput"
+                    type="number"
+                    class="form-control"
+                    min="1"
+                    v-model="store.num_beds"
+                    @input="setBedsFilter(store.num_beds)"
+                    placeholder="Inserisci il numero di letti">
+            </div>
+    
+            <!-- Pulsante per rimuovere i filtri -->
+            <button
+                class="btn btn-secondary w-100 mt-4"
+                @click="resetFilters">
+                Rimuovi tutti i filtri
+            </button>
         </div>
     </div>
 </template>
