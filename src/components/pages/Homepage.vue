@@ -21,6 +21,7 @@ export default {
         'store.filterType': 'getProperties',
         'store.current_page': 'getProperties',
         'store.num_rooms': 'getProperties', // Aggiungi il watch per le stanze
+        'store.num_beds': 'getProperties', // Aggiungi il watch per le beds
     },
     methods: {
         getProperties() {
@@ -29,6 +30,7 @@ export default {
                 type: store.filterType || null,
                 search: store.searchTerm || null,
                 num_rooms: store.num_rooms || null, // Aggiungi il filtro num_rooms
+                num_beds: store.num_beds || null, // Aggiungi il filtro num_beds              
             };
             axios.get(`${store.baseUrl}/properties`, { params })
                 .then(response => {
