@@ -1,8 +1,10 @@
 <script>
 import { store } from '../../store';
 import axios from 'axios';
+import TomTomMap from '../partials/TomTomMap.vue';
 
 export default {
+    components: { TomTomMap },
     data() {
         return {
             store,
@@ -16,6 +18,8 @@ export default {
             },
             isMessageSent: false,  // Stato per mostrare il messaggio di successo
             showMessageClass: '',  // Classe per gestire l'animazione del messaggio
+            lat: null,
+            long: null,
         };
     },
     created() {
@@ -30,7 +34,10 @@ export default {
             axios.get(`${store.baseUrl}/property/${slug}`)
                 .then(response => {
                     if (response.data && response.data.results) {
-                        store.property = response.data.results;  // Salva nel store
+                        store.property = response.data.results;// Salva nel store
+
+                        this.lat = store.property.lat;
+                        this.long = store.property.long;
                     } else {
                         console.error("Dati non validi ricevuti:", response);
                     }
@@ -87,7 +94,7 @@ export default {
 
         // Funzione per validare il form
         isValidForm() {
-            if ( !this.form.email || !this.form.message) {
+            if (!this.form.email || !this.form.message) {
                 alert("Tutti i campi sono obbligatori!");
                 return false;
             }
@@ -114,18 +121,14 @@ export default {
             <!-- Sezione carosello -->
             <div class="col-md-8">
                 <!-- Immagine principale (presa dalla tabella properties) -->
-                <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image" class="img-fluid main-image">
+                <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image"
+                    class="img-fluid main-image">
             </div>
             <div class="col-md-4">
                 <!-- Immagini più piccole (prese dalla tabella images) -->
                 <div class="small-images">
-                    <img 
-                        v-for="(image, index) in store.property.images.slice(0, 4)" 
-                        :key="index" 
-                        :src="image.url" 
-                        alt="Additional Property Image" 
-                        class="img-fluid small-image m-2 rounded-4"
-                    >
+                    <img v-for="(image, index) in store.property.images.slice(0, 4)" :key="index" :src="image.url"
+                        alt="Additional Property Image" class="img-fluid small-image m-2 rounded-4">
                 </div>
             </div>
         </div>
@@ -144,42 +147,42 @@ export default {
                     </div>
                 </div>
                 <div class="col-4 text-center">
-                        <h3>Contact</h3>
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                    placeholder="Enter your first name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                    placeholder="Enter your last name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" v-model="form.email" id="email"
-                                    placeholder="Enter your email" :disabled="isLoading" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                    placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                                <span v-if="isLoading">Sending...</span>
-                                <span v-else>Send</span>
-                            </button>
-                        </form>
-                        <!-- Messaggio di successo -->
-                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                            <div class="d-flex align-items-center">
-                                <!-- Icona di successo -->
-                                <i class="fa-solid fa-check"></i>
-                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                            </div>
+                    <h3>Contact</h3>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                                placeholder="Enter your first name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                                placeholder="Enter your last name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" v-model="form.email" id="email"
+                                placeholder="Enter your email" :disabled="isLoading" required />
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                            <span v-if="isLoading">Sending...</span>
+                            <span v-else>Send</span>
+                        </button>
+                    </form>
+                    <!-- Messaggio di successo -->
+                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                        <div class="d-flex align-items-center">
+                            <!-- Icona di successo -->
+                            <i class="fa-solid fa-check"></i>
+                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                         </div>
                     </div>
+                </div>
             </div>
 
             <div class="col-12">
@@ -187,10 +190,8 @@ export default {
                     <div class="col-12">
                         <h2 class="text-center">Map</h2>
                     </div>
-                    <div class="col-12 d-flex justify-content-center">
-                        <div class="square">
-                            <p>MILANO</p>
-                        </div>
+                    <div class="col-12 d-flex justify-content-center my-2">
+                        <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
                     </div>
                 </div>
             </div>
@@ -211,7 +212,8 @@ export default {
     display: flex;
     align-items: center;
     animation: slideIn 1s ease-out forwards;
-    .fa-check{
+
+    .fa-check {
         color: #f7ede2;
         font-size: 20px;
         margin-right: 10px;
