@@ -15,6 +15,7 @@ export default {
     created() {
         this.getProperties();
         this.getPropertyTypes();
+        console.log(store.properties);
     },
     watch: {
         'store.searchTerm': 'getProperties',
