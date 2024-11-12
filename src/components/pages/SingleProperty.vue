@@ -140,13 +140,21 @@ export default {
                             <h3>Description</h3>
                             <p>{{ store.property.description }}</p>
                             <h3>Price</h3>
-                            <p>{{ store.property.price }} €</p>
+                            <p>{{ store.formatPrice(store.property.price) }}</p>
                             <h3>Address</h3>
                             <p>{{ store.property.address }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-4 text-center">
+                    <!-- Messaggio di successo -->
+                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                        <div class="d-flex align-items-center">
+                            <!-- Icona di successo -->
+                            <i class="fa-solid fa-check"></i>
+                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
+                        </div>
+                    </div>
                     <h3>Contact</h3>
                     <form @submit.prevent="submitForm">
                         <div class="mb-3">
@@ -174,14 +182,6 @@ export default {
                             <span v-else>Send</span>
                         </button>
                     </form>
-                    <!-- Messaggio di successo -->
-                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                        <div class="d-flex align-items-center">
-                            <!-- Icona di successo -->
-                            <i class="fa-solid fa-check"></i>
-                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 

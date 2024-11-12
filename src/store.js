@@ -34,5 +34,8 @@ export const store = reactive({
         lake: '/public/icon/lake-area-svgrepo-com.svg',
         beach: '/public/icon/beach-area-svgrepo-com.svg',
         castle: '/public/icon/castle-svgrepo-com.svg'
+    },
+    formatPrice(price) {
+        return price.toFixed(2).replace('.', ',') + ' €';
     }
 });

@@ -50,7 +50,7 @@ export default {
     <div id="map" style="height: 500px; width: 100%;"></div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 #map {
     height: 100%;
     width: 100%;
