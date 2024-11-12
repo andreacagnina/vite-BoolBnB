@@ -12,14 +12,13 @@ export default {
         };
 
         // Funzione per impostare il filtro numero stanze
-        const setRoomsFilter = (numRooms) => {
+        const setAdvancedFilter = (numRooms, numBeds, numBaths, mq, price, selectedServices) => {
             store.num_rooms = numRooms;
-            store.current_page = 1;
-        };
-
-        // filtro num_beds
-        const setBedsFilter = (numBeds) => {
             store.num_beds = numBeds;
+            store.num_baths = numBaths;
+            store.mq = mq;
+            store.price = price;
+            store.selectedServices = selectedServices;
             store.current_page = 1;
         };
 
@@ -28,11 +27,16 @@ export default {
             store.filterType = '';
             store.num_rooms = '';
             store.num_beds = '';
+            store.num_baths = '';
+            store.mq = '';
+            store.price = '';
+            store.selectedServices = [];
             store.current_page = 1;
         };
 
-        return { store, setFilter, setRoomsFilter, setBedsFilter, resetFilters };
+        return { store, setFilter, setAdvancedFilter, resetFilters };
     },
+    
 };
 </script>
 
@@ -67,7 +71,7 @@ export default {
     <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
         <div class="offcanvas-header">
             <h5 id="roomsOffcanvasLabel">Filtri</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
         </div>
         <div class="offcanvas-body">
             <!-- Filtro per numero di stanze -->
@@ -79,7 +83,7 @@ export default {
                     class="form-control"
                     min="1"
                     v-model="store.num_rooms"
-                    @input="setRoomsFilter(store.num_rooms)"
+                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
                     placeholder="Inserisci il numero di stanze">
             </div>
             
@@ -92,16 +96,69 @@ export default {
                     class="form-control"
                     min="1"
                     v-model="store.num_beds"
-                    @input="setBedsFilter(store.num_beds)"
+                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
                     placeholder="Inserisci il numero di letti">
             </div>
     
+            <!-- Filtro per numero di bagni -->
+            <div class="mb-3">
+                <label for="numBathsInput" class="form-label">Numero di bagni</label>
+                <input
+                    id="numBathsInput"
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    v-model="store.num_baths"
+                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    placeholder="Inserisci il numero di letti">
+            </div>
+
+            <!-- Filtro per mq -->
+            <div class="mb-3">
+                <label for="mqInput" class="form-label">mq</label>
+                <input
+                    id="mqInput"
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    v-model="store.mq"
+                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    placeholder="Inserisci il numero di letti">
+            </div>
+
+            <!-- Filtro per prezzo -->
+            <div class="mb-3">
+                <label for="priceInput" class="form-label">Prezzo</label>
+                <input
+                    id="priceInput"
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    v-model="store.price"
+                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)"
+                    placeholder="Inserisci il prezzo">
+            </div>
+            <div class="mb-3">
+                <label for="servicesCheckbox" class="form-label">Servizi</label>
+                <div v-for="service in services" :key="service.id" class="form-check">
+                    <input
+                        type="checkbox"
+                        class="form-check-input"
+                        :id="'service-' + service.id"
+                        :value="service.id"
+                        v-model="store.selectedServices"
+                        @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
+                    <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+                </div>
+            </div>
+
             <!-- Pulsante per rimuovere i filtri -->
             <button
                 class="btn btn-secondary w-100 mt-4"
                 @click="resetFilters">
                 Rimuovi tutti i filtri
             </button>
+            <button type="button" class="btn-primary" data-bs-dismiss="offcanvas">See Results</button>
         </div>
     </div>
 </template>

@@ -111,18 +111,21 @@ export default {
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-12 my-4">
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 d-flex justify-content-center">
-                        <img class="img-fluid m-2 rounded-4" :src="store.property.imageUrl" alt="Property image"
-                            v-if="!isLoading" />
-                    </div>
-                    <div class="col-sm-12 col-md-6 justify-content-center">
-                        <img class="img-fluid m-2 rounded-4" :src="store.property.imageUrl" alt="Property image"
-                            v-if="!isLoading" />
-                        <img class="img-fluid m-2 rounded-4" v-for="(image, index) in store.property.images"
-                            :key="index" :src="image.url" alt="Property image" />
-                    </div>
+            <!-- Sezione carosello -->
+            <div class="col-md-8">
+                <!-- Immagine principale (presa dalla tabella properties) -->
+                <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image" class="img-fluid main-image">
+            </div>
+            <div class="col-md-4">
+                <!-- Immagini più piccole (prese dalla tabella images) -->
+                <div class="small-images">
+                    <img 
+                        v-for="(image, index) in store.property.images.slice(0, 4)" 
+                        :key="index" 
+                        :src="image.url" 
+                        alt="Additional Property Image" 
+                        class="img-fluid small-image m-2 rounded-4"
+                    >
                 </div>
             </div>
         </div>
