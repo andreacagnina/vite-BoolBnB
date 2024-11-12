@@ -55,9 +55,6 @@ export default {
                     <span>{{ type }}</span>
                 </li>
             </ul>
-            <button class="next-button mx-3 d-none d-sm-block">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
     
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
@@ -163,9 +160,9 @@ export default {
             <button
                 class="btn btn-custom w-100 mt-4"
                 @click="resetFilters">
-                Remove all filters
+                <strong>Remove all filters</strong>
             </button>
-            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
+            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas"><strong>See Results</strong></button>
         </div>
     </div>
 </template>
@@ -260,10 +257,10 @@ export default {
     background-color: #ebada2;
 }
 
-.offcanvas-header, .offcanvas-body {
+.offcanvas {
     text-align: center;
     color: #f7ede2;
-    background-color: #49919d;
+    background: linear-gradient(360deg, #192033, #49919d);
     padding: 20px;
     border: none;
     .btn-custom{

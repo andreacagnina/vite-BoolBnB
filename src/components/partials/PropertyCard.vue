@@ -23,7 +23,7 @@ export default {
 <template>
     <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3 px-2 my-3">
         <div class="card h-100 d-flex flex-column">
-            <span v-if="property.sponsored" class="badge-sponsor">SPONSORED</span>
+            <span v-if="property.sponsored" class="badge-sponsor"><i class="fa-solid fa-crown"></i>SPONSORED<i class="fa-solid fa-crown"></i></span>
 
 
             <router-link class="text-reset text-decoration-none h-100 d-flex flex-column"
@@ -120,12 +120,17 @@ export default {
         top: 0px;
         right: 0px;
         background-color: #f6bd60;
-        color: #f7ede2;
+        color: #192033;
         font-size: 0.8rem;
         font-weight: bold;
         padding: 5px 10px;
         border-radius: 5px;
         z-index: 1;
+        .fa-crown {
+            font-size: 0.8rem;
+            color: #192033;
+            margin: 0 5px;
+        }
     }
 
     i {
