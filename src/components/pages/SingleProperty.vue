@@ -100,10 +100,9 @@ export default {
                 </div>
             </div>
         </div>
-
         <div class="container">
             <div class="row">
-                <div class="col-12">
+                <div class="col-8">
                     <div v-if="!isLoading">
                         <div class="col-8 text-center">
                             <h3>Description</h3>
@@ -114,43 +113,42 @@ export default {
                             <p>{{ store.property.address }}</p>
                         </div>
                     </div>
-                    <div class="col-4">
+                </div>
+                <div class="col-4">
                         <!-- Form di contatto -->
-                        <h3 class="text-center">Contact Form</h3>
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" v-model="form.firstName" id="firstName" placeholder="Enter your first name"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" v-model="form.lastName" id="lastName" placeholder="Enter your last name"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" v-model="form.email" id="email" placeholder="Enter your email" required/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" v-model="form.message" id="message" rows="3" placeholder="Enter your message" required></textarea>
-                            </div>
+                    <h3 class="text-center">Contact Form</h3>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-3">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" v-model="form.firstName" id="firstName" placeholder="Enter your first name"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" v-model="form.lastName" id="lastName" placeholder="Enter your last name"/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" v-model="form.email" id="email" placeholder="Enter your email" required/>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" v-model="form.message" id="message" rows="3" placeholder="Enter your message" required></textarea>
+                        </div>
+                        <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
                         </form>
                     </div>
-                    
                     <!-- Messaggio di successo -->
                     <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
                         <div class="d-flex align-items-center">
-                            <!-- Icona di successo -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style="color: #4CAF50;">
-                                <path d="M16 8a8 8 0 1 1-16 0 8 8 0 0 1 16 0zM8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1zm3.854 5.146a.5.5 0 0 0-.708-.708L8.5 7.793 6.854 6.146a.5.5 0 1 0-.708.708L7.793 8l-1.647 1.646a.5.5 0 0 0 .708.708L8.5 8.707l1.646 1.646a.5.5 0 0 0 .708-.708L9.207 8l1.647-1.646z"/>
-                            </svg>
-                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style="color: #4CAF50;">
+                            <path d="M16 8a8 8 0 1 1-16 0 8 8 0 0 1 16 0zM8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1zm3.854 5.146a.5.5 0 0 0-.708-.708L8.5 7.793 6.854 6.146a.5.5 0 1 0-.708.708L7.793 8l-1.647 1.646a.5.5 0 0 0 .708.708L8.5 8.707l1.646 1.646a.5.5 0 0 0 .708-.708L9.207 8l1.647-1.646z"/>
+                        </svg>
+                        <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                     </div>
                 </div>
             </div>
-
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
