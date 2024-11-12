@@ -147,7 +147,33 @@ export default {
                     </div>
                 </div>
                 <div class="col-4 text-center">
-                    <!-- Messaggio di successo -->
+                    <h3>Contact Us!</h3>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-2">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                                placeholder="Enter your first name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                                placeholder="Enter your last name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" v-model="form.email" id="email"
+                                placeholder="Enter your email" :disabled="isLoading" required />
+                        </div>
+                        <div class="mb-2">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-2" :disabled="isLoading">
+                            <span v-if="isLoading">Sending...</span>
+                            <span v-else>Send</span>
+                        </button>
+                        <!-- Messaggio di successo -->
                     <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
                         <div class="d-flex align-items-center">
                             <!-- Icona di successo -->
@@ -155,32 +181,6 @@ export default {
                             <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                         </div>
                     </div>
-                    <h3>Contact</h3>
-                    <form @submit.prevent="submitForm">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                placeholder="Enter your first name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                placeholder="Enter your last name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" v-model="form.email" id="email"
-                                placeholder="Enter your email" :disabled="isLoading" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                            <span v-if="isLoading">Sending...</span>
-                            <span v-else>Send</span>
-                        </button>
                     </form>
                 </div>
             </div>
@@ -188,10 +188,18 @@ export default {
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center">Map</h2>
+                        <h2 class="text-center">Here’s where you can find us!</h2>
                     </div>
-                    <div class="col-12 d-flex justify-content-center my-2">
+                    <div class="col-12 my-4">
+                        <div class="row">
+                            <div class="col-1 mb-4 text-center align-self-center">
+                        <h3>Address</h3>
+                        <p>{{ store.property.address }}</p>
+                    </div>
+                    <div class="col-11 d-flex justify-content-center mb-4">
                         <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
