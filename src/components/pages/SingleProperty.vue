@@ -111,91 +111,108 @@ export default {
 <template>
     <div class="container">
         <div class="row">
-            <!-- Sezione carosello -->
+            <!-- Immagine principale (cover image) -->
             <div class="col-md-8">
-                <!-- Immagine principale (presa dalla tabella properties) -->
-                <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image" class="img-fluid main-image">
+                <img :src="store.property.cover_image" alt="Main Property Image" class="img-fluid main-image ">
             </div>
+    
+            <!-- Immagini aggiuntive (layout 2x2) -->
             <div class="col-md-4">
-                <!-- Immagini più piccole (prese dalla tabella images) -->
-                <div class="small-images">
-                    <img 
-                        v-for="(image, index) in store.property.images.slice(0, 4)" 
-                        :key="index" 
-                        :src="image.url" 
-                        alt="Additional Property Image" 
-                        class="img-fluid small-image m-2 rounded-4"
-                    >
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <div v-if="!isLoading">
-                        <div class="col-8 text-center">
-                            <h3>Description</h3>
-                            <p>{{ store.property.description }}</p>
-                            <h3>Price</h3>
-                            <p>{{ store.property.price }} €</p>
-                            <h3>Address</h3>
-                            <p>{{ store.property.address }}</p>
-                        </div>
+                <div class="small-images d-flex flex-column h-100">
+                    <div class="d-flex flex-grow-1">
+                        <img 
+                            v-for="(image, index) in store.property.images.slice(0, 2)" 
+                            :key="image.id" 
+                            :src="image.path" 
+                            alt="Additional Property Image" 
+                            class="img-fluid w-50 small-image m-1"
+                        />
                     </div>
-                </div>
-                <div class="col-4 text-center">
-                        <h3>Contact</h3>
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                    placeholder="Enter your first name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                    placeholder="Enter your last name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" v-model="form.email" id="email"
-                                    placeholder="Enter your email" :disabled="isLoading" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                    placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                                <span v-if="isLoading">Sending...</span>
-                                <span v-else>Send</span>
-                            </button>
-                        </form>
-                        <!-- Messaggio di successo -->
-                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                            <div class="d-flex align-items-center">
-                                <!-- Icona di successo -->
-                                <i class="fa-solid fa-check"></i>
-                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center">Map</h2>
-                    </div>
-                    <div class="col-12 d-flex justify-content-center">
-                        <div class="square">
-                            <p>MILANO</p>
-                        </div>
+                    <div class="d-flex flex-grow-1">
+                        <img 
+                            v-for="(image, index) in store.property.images.slice(2, 4)" 
+                            :key="image.id" 
+                            :src="image.path" 
+                            alt="Additional Property Image" 
+                            class="img-fluid w-50 small-image m-1"
+                        />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+        
+    <div class="container">
+        <div class="row">
+            <!-- Colonna per la descrizione della proprietà -->
+            <div class="col-8">
+                <div v-if="!isLoading">
+                    <div class="text-center">
+                        <h3>Description</h3>
+                        <p>{{ store.property.description }}</p>
+                        <h3>Price</h3>
+                        <p>{{ store.property.price }} €</p>
+                        <h3>Address</h3>
+                        <p>{{ store.property.address }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Colonna per il form di contatto -->
+            <div class="col-4 text-center">
+                <h3>Contact</h3>
+                <form @submit.prevent="submitForm">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                            placeholder="Enter your first name" :disabled="isLoading" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                            placeholder="Enter your last name" :disabled="isLoading" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" v-model="form.email" id="email"
+                            placeholder="Enter your email" :disabled="isLoading" required />
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                            placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" :disabled="isLoading">
+                        <span v-if="isLoading">Sending...</span>
+                        <span v-else>Send</span>
+                    </button>
+                </form>
+    
+                <!-- Messaggio di successo -->
+                <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                    <div class="d-flex align-items-center">
+                        <!-- Icona di successo -->
+                        <i class="fa-solid fa-check"></i>
+                        <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Sezione della mappa -->
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center">Map</h2>
+            </div>
+            <div class="col-12 d-flex justify-content-center">
+                <div class="square">
+                    <p>MILANO</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </template>
 
 
@@ -223,6 +240,21 @@ export default {
 
 .success-message svg {
     margin-right: 10px;
+}
+
+.main-image {
+    height: 100%;
+    object-fit: cover;
+}
+
+.small-images {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.small-image {
+    object-fit: cover;
 }
 
 /* Animazione di entrata */
