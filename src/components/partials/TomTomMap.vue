@@ -47,13 +47,12 @@ export default {
 
 <template>
     <!-- Assicurati che il div `map` abbia uno stile che gli dia un'altezza definita -->
-    <div id="map" style="height: 500px; width: 100%;"></div>
+    <div id="map" class="rounded-4" style="height: 500px; width: 100%;"></div>
 </template>
 
 <style lang="scss" scoped>
 #map {
     height: 100%;
     width: 100%;
-    border-radius: 20px;
 }
 </style>
