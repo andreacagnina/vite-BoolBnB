@@ -141,31 +141,7 @@ export default {
                         </div>
                     </div>
                     <div class="col-4">
-                        <!-- Form di contatto -->
-                        <!-- <h3 class="text-center">Contact Form</h3>
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-3">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                    placeholder="Enter your first name" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                    placeholder="Enter your last name" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" v-model="form.email" id="email"
-                                    placeholder="Enter your email" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                    placeholder="Enter your message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Send</button>
-                        </form> -->
+                        <h3>Contact</h3>
                         <form @submit.prevent="submitForm">
                             <div class="mb-3">
                                 <label for="firstName" class="form-label">First Name</label>
@@ -224,6 +200,7 @@ export default {
         </div>
     </div>
 </template>
+
 
 <style lang="scss" scoped>
 /* Messaggio di successo */

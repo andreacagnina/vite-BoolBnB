@@ -2,6 +2,7 @@
 import { store } from '../../store';
 
 export default {
+    store,
     name: 'Header',
     setup() {
         const onSearch = () => {
@@ -11,36 +12,27 @@ export default {
     },
 };
 </script>
-<input
-v-model="store.searchTerm"
-@keyup.enter="onSearch"
-placeholder="Cerca una BnB..."
-class="search-input"
-/>
+<input v-model="store.searchTerm" @keyup.enter="onSearch" placeholder="Cerca una BnB..." class="search-input" />
 
 <template>
     <header class="app-header">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-hide col-md-4">
-                    <img class="logo" src="../../../public/logo.png" alt="Logo">
+                    <router-link to="/"><img class="logo" src="../../../public/logo.png" alt="Logo"></router-link>
                 </div>
 
-                <div class="col-sm-12 col-md-4"> 
+                <div class="col-sm-12 col-md-4">
                     <div class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
-                        <input
-                        v-model="store.searchTerm"
-                        @keyup.enter="onSearch"
-                        placeholder="Cerca una BnB..."
-                        class="input-search"
-                    />
+                        <input v-model="store.searchTerm" @keyup.enter="onSearch" placeholder="Cerca una BnB..."
+                            class="input-search" />
                     </div>
                 </div>
-                
+
                 <div class="col-sm-hide col-md-4 col-lg-4 justify-content-end">
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
+                    <a :href="`${store.clientUrl}/login`">Login</a>
+                    <a :href="`${store.clientUrl}/register`">Register</a>
                 </div>
             </div>
         </div>
@@ -48,19 +40,22 @@ class="search-input"
 </template>
 
 <style lang="scss" scoped>
-.app-header{
+.app-header {
     padding-top: 20px;
-    .col-sm-12{
+
+    .col-sm-12 {
         display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
-        .search-box{
+
+        .search-box {
             width: fit-content;
             height: fit-content;
             position: relative;
         }
-        .input-search{
+
+        .input-search {
             height: 50px;
             width: 50px;
             border-style: none;
@@ -69,20 +64,20 @@ class="search-input"
             outline: none;
             border-radius: 25px;
             transition: all .5s ease-in-out;
-            background: linear-gradient(
-                45deg,
-                #49919d,
-                #84a59d
-            );
+            background: linear-gradient(45deg,
+                    #49919d,
+                    #84a59d);
             padding-right: 40px;
-            color:#f7ede2;
+            color: #f7ede2;
         }
-        .input-search::placeholder{
-            color:rgba(255,255,255,.5);
+
+        .input-search::placeholder {
+            color: rgba(255, 255, 255, .5);
             font-size: 18px;
             font-weight: 100;
         }
-        .btn-search{
+
+        .btn-search {
             width: 50px;
             height: 50px;
             border-style: none;
@@ -93,48 +88,56 @@ class="search-input"
             border-radius: 50%;
             position: absolute;
             right: 0px;
-            color:#f7ede2 ;
-            background-color:transparent;
-            pointer-events: painted;  
-            &:hover{
+            color: #f7ede2;
+            background-color: transparent;
+            pointer-events: painted;
+
+            &:hover {
                 transform: scale(1.2);
                 transition: all 0.3s ease-in-out;
             }
         }
-        .btn-search:focus ~ .input-search{
+
+        .btn-search:focus~.input-search {
             width: 450px;
             border-radius: 0px;
             background: transparent;
-            border-bottom:1px solid #f7ede2;
+            border-bottom: 1px solid #f7ede2;
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
-        .input-search:focus{
+
+        .input-search:focus {
             width: 450px;
             border-radius: 0px;
             background: transparent;
-            border-bottom:1px solid #f7ede2;
+            border-bottom: 1px solid #f7ede2;
             transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
         }
     }
-    .col-md-4{
+
+    .col-md-4 {
         display: flex;
         align-items: center;
         padding: 0px 50px;
-        .logo{
+
+        .logo {
             width: 100px;
             height: 67px;
         }
     }
-    .col-lg-4{
+
+    .col-lg-4 {
         display: flex;
         align-items: center;
-        a{
+
+        a {
             color: #f7ede2;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.2rem;
             margin: 0px 20px;
-            &:hover{
+
+            &:hover {
                 color: #f6bd60;
                 transform: scale(1.2);
                 transition: all 0.3s ease-in-out;
@@ -143,30 +146,33 @@ class="search-input"
 
     }
 }
-    /* Su dispositivi mobile (fino a 767px) */
-    @media (max-width: 767px) {
-        .col-sm-hide {
-            display: none !important;
-        }
-        .search-box .btn-search:focus ~ .input-search,
-        .search-box .input-search:focus {
-            width: 450px !important;
-            border-radius: 0px;
-            background-color: transparent;
-            border-bottom: 1px solid #f7ede2;
-            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-        }
-    }
-    /* Su dispositivi tablet (da 768px a 991px) */
-    @media (min-width: 768px) and (max-width: 991px) {
 
-        .search-box .btn-search:focus ~ .input-search,
-        .search-box .input-search:focus {
-            width: 300px !important;
-            border-radius: 0px;
-            background-color: transparent;
-            border-bottom: 1px solid #f7ede2;
-            transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
-        }
+/* Su dispositivi mobile (fino a 767px) */
+@media (max-width: 767px) {
+    .col-sm-hide {
+        display: none !important;
+    }
+
+    .search-box .btn-search:focus~.input-search,
+    .search-box .input-search:focus {
+        width: 450px !important;
+        border-radius: 0px;
+        background-color: transparent;
+        border-bottom: 1px solid #f7ede2;
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    }
+}
+
+/* Su dispositivi tablet (da 768px a 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+
+    .search-box .btn-search:focus~.input-search,
+    .search-box .input-search:focus {
+        width: 300px !important;
+        border-radius: 0px;
+        background-color: transparent;
+        border-bottom: 1px solid #f7ede2;
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+    }
 }
 </style>
