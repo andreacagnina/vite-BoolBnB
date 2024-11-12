@@ -69,77 +69,84 @@ export default {
 
     <!-- Offcanvas per il filtro avanzato -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
-        <div class="offcanvas-header">
-            <h5 id="roomsOffcanvasLabel">Filtri</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
-        </div>
-        <div class="offcanvas-body">
-            <!-- Filtro per numero di stanze -->
-            <div class="mb-3">
-                <label for="numRoomsInput" class="form-label">Numero di stanze</label>
+    <div class="offcanvas-header">
+        <h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
+    </div>
+    <div class="offcanvas-body">
+        <!-- Gruppo di label per stanze e letti -->
+        <div class="d-flex justify-content-between mb-3">
+            <div class="w-50 me-2">
+                <label for="numRoomsInput" class="form-label fw-bold">Number of rooms</label>
                 <input
                     id="numRoomsInput"
                     type="number"
                     class="form-control"
                     min="1"
+                    max="50"
                     v-model="store.num_rooms"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Inserisci il numero di stanze">
+                    placeholder="Input the room">
             </div>
-            
-            <!-- Filtro per numero di letti -->
-            <div class="mb-3">
-                <label for="numBedsInput" class="form-label">Numero di letti</label>
+
+            <div class="w-50">
+                <label for="numBedsInput" class="form-label fw-bold">Number of beds</label>
                 <input
                     id="numBedsInput"
                     type="number"
                     class="form-control"
                     min="1"
+                    max="20"
                     v-model="store.num_beds"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Inserisci il numero di letti">
+                    placeholder="Input the bed">
             </div>
-    
-            <!-- Filtro per numero di bagni -->
-            <div class="mb-3">
-                <label for="numBathsInput" class="form-label">Numero di bagni</label>
+        </div>
+
+        <!-- Gruppo di label per bagni e mq -->
+        <div class="d-flex justify-content-between mb-3">
+            <div class="w-50 me-2">
+                <label for="numBathsInput" class="form-label fw-bold">Number of baths</label>
                 <input
                     id="numBathsInput"
                     type="number"
                     class="form-control"
                     min="0"
+                    max="5"
                     v-model="store.num_baths"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Inserisci il numero di letti">
+                    placeholder="Input the bath">
             </div>
 
-            <!-- Filtro per mq -->
-            <div class="mb-3">
-                <label for="mqInput" class="form-label">mq</label>
+            <div class="w-50">
+                <label for="mqInput" class="form-label fw-bold">Number of mq</label>
                 <input
                     id="mqInput"
                     type="number"
                     class="form-control"
                     min="0"
+                    max="5000"
                     v-model="store.mq"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Inserisci il numero di letti">
+                    placeholder="Input the mq">
             </div>
+        </div>
 
             <!-- Filtro per prezzo -->
             <div class="mb-3">
-                <label for="priceInput" class="form-label">Prezzo</label>
+                <label for="priceInput" class="form-label fw-bold">Price</label>
                 <input
                     id="priceInput"
                     type="number"
                     class="form-control"
                     min="0"
+                    max="1000000"
                     v-model="store.price"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)"
-                    placeholder="Inserisci il prezzo">
+                    placeholder="Input the price">
             </div>
             <div class="mb-3">
-                <label for="servicesCheckbox" class="form-label">Servizi</label>
+                <label for="servicesCheckbox" class="form-label fw-bold">Services</label>
                 <div v-for="service in services" :key="service.id" class="form-check">
                     <input
                         type="checkbox"
@@ -154,11 +161,11 @@ export default {
 
             <!-- Pulsante per rimuovere i filtri -->
             <button
-                class="btn btn-secondary w-100 mt-4"
+                class="btn btn-custom w-100 mt-4"
                 @click="resetFilters">
-                Rimuovi tutti i filtri
+                Remove all filters
             </button>
-            <button type="button" class="btn-primary" data-bs-dismiss="offcanvas">See Results</button>
+            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
         </div>
     </div>
 </template>
@@ -255,6 +262,34 @@ export default {
 
 .offcanvas-header, .offcanvas-body {
     text-align: center;
+    color: #f7ede2;
+    background-color: #49919d;
+    padding: 20px;
+    border: none;
+    .btn-custom{
+        color: #f7ede2;
+        background: linear-gradient(45deg, #ce6a6c, #ebada2);
+        border-radius: 10px;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover{
+            transform: scale(1.05);
+        }
+    }
+    .btn-custom-two{
+        color: #f7ede2;
+        background: linear-gradient(250deg, #ce6a6c, #ebada2);
+        border-radius: 10px;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover{
+            transform: scale(1.05);
+        }
+    }
 }
 
 .list-group-item {
@@ -297,5 +332,8 @@ export default {
             filter: brightness(0) saturate(100%) invert(48%) sepia(33%) saturate(545%) hue-rotate(300deg) brightness(96%) contrast(94%);
         }
     }
+}
+.form-control{
+    background-color: #f7ede2;
 }
 </style>
