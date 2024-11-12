@@ -15,7 +15,11 @@ export const store = reactive({
     filterType: '',
     searchTerm: '',
     num_rooms: null, // Nuovo parametro per il filtro delle stanze
-    num_beds: null, // Nuovo parametro per il filtro delle stanze
+    num_beds: null, // Nuovo parametro per il filtro delle beds
+    num_baths: null, // Nuovo parametro per il filtro delle baths
+    mq: null,
+    price: null,
+    selectedServices: [],
 
     // Mappatura delle icone per ciascun tipo di proprietà
     iconMap: {
