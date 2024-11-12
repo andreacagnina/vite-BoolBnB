@@ -55,9 +55,6 @@ export default {
                     <span>{{ type }}</span>
                 </li>
             </ul>
-            <button class="next-button mx-3 d-none d-sm-block">
-                <i class="fa-solid fa-angle-right"></i>
-            </button>
     
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
