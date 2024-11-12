@@ -87,8 +87,9 @@ export default {
 
         // Funzione per validare il form
         isValidForm() {
-            if ( !this.form.email || !this.form.message) {
-                alert("Tutti i campi sono obbligatori!");
+            // Verifica che i campi obbligatori siano compilati
+            if (!this.form.email || !this.form.message) {
+                alert("Email e messaggio sono obbligatori!");
                 return false;
             }
             return this.validateEmail(this.form.email);
@@ -139,9 +140,9 @@ export default {
                             <p>{{ store.property.address }}</p>
                         </div>
                     </div>
-                </div>
-                <div class="col-4 text-center">
-                        <h3>Contact</h3>
+                    <div class="col-4">
+                        <!-- Form di contatto -->
+                        <h3 class="text-center">Contact Form</h3>
                         <form @submit.prevent="submitForm">
                             <div class="mb-3">
                                 <label for="firstName" class="form-label">First Name</label>
@@ -168,15 +169,19 @@ export default {
                                 <span v-else>Send</span>
                             </button>
                         </form>
-                        <!-- Messaggio di successo -->
-                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                            <div class="d-flex align-items-center">
-                                <!-- Icona di successo -->
-                                <i class="fa-solid fa-check"></i>
-                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                            </div>
+                    </div>
+                    
+                    <!-- Messaggio di successo -->
+                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                        <div class="d-flex align-items-center">
+                            <!-- Icona di successo -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16" style="color: #4CAF50;">
+                                <path d="M16 8a8 8 0 1 1-16 0 8 8 0 0 1 16 0zM8 1a7 7 0 1 0 7 7A7 7 0 0 0 8 1zm3.854 5.146a.5.5 0 0 0-.708-.708L8.5 7.793 6.854 6.146a.5.5 0 1 0-.708.708L7.793 8l-1.647 1.646a.5.5 0 0 0 .708.708L8.5 8.707l1.646 1.646a.5.5 0 0 0 .708-.708L9.207 8l1.647-1.646z"/>
+                            </svg>
+                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                         </div>
                     </div>
+                </div>
             </div>
 
             <div class="col-12">
@@ -198,25 +203,17 @@ export default {
 
 <style lang="scss" scoped>
 /* Messaggio di successo */
-.success-message {
-    background-color: #49919d;
-    color: #f7ede2;
-    border-radius: 10px;
-    padding: 15px;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    animation: slideIn 1s ease-out forwards;
-    .fa-check{
-        color: #f7ede2;
-        font-size: 20px;
-        margin-right: 10px;
-        border-radius: 50%;
-        padding: 5px;
-        border: 1px solid #f7ede2;
+    .success-message {
+        background-color: #4CAF50; /* Verde per il successo */
+        color: white;
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        animation: slideIn 1s ease-out forwards;
     }
-}
 
 .success-message svg {
     margin-right: 10px;
@@ -252,13 +249,12 @@ export default {
     }
 }
 
-/* Stili generali */
-h2,
-h3,
-p,
-label {
-    color: #f7ede2;
-}
+    /* Stili generali */
+    h2,
+    h3,
+    p {
+        color: #f7ede2;
+    }
 
 .square {
     width: 500px;
