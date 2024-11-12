@@ -273,17 +273,6 @@ label {
     color: #f7ede2;
 }
 
-.square {
-    width: 500px;
-    height: 500px;
-    background-color: #49919d;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 10px;
-}
-
 .modal-backdrop {
     background: rgba(0, 0, 0, 0.5);
     position: fixed;
