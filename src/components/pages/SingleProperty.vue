@@ -20,10 +20,23 @@ export default {
             showMessageClass: '',  // Classe per gestire l'animazione del messaggio
             lat: null,
             long: null,
+            currentImageIndex: 0,  // indice dell'immagine attualmente visualizzata
         };
     },
     created() {
         this.getProperty();
+    },
+    computed: {
+        currentImage() {
+            return this.images[this.currentImageIndex];
+        },
+        visibleSmallImages() {
+            // Ottieni un array con tutte le immagini tranne quella attualmente selezionata
+            return this.images.filter((_, index) => index !== this.currentImageIndex).slice(0, 4);
+        },
+        images() {
+            return [{ path: store.property.cover_image }, ...store.property.images];
+        },
     },
     methods: {
         // Funzione per recuperare la proprietà
@@ -47,8 +60,10 @@ export default {
                 })
                 .finally(() => {
                     this.isLoading = false;
-                });
+            });
+                
         },
+        
 
         // Funzione per inviare il form
         submitForm() {
@@ -110,6 +125,19 @@ export default {
         // Funzione per mostrare/nascondere la modale
         toggleModal() {
             this.isModalVisible = !this.isModalVisible;
+        },
+        setCurrentImage(index) {
+            this.currentImageIndex = index + 1;  // Compensa l'offset della cover_image
+        },
+        prevImage() {
+            this.currentImageIndex = (this.currentImageIndex === 0)
+                ? this.images.length - 1
+                : this.currentImageIndex - 1;
+        },
+        nextImage() {
+            this.currentImageIndex = (this.currentImageIndex === this.images.length - 1)
+                ? 0
+                : this.currentImageIndex + 1;
         }
     }
 };
@@ -118,97 +146,147 @@ export default {
 <template>
     <div class="container">
         <div class="row">
-            <!-- Sezione carosello -->
-            <div class="col-md-8">
-                <!-- Immagine principale (presa dalla tabella properties) -->
-                <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image"
-                    class="img-fluid main-image">
+            <div class="col-12 text-center mt-4">
+                <h1 class="fw-bold">{{ store.property.title }}</h1>
+                <p>{{ store.property.description }}</p>
             </div>
-            <div class="col-md-4">
-                <!-- Immagini più piccole (prese dalla tabella images) -->
-                <div class="small-images">
-                    <img v-for="(image, index) in store.property.images.slice(0, 4)" :key="index" :src="image.url"
-                        alt="Additional Property Image" class="img-fluid small-image m-2 rounded-4">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-8">
-                    <div v-if="!isLoading">
-                        <div class="col-8 text-center">
-                            <h3>Description</h3>
-                            <p>{{ store.property.description }}</p>
-                            <h3>Price</h3>
-                            <p>{{ store.formatPrice(store.property.price) }}</p>
-                            <h3>Address</h3>
-                            <p>{{ store.property.address }}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4 text-center">
-                    <h3>Contact Us!</h3>
-                    <form @submit.prevent="submitForm">
-                        <div class="mb-2">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                placeholder="Enter your first name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-2">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                placeholder="Enter your last name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-2">
-                            <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" v-model="form.email" id="email"
-                                placeholder="Enter your email" :disabled="isLoading" required />
-                        </div>
-                        <div class="mb-2">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-2" :disabled="isLoading">
-                            <span v-if="isLoading">Sending...</span>
-                            <span v-else>Send</span>
-                        </button>
-                        <!-- Messaggio di successo -->
-                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                        <div class="d-flex align-items-center">
-                            <!-- Icona di successo -->
-                            <i class="fa-solid fa-check"></i>
-                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                        </div>
-                    </div>
-                    </form>
-                </div>
+            <!-- Immagine principale (immagine attiva selezionata) -->
+            <div class="col-md-7 my-4">
+                <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
             </div>
 
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="text-center">Here’s where you can find us!</h2>
-                    </div>
-                    <div class="col-12 my-4">
-                        <div class="row">
-                            <div class="col-1 mb-4 text-center align-self-center">
-                        <h3>Address</h3>
-                        <p>{{ store.property.address }}</p>
-                    </div>
-                    <div class="col-11 d-flex justify-content-center mb-4">
-                        <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
-                    </div>
-                        </div>
+            <!-- Immagini aggiuntive (layout 2x2) -->
+            <div class="col-md-5 my-5">
+                <div class="small-images d-flex flex-column h-100">
+                    <div class="d-flex flex-grow-1">
+                        <img 
+                            v-for="(image, index) in visibleSmallImages" 
+                            :key="image.id" 
+                            :src="image.path" 
+                            alt="Additional Property Image" 
+                            class="img-fluid w-50 small-image m-1 rounded-4"
+                            @click="setCurrentImage(index)"
+                        />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- DETAILS -->
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div v-if="!isLoading">
+                        <div class="col-12 my-4 text-center">
+                            <h2 class="fw-bold">Info & Details</h2>
+                            <div class="price">
+                                <h5 class="fw-bold">Weekly Price:</h5>
+                                <p class="ms-2">{{ store.formatPrice(store.property.price) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-5">
+                <div class="row gx-5">
+                    <div class="col-12 mt-5">
+                        <h2 class="fw-bold">Here’s where you can find us!</h2>
+                        <p>{{ store.property.address }}</p>
+                    </div>
+                    <div class="col-8 d-flex justify-content-center mb-4">
+                        <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
+                    </div>
+                    <div class="col-4 text-center">
+                        <h2 class="fw-bold">Contact Us!</h2>
+                        <form @submit.prevent="submitForm">
+                            <div class="mb-2">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                                    placeholder="Enter your first name" :disabled="isLoading" />
+                            </div>
+                            <div class="mb-2">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                                    placeholder="Enter your last name" :disabled="isLoading" />
+                            </div>
+                            <div class="mb-2">
+                                <label for="email" class="form-label">Email address</label>
+                                <input type="email" class="form-control" v-model="form.email" id="email"
+                                    placeholder="Enter your email" :disabled="isLoading" required />
+                            </div>
+                            <div class="mb-2">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                                    placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-custom w-100 mt-2" :disabled="isLoading">
+                                <span v-if="isLoading">Sending Message...</span>
+                                <span v-else>Send Message</span>
+                            </button>
+                            <!-- Messaggio di successo -->
+                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                            <div class="d-flex align-items-center">
+                                <!-- Icona di successo -->
+                                <i class="fa-solid fa-check"></i>
+                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
 </template>
 
 
 <style lang="scss" scoped>
+.main-image {
+    height:550px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.small-images {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+.small-image {
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    opacity: 0.7;
+
+    &:hover {
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+    }
+}
+
+.price {
+    h5, p {
+        display: inline-block;
+    }
+}
+
+.btn-custom{
+    color: #f7ede2;
+    background: linear-gradient(45deg, #ce6a6c, #ebada2);
+    border-radius: 10px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover{
+        transform: scale(1.05);
+    }
+}
 /* Messaggio di successo */
 .success-message {
     background-color: #49919d;
@@ -266,11 +344,18 @@ export default {
 }
 
 /* Stili generali */
+h1,
 h2,
 h3,
+h5,
 p,
 label {
     color: #f7ede2;
+    &:hover {
+        background: linear-gradient(45deg, #ce6a6c, #ebada2);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
 }
 
 .modal-backdrop {
