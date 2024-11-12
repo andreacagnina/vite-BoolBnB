@@ -8,8 +8,8 @@ export default {
     data() {
         return {
             store,
-            isModalVisible: false,
-            isLoading: true,
+            isModalVisible: false,  // Stato per mostrare/nascondere la modale
+            isLoading: true,        // Stato per gestire il caricamento
             form: {
                 firstName: '',
                 lastName: '',
@@ -25,19 +25,8 @@ export default {
     created() {
         this.getProperty();
     },
-    computed: {
-        currentImage() {
-            return this.images[this.currentImageIndex];
-        },
-        visibleSmallImages() {
-            // Ottieni un array con tutte le immagini tranne quella attualmente selezionata
-            return this.images.filter((_, index) => index !== this.currentImageIndex).slice(0, 4);
-        },
-        images() {
-            return [{ path: store.property.cover_image }, ...store.property.images];
-        },
-    },
     methods: {
+        // Funzione per recuperare la proprietà
         getProperty() {
             const slug = this.$route.params.slug;
             this.isLoading = true;
@@ -60,6 +49,8 @@ export default {
                     this.isLoading = false;
                 });
         },
+
+        // Funzione per inviare il form
         submitForm() {
             if (this.isValidForm()) {
                 this.isLoading = true;
@@ -69,67 +60,60 @@ export default {
                     last_name: this.form.lastName,
                     email: this.form.email,
                     message: this.form.message,
-                    property_id: store.property.id,
+                    property_id: store.property.id,  // ID della proprietà corrente
+
                 })
-                .then(response => {
-                    this.isMessageSent = true;
-                    this.showMessageClass = 'message-shown';
+                    .then(response => {
+                        this.isMessageSent = true;
+                        this.showMessageClass = 'message-shown';
 
-                    this.form.firstName = '';
-                    this.form.lastName = '';
-                    this.form.email = '';
-                    this.form.message = '';
+                        // Reset dei campi del form
+                        this.form.firstName = '';
+                        this.form.lastName = '';
+                        this.form.email = '';
+                        this.form.message = '';
 
-                    setTimeout(() => {
-                        this.showMessageClass = 'message-hidden';
+                        // Nascondi il messaggio di successo dopo 3 secondi
                         setTimeout(() => {
-                            this.isMessageSent = false;
-                            this.showMessageClass = '';
-                        }, 500);
-                    }, 3000);
-                })
-                .catch(error => {
-                    console.error("Errore nell'invio del messaggio:", error);
-                    alert("C'è stato un errore nell'invio del messaggio. Riprova.");
-                })
-                .finally(() => {
-                    this.isLoading = false;
-                });
+                            this.showMessageClass = 'message-hidden';
+                            setTimeout(() => {
+                                this.isMessageSent = false;
+                                this.showMessageClass = '';
+                            }, 500);
+                        }, 3000);
+                    })
+                    .catch(error => {
+                        console.error("Errore nell'invio del messaggio:", error);
+                        alert("C'è stato un errore nell'invio del messaggio. Riprova.");
+                    })
+                    .finally(() => {
+                        this.isLoading = false;
+                    });
             }
         },
+
+        // Funzione per validare il form
         isValidForm() {
-            if (!this.form.email || !this.form.message) {
             if (!this.form.email || !this.form.message) {
                 alert("Tutti i campi sono obbligatori!");
                 return false;
             }
             return this.validateEmail(this.form.email);
         },
+
+        // Funzione di validazione email
         validateEmail(email) {
             const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return re.test(email);
         },
+
+        // Funzione per mostrare/nascondere la modale
         toggleModal() {
             this.isModalVisible = !this.isModalVisible;
-        },
-        setCurrentImage(index) {
-            this.currentImageIndex = index + 1;  // Compensa l'offset della cover_image
-        },
-        prevImage() {
-            this.currentImageIndex = (this.currentImageIndex === 0)
-                ? this.images.length - 1
-                : this.currentImageIndex - 1;
-        },
-        nextImage() {
-            this.currentImageIndex = (this.currentImageIndex === this.images.length - 1)
-                ? 0
-                : this.currentImageIndex + 1;
         }
-    
     }
 };
 </script>
-
 
 <template>
     <div class="container">
@@ -140,20 +124,6 @@ export default {
                 <img v-if="!isLoading" :src="store.property.cover_img" alt="Main Property Image"
                     class="img-fluid main-image">
             </div>
-
-            <!-- Immagini aggiuntive (layout 2x2) -->
-            <div class="col-md-5">
-                <div class="small-images d-flex flex-column h-100">
-                    <div class="d-flex flex-grow-1">
-                        <img 
-                            v-for="(image, index) in visibleSmallImages" 
-                            :key="image.id" 
-                            :src="image.path" 
-                            alt="Additional Property Image" 
-                            class="img-fluid w-50 small-image m-1 rounded-4"
-                            @click="setCurrentImage(index)"
-                        />
-                    </div>
             <div class="col-md-4">
                 <!-- Immagini più piccole (prese dalla tabella images) -->
                 <div class="small-images">
@@ -177,7 +147,33 @@ export default {
                     </div>
                 </div>
                 <div class="col-4 text-center">
-                    <!-- Messaggio di successo -->
+                    <h3>Contact Us!</h3>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-2">
+                            <label for="firstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                                placeholder="Enter your first name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="lastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                                placeholder="Enter your last name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" v-model="form.email" id="email"
+                                placeholder="Enter your email" :disabled="isLoading" required />
+                        </div>
+                        <div class="mb-2">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-2" :disabled="isLoading">
+                            <span v-if="isLoading">Sending...</span>
+                            <span v-else>Send</span>
+                        </button>
+                        <!-- Messaggio di successo -->
                     <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
                         <div class="d-flex align-items-center">
                             <!-- Icona di successo -->
@@ -185,32 +181,6 @@ export default {
                             <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                         </div>
                     </div>
-                    <h3>Contact</h3>
-                    <form @submit.prevent="submitForm">
-                        <div class="mb-3">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                placeholder="Enter your first name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                placeholder="Enter your last name" :disabled="isLoading" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email address</label>
-                            <input type="email" class="form-control" v-model="form.email" id="email"
-                                placeholder="Enter your email" :disabled="isLoading" required />
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                            <span v-if="isLoading">Sending...</span>
-                            <span v-else>Send</span>
-                        </button>
                     </form>
                 </div>
             </div>
@@ -218,10 +188,18 @@ export default {
             <div class="col-12">
                 <div class="row">
                     <div class="col-12">
-                        <h2 class="text-center">Map</h2>
+                        <h2 class="text-center">Here’s where you can find us!</h2>
                     </div>
-                    <div class="col-12 d-flex justify-content-center my-2">
+                    <div class="col-12 my-4">
+                        <div class="row">
+                            <div class="col-1 mb-4 text-center align-self-center">
+                        <h3>Address</h3>
+                        <p>{{ store.property.address }}</p>
+                    </div>
+                    <div class="col-11 d-flex justify-content-center mb-4">
                         <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
+                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -231,43 +209,6 @@ export default {
 
 
 <style lang="scss" scoped>
-
-.main-image {
-    height:550px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.small-images {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    position: relative;
-}
-
-.small-image {
-    object-fit: cover;
-}
-
-.prev, .next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-}
-
-.prev {
-    left: -10px;
-}
-
-.next {
-    right: -10px;
-}
-
-.small-image.active {
-    border: 2px solid #49919d;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
 /* Messaggio di successo */
 .success-message {
     background-color: #49919d;
@@ -293,7 +234,6 @@ export default {
 .success-message svg {
     margin-right: 10px;
 }
-
 
 /* Animazione di entrata */
 @keyframes slideIn {
@@ -331,17 +271,6 @@ h3,
 p,
 label {
     color: #f7ede2;
-}
-
-.square {
-    width: 500px;
-    height: 500px;
-    background-color: #49919d;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 10px;
 }
 
 .modal-backdrop {
