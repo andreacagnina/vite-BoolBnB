@@ -146,10 +146,12 @@ export default {
     }
 
     &:hover {
-        color: #a2a2a2;
+        color: #ce6a6c;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
 
         img {
-            filter: brightness(0) invert(0.6);
+            filter: brightness(0) saturate(100%) invert(48%) sepia(33%) saturate(545%) hue-rotate(300deg) brightness(96%) contrast(94%);
         }
     }
 }
@@ -161,10 +163,10 @@ export default {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background-color: #f7ede2;
-    color: black;
+    background: linear-gradient(45deg, #ce6a6c, #ebada2);
+    color: #f7ede2;
     font-size: 18px;
-    border: 1px solid gray;
+    border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 
@@ -174,13 +176,12 @@ export default {
     }
 }
 
-
 .filter-list li.active {
     position: relative;
-    color: #a2a2a2;
+    color: #ebada2;
 
     img {
-        filter: brightness(0) invert(0.6);
+        filter: brightness(0) saturate(100%) invert(46%) sepia(19%) saturate(476%) hue-rotate(289deg) brightness(95%) contrast(85%);
     }
 }
 
@@ -192,7 +193,7 @@ export default {
     transform: translateX(-50%);
     width: 50%;
     height: 1px;
-    background-color: #6f6f6f;;
+    background-color: #ebada2;
 }
 
 .offcanvas-header, .offcanvas-body {
@@ -217,10 +218,9 @@ export default {
 }
 
 .btn-filter {
-    color: #fff;
+    color: #f7ede2;
     border: none;
     border-radius: 5px;
-    border: 1px solid #f7ede2;
     padding: 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -234,7 +234,11 @@ export default {
     }
     
     &:hover {
-        transform: scale(1.05);
+        transform: scale(1.1);
+        color: #ce6a6c;
+        img {
+            filter: brightness(0) saturate(100%) invert(48%) sepia(33%) saturate(545%) hue-rotate(300deg) brightness(96%) contrast(94%);
+        }
     }
 }
 </style>
