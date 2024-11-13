@@ -11,6 +11,7 @@ export const store = reactive({
 
     properties: [],
     property: [],
+    services: [],
     last_page: null,
     current_page: 1,
     filterType: '',
