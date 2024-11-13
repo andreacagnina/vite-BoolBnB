@@ -174,24 +174,66 @@ export default {
     </div>
 
     <!-- DETAILS -->
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div v-if="!isLoading">
-                        <div class="col-12 my-4 text-center">
-                            <h2 class="fw-bold">Info & Details</h2>
-                            <div class="price">
-                                <h5 class="fw-bold">Weekly Price:</h5>
-                                <p class="ms-2">{{ store.formatPrice(store.property.price) }}</p>
-                            </div>
+    <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div v-if="!isLoading">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">Info & Details</h2>
+                </div>
+                <!-- Prezzo Settimanale -->
+                <div class="card p-3 mb-3 text-center">
+                    <h5 class="fw-bold">Weekly Price:</h5>
+                    <p>{{ store.formatPrice(store.property.price) }}</p>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card p-3 mb-3">
+                            <h5 class="fw-bold text-center">Services:</h5>
+                            <ul class="list-unstyled">
+                                <li v-for="service in store.property.services" :key="service.id">
+                                    <span class="pe-1 icon-line">
+                                        <i :class="service.icon" class="me-1 icon-custom"></i>
+                                        <p>{{ service.name }}</p>
+                                    </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="col-6">
+                            <!-- Dettagli Proprieta' -->
+
+                            <div class="card p-3 mb-3">
+                                <h5 class="fw-bold text-center">Property Details:</h5>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Rooms:</p>
+                                    <p>{{ store.property.num_rooms }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Beds:</p>
+                                    <p>{{ store.property.num_beds }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Bedrooms:</p>
+                                    <p>{{ store.property.num_bedrooms }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Bathrooms:</p>
+                                    <p>{{ store.property.num_bathrooms }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p class="fw-bold">Availability:</p>
+                                    <p>{{ store.property.availability }}</p>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
-
+        </div>
+            </div>
             <div class="col-12 mb-5">
                 <div class="row gx-5">
-                    <div class="col-12 mt-5">
+                    <div class="col-8 mt-5 text-center">
                         <h2 class="fw-bold">Here’s where you can find us!</h2>
                         <p>{{ store.property.address }}</p>
                     </div>
@@ -243,6 +285,30 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.card {
+    border: 1px solid #f7ede2;
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+}
+.icon-line{
+    p{
+        display: inline-block;
+        margin: 15px 10px;
+    }
+}
+.icon-custom{
+    font-size: 1.5rem;
+    color: #f7ede2;
+    &:hover{
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transform: scale(1.15);
+        transition: all 0.3s ease-in-out;
+    }
+}
 .main-image {
     height:550px;
     width: 100%;
@@ -347,15 +413,19 @@ export default {
 h1,
 h2,
 h3,
-h5,
+h5{
+    color: #f7ede2;
+    &:hover {
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;  
+    }
+}
 p,
 label {
     color: #f7ede2;
-    &:hover {
-        background: linear-gradient(45deg, #ce6a6c, #ebada2);
-        -webkit-background-clip: text;
-        color: transparent;
-    }
 }
 
 .modal-backdrop {

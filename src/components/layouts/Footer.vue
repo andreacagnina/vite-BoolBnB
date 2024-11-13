@@ -35,13 +35,13 @@ export default {
                 <div class="container">
                     <div class="row">
                     <div class="col-12 text-center my-3">  
-                        <router-link class="footer-link" >Link placeholder 1</router-link>
-                        <router-link class="footer-link" >Link placeholder 2</router-link>
-                        <router-link class="footer-link" >Link placeholder 3</router-link>
-                        <router-link class="footer-link" >Link placeholder 4</router-link>
+                        <router-link class="footer-link mx-2" >Link placeholder 1</router-link>
+                        <router-link class="footer-link mx-2" >Link placeholder 2</router-link>
+                        <router-link class="footer-link mx-2" >Link placeholder 3</router-link>
+                        <router-link class="footer-link mx-2" >Link placeholder 4</router-link>
                     </div>
                     <div class="col-12 text-center my-3 social-icon">
-                        <p><strong>Follow us on:</strong></p>
+                        <p class="follow-us"><strong>Follow us on:</strong></p>
                         <p><i class="fab fa-facebook-f"></i> <i class="fab fa-twitter"></i> <i class="fab fa-instagram"></i> <i class="fa-brands fa-linkedin"></i></p>
                         
                     </div>
@@ -104,8 +104,10 @@ export default {
         text-decoration: none;
         cursor: pointer;
         &:hover {
-            color: #f6bd60;
-            transform: scale(1.2);
+            background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+            background-clip: text;
+            color: transparent;
+            transform: scale(1.15);
             transition: all 0.3s ease-in-out;
         }
     }
@@ -137,7 +139,9 @@ export default {
             color: #f7ede2;
             cursor: pointer;
             &:hover{
-                color: #f6bd60;
+                background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+                background-clip: text;
+                color: transparent;
                 transform: scale(1.2);
                 transition: all 0.3s ease-in-out;
             }
@@ -204,16 +208,30 @@ export default {
         text-align: center;
         text-decoration: none;
         color: #f7ede2;
+        
         p {
             font-size: 1.2rem;
-            margin: 0;
         }
         &:hover {
-            color: #f6bd60;
+                   background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+                    background-clip: text;
+                    color: transparent;
         }
         &.active {
-            color: #f6bd60;
+                   background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+                    background-clip: text;
+                    color: transparent;
         }
+    }
+
+    .follow-us:hover{
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transform: scale(1.15);
+        transition: all 0.3s ease-in-out;
+
+
     }
 
     /* MEDIA QUERIES */
