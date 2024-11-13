@@ -21,6 +21,10 @@ export default {
             lat: null,
             long: null,
             currentImageIndex: 0,  // indice dell'immagine attualmente visualizzata
+
+            isFavorite: window.isFavorite, // Inizializza con il valore fornito dal backend
+            isLoading: false,
+
         };
     },
     created() {
@@ -133,8 +137,27 @@ export default {
             store.property.cover_image = imagesCopy[0].path;
             store.property.images = imagesCopy.slice(1).map(image => ({ path: image.path }));
         },
+        // addToFavorites() {
+        //     this.isLoading = true;
+
+        //     axios.post(`${store.baseUrl}/favorites`, {
+        //         property_id: store.property.id,
+        //     })
+        //         .then(response => {
+        //             if (response.data.success) {
+        //                 this.isFavorite = true; // Cambia lo stato locale
+        //             }
+        //         })
+        //         .catch(error => {
+        //             console.error("Errore nell'aggiunta ai preferiti:", error);
+        //             alert("C'è stato un errore. Riprova.");
+        //         })
+        //         .finally(() => {
+        //             this.isLoading = false;
+        //         });
+        // }
     }
-};
+}
 </script>
 
 
@@ -145,9 +168,16 @@ export default {
                 <h1 class="fw-bold">{{ store.property.title }}</h1>
                 <p>{{ store.property.description }}</p>
             </div>
+
+
+
             <!-- Immagine principale (immagine attiva selezionata) -->
-            <div class="col-lg-7 my-4">
+            <div class="col-lg-7 my-4 position-relative">
                 <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
+                <button class="rounded-2 text-center fs-3 p-3 btn position-absolute top-0 end-0 border-0 me-4"
+                    @click="addToFavorites" :disabled="isLoading"><i v-if="!isFavorite" class="fa-regular fa-heart"
+                        style="color: #ff0000;"></i><i v-else class="fa-solid fa-heart"
+                        style="color: #ff0000;"></i></button>
             </div>
 
             <!-- Immagini aggiuntive (layout 2x2) -->
@@ -222,7 +252,7 @@ export default {
                     <h2 class="fw-bold">Here’s where you can find us!</h2>
                     <p>{{ store.property.address }}</p>
                 </div>
-                <div class="col-sm-12 col-md-4 mt-5 text-center order-sm-last">
+                <div class="col-sm-12 col-md-4 mt-5 text-center order-sm-last order-md-0">
                     <div v-if="isMessageSent" :class="['success-message', showMessageClass]" class="mb-2">
                         <div class="d-flex align-items-center">
                             <!-- Icona di successo -->
