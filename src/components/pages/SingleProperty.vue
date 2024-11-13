@@ -28,14 +28,10 @@ export default {
     },
     computed: {
         currentImage() {
-            return this.images[this.currentImageIndex];
-        },
-        visibleSmallImages() {
-            // Ottieni un array con tutte le immagini tranne quella attualmente selezionata
-            return this.images.filter((_, index) => index !== this.currentImageIndex).slice(0, 4);
+            return this.images[this.currentImageIndex];//Imposta l'inidce l'immagine attualmente visualizzata al valore di currentImageIndex(0)
         },
         images() {
-            return [{ path: store.property.cover_image }, ...store.property.images];
+            return [{ path: store.property.cover_image }, ...store.property.images]; //Unisce la cover image con le altre immagini di property
         },
     },
     methods: {
@@ -47,7 +43,7 @@ export default {
             axios.get(`${store.baseUrl}/property/${slug}`)
                 .then(response => {
                     if (response.data && response.data.results) {
-                        store.property = response.data.results;// Salva nel store
+                        store.property = response.data.results; // Salva nel store
 
                         this.lat = store.property.lat;
                         this.long = store.property.long;
@@ -60,10 +56,8 @@ export default {
                 })
                 .finally(() => {
                     this.isLoading = false;
-            });
-                
+                });
         },
-        
 
         // Funzione per inviare il form
         submitForm() {
@@ -126,22 +120,23 @@ export default {
         toggleModal() {
             this.isModalVisible = !this.isModalVisible;
         },
-        setCurrentImage(index) {
-            this.currentImageIndex = index + 1;  // Compensa l'offset della cover_image
+
+        // Funzione per scambiare le immagini del carosello
+        swapImages(index) {
+            const imagesCopy = [...this.images]; //Creazione di una copia dell'array delle immagini
+            const temp = imagesCopy[0]; //Salvataggio temporaneo della cover image
+            imagesCopy[0] = imagesCopy[index + 1]; // Scambio dell'immaginee con indice 0 con l'immagine selezionata
+            
+            imagesCopy[index + 1] = temp; //L'image viene inserita nella posizione da cui è stata prelevata l'immagine selezionata, ossia nella posizione index + 1
+
+            // Aggiorna l'array delle immagini nel store
+            store.property.cover_image = imagesCopy[0].path;
+            store.property.images = imagesCopy.slice(1).map(image => ({ path: image.path }));
         },
-        prevImage() {
-            this.currentImageIndex = (this.currentImageIndex === 0)
-                ? this.images.length - 1
-                : this.currentImageIndex - 1;
-        },
-        nextImage() {
-            this.currentImageIndex = (this.currentImageIndex === this.images.length - 1)
-                ? 0
-                : this.currentImageIndex + 1;
-        }
     }
 };
 </script>
+
 
 <template>
     <div class="container">
@@ -151,21 +146,21 @@ export default {
                 <p>{{ store.property.description }}</p>
             </div>
             <!-- Immagine principale (immagine attiva selezionata) -->
-            <div class="col-md-7 my-4">
+            <div class="col-lg-7 my-4">
                 <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
             </div>
 
             <!-- Immagini aggiuntive (layout 2x2) -->
-            <div class="col-md-5 my-5">
+            <div class="col-lg-5 my-5">
                 <div class="small-images d-flex flex-column h-100">
                     <div class="d-flex flex-grow-1">
                         <img 
-                            v-for="(image, index) in visibleSmallImages" 
+                            v-for="(image, index) in store.property.images" 
                             :key="image.id" 
                             :src="image.path" 
                             alt="Additional Property Image" 
                             class="img-fluid w-50 small-image m-1 rounded-4"
-                            @click="setCurrentImage(index)"
+                            @click="swapImages(index)"
                         />
                     </div>
                 </div>
@@ -178,60 +173,54 @@ export default {
     <div class="row justify-content-center">
         <div class="col-12">
             <div v-if="!isLoading">
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold">Info & Details</h2>
-                </div>
-                <!-- Prezzo Settimanale -->
-                <div class="card p-3 mb-3 text-center">
-                    <h5 class="fw-bold">Weekly Price:</h5>
-                    <p>{{ store.formatPrice(store.property.price) }}</p>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card p-3 mb-3">
-                            <h5 class="fw-bold text-center">Services:</h5>
-                            <ul class="list-unstyled">
-                                <li v-for="service in store.property.services" :key="service.id">
-                                    <span class="pe-1 icon-line">
-                                        <i :class="service.icon" class="me-1 icon-custom"></i>
-                                        <p>{{ service.name }}</p>
-                                    </span>
+                <hr>
+                <div class="row justify-content-evenly">
+                    
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                        <div class="card p-3 mb-3 h-100">
+                            <h3 class="fw-bold text-center mb-4">Services:</h3>
+                            <ul class="list-unstyled text-center">
+                                <li v-for="service in store.property.services" :key="service.id" class="d-flex">
+                                    <div class="icon-line">
+                                        <i :class="service.icon" class="me-2 icon-custom"></i>
+                                        <span class="ms-2">
+                                            {{ service.name }}
+                                        </span>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-6">
-                            <!-- Dettagli Proprieta' -->
-
-                            <div class="card p-3 mb-3">
-                                <h5 class="fw-bold text-center">Property Details:</h5>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold">Rooms:</p>
-                                    <p>{{ store.property.num_rooms }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold">Beds:</p>
-                                    <p>{{ store.property.num_beds }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold">Bedrooms:</p>
-                                    <p>{{ store.property.num_bedrooms }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold">Bathrooms:</p>
-                                    <p>{{ store.property.num_bathrooms }}</p>
-                                </div>
-                                <div class="d-flex justify-content-between">
-                                    <p class="fw-bold">Availability:</p>
-                                    <p>{{ store.property.availability }}</p>
-                                </div>
+                    <div class="col-sm-12 col-md-6 col-lg-3">
+                        <!-- Dettagli Proprieta' -->
+                        <div class="card p-3 mb-3 h-100">
+                            <h3 class="fw-bold text-center mb-4">Property Details:</h3>
+                            <div class="align-details">
+                                <p><strong class="pe-2">Rooms:</strong>{{ store.property.num_rooms }}</p>
+                            </div>
+                            <div class="align-details">
+                                <p><strong class="pe-2">Beds:</strong>{{ store.property.num_beds }}</p>
+                            </div>
+                            <div class="align-details">
+                                <p><strong class="pe-2">Bathrooms:</strong>{{ store.property.num_baths }}</p>
+                            </div>
+                            <div class="align-details">
+                                <p><strong class="pe-2">M<sup>2</sup></strong>{{ store.property.mq }}</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-3">
+                        <div class="card p-3 mb-3 h-100">
+                            <h3 class="fw-bold mb-3 text-center">Weekly Price:</h3>
+                            <p class="fw-bold align-price">{{ store.formatPrice(store.property.price) }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
             </div>
             <div class="col-12 mb-5">
+                <hr>
                 <div class="row gx-5">
                     <div class="col-8 mt-5 text-center">
                         <h2 class="fw-bold">Here’s where you can find us!</h2>
@@ -241,6 +230,14 @@ export default {
                         <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
                     </div>
                     <div class="col-4 text-center">
+                        <!-- Messaggio di successo -->
+                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
+                            <div class="d-flex align-items-center">
+                                <!-- Icona di successo -->
+                                <i class="fa-solid fa-check"></i>
+                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
+                            </div>
+                        </div>
                         <h2 class="fw-bold">Contact Us!</h2>
                         <form @submit.prevent="submitForm">
                             <div class="mb-2">
@@ -267,14 +264,6 @@ export default {
                                 <span v-if="isLoading">Sending Message...</span>
                                 <span v-else>Send Message</span>
                             </button>
-                            <!-- Messaggio di successo -->
-                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                            <div class="d-flex align-items-center">
-                                <!-- Icona di successo -->
-                                <i class="fa-solid fa-check"></i>
-                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                            </div>
-                        </div>
                         </form>
                     </div>
                 </div>
@@ -286,21 +275,25 @@ export default {
 
 <style lang="scss" scoped>
 
+hr {
+    color: #f7ede2;
+    border: 1.5px solid #f7ede2;
+}
+
 .card {
-    border: 1px solid #f7ede2;
-    border-radius: 8px;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border: none;
     background-color: transparent;
 }
 .icon-line{
-    p{
-        display: inline-block;
-        margin: 15px 10px;
-    }
+    margin-left: 30%;
+    color: #f7ede2;
 }
 .icon-custom{
+    width: 30px;
+    height: 30px;
     font-size: 1.5rem;
     color: #f7ede2;
+    margin: 0px 0px 15px 0px;
     &:hover{
         background: linear-gradient(45deg, #f6bd60, #ce6a6c);
         background-clip: text;
@@ -309,6 +302,25 @@ export default {
         transition: all 0.3s ease-in-out;
     }
 }
+
+.align-details{
+    margin-left: 13%;
+}
+
+.align-price{
+    font-size: 1.2rem;
+    color: #f7ede2;
+    margin-left: 21%;
+    &:hover{
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;
+    }
+    
+}
+
 .main-image {
     height:550px;
     width: 100%;

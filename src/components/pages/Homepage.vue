@@ -15,7 +15,7 @@ export default {
     created() {
         this.getProperties();
         this.getPropertyTypes();
-        console.log(store.properties);
+        this.getServices();
     },
     watch: {
         'store.searchTerm': 'getProperties',
@@ -52,6 +52,13 @@ export default {
             axios.get(`${store.baseUrl}/properties`)
                 .then((response) => {
                     this.propertyTypes = response.data.types.map(type => type.type);
+                })
+        },
+
+        getServices() {
+            axios.get(`${store.baseUrl}/services`)
+                .then((response) => {
+                    store.services = response.data.results;
                 })
         },
         goToPage(page) {

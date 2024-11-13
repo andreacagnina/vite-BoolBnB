@@ -1,5 +1,6 @@
 <script>
 import { store } from '../../store';
+import axios from 'axios';
 
 export default {
     name: 'Filter',
@@ -47,19 +48,22 @@ export default {
             <ul class="filter-list">
                 <li @click="setFilter('')" :class="{ active: store.filterType === '' }">
                     <img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
-                    <span class="fw-bold">All</span>
+                    <span>All</span>
                 </li>
                 <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
                     <!-- Icona sopra il nome del tipo -->
                     <img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
-                    <span class="fw-bold">{{ type }}</span>
+                    <span>{{ type }}</span>
                 </li>
             </ul>
+            <button class="next-button mx-3 d-none d-sm-block">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
     
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
                 <img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter">
-                <span class="d-none d-sm-block fw-bold">Filter</span>
+                <span class="d-none d-sm-block">Filter</span>
             </button>
         </div>
     </div>
@@ -73,8 +77,8 @@ export default {
     <div class="offcanvas-body">
         <!-- Gruppo di label per stanze e letti -->
         <div class="d-flex justify-content-between mb-3">
-            <div class="w-50 me-2">
-                <label for="numRoomsInput" class="form-label fw-bold">Number of rooms</label>
+            <div class="w-50 me-2 mb-2">
+                <label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
                 <input
                     id="numRoomsInput"
                     type="number"
@@ -83,11 +87,11 @@ export default {
                     max="50"
                     v-model="store.num_rooms"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Input the room">
+                    placeholder="">
             </div>
 
-            <div class="w-50">
-                <label for="numBedsInput" class="form-label fw-bold">Number of beds</label>
+            <div class="w-50 mb-2">
+                <label for="numBedsInput" class="form-label fw-bold">Beds</label>
                 <input
                     id="numBedsInput"
                     type="number"
@@ -96,14 +100,14 @@ export default {
                     max="20"
                     v-model="store.num_beds"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Input the bed">
+                    placeholder="">
             </div>
         </div>
 
         <!-- Gruppo di label per bagni e mq -->
         <div class="d-flex justify-content-between mb-3">
-            <div class="w-50 me-2">
-                <label for="numBathsInput" class="form-label fw-bold">Number of baths</label>
+            <div class="w-50 me-2 mb-2">
+                <label for="numBathsInput" class="form-label fw-bold">Baths</label>
                 <input
                     id="numBathsInput"
                     type="number"
@@ -112,11 +116,11 @@ export default {
                     max="5"
                     v-model="store.num_baths"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Input the bath">
+                    placeholder="">
             </div>
 
-            <div class="w-50">
-                <label for="mqInput" class="form-label fw-bold">Number of mq</label>
+            <div class="w-50 mb-2">
+                <label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
                 <input
                     id="mqInput"
                     type="number"
@@ -125,12 +129,12 @@ export default {
                     max="5000"
                     v-model="store.mq"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="Input the mq">
+                    placeholder="">
             </div>
         </div>
 
             <!-- Filtro per prezzo -->
-            <div class="mb-3">
+            <div class="mb-4">
                 <label for="priceInput" class="form-label fw-bold">Price</label>
                 <input
                     id="priceInput"
@@ -140,19 +144,35 @@ export default {
                     max="1000000"
                     v-model="store.price"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)"
-                    placeholder="Input the price">
+                    placeholder="">
             </div>
-            <div class="mb-3">
-                <label for="servicesCheckbox" class="form-label fw-bold">Services</label>
-                <div v-for="service in services" :key="service.id" class="form-check">
-                    <input
-                        type="checkbox"
-                        class="form-check-input"
-                        :id="'service-' + service.id"
-                        :value="service.id"
-                        v-model="store.selectedServices"
-                        @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
-                    <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+            <div class="mb-4">
+                <label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
+                            <input
+                                type="checkbox"
+                                class="form-check-input me-1"
+                                :id="'service-' + service.id"
+                                :value="service.id"
+                                v-model="store.selectedServices"
+                                @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
+                            <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
+                            <input
+                                type="checkbox"
+                                class="form-check-input me-1"
+                                :id="'service-' + service.id"
+                                :value="service.id"
+                                v-model="store.selectedServices"
+                                @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
+                            <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -160,9 +180,9 @@ export default {
             <button
                 class="btn btn-custom w-100 mt-4"
                 @click="resetFilters">
-                <strong>Remove all filters</strong>
+                Remove all filters
             </button>
-            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas"><strong>See Results</strong></button>
+            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
         </div>
     </div>
 </template>
@@ -257,10 +277,10 @@ export default {
     background-color: #ebada2;
 }
 
-.offcanvas {
+.offcanvas-header, .offcanvas-body {
     text-align: center;
     color: #f7ede2;
-    background: linear-gradient(360deg, #192033, #49919d);
+    background-color: #49919d;
     padding: 20px;
     border: none;
     .btn-custom{
