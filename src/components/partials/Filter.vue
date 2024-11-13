@@ -1,5 +1,6 @@
 <script>
 import { store } from '../../store';
+import axios from 'axios';
 
 export default {
     name: 'Filter',
@@ -9,9 +10,10 @@ export default {
         const setFilter = (type) => {
             store.filterType = type;
             store.current_page = 1;
+            fetchProperties(); // Aggiorna i dati delle proprietà
         };
 
-        // Funzione per impostare il filtro numero stanze
+        // Funzione per impostare il filtro avanzato
         const setAdvancedFilter = (numRooms, numBeds, numBaths, mq, price, selectedServices) => {
             store.num_rooms = numRooms;
             store.num_beds = numBeds;
@@ -20,23 +22,50 @@ export default {
             store.price = price;
             store.selectedServices = selectedServices;
             store.current_page = 1;
+            fetchProperties(); // Aggiorna i dati delle proprietà
         };
 
         // Funzione per resettare tutti i filtri
         const resetFilters = () => {
             store.filterType = '';
-            store.num_rooms = '';
-            store.num_beds = '';
-            store.num_baths = '';
-            store.mq = '';
-            store.price = '';
+            store.num_rooms = null;
+            store.num_beds = null;
+            store.num_baths = null;
+            store.mq = null;
+            store.price = null;
             store.selectedServices = [];
             store.current_page = 1;
+            fetchProperties(); // Aggiorna i dati delle proprietà
+        };
+
+        // Funzione per recuperare le proprietà filtrate dal server
+        const fetchProperties = () => {
+            axios.get(`${store.baseUrl}/properties`, {
+                params: {
+                    type: store.filterType,
+                    num_rooms: store.num_rooms,
+                    num_beds: store.num_beds,
+                    num_baths: store.num_baths,
+                    mq: store.mq,
+                    price: store.price,
+                    selectedServices: store.selectedServices,
+                    page: store.current_page,
+                }
+            })
+            .then(response => {
+                if (response.data.success) {
+                    store.properties = response.data.results.data; // Aggiorna lo store con i risultati
+                    store.last_page = response.data.results.last_page;
+                    store.current_page = response.data.results.current_page;
+                }
+            })
+            .catch(error => {
+                console.error("Errore nel recupero delle proprietà:", error);
+            });
         };
 
         return { store, setFilter, setAdvancedFilter, resetFilters };
     },
-    
 };
 </script>
 
@@ -55,6 +84,9 @@ export default {
                     <span>{{ type }}</span>
                 </li>
             </ul>
+            <button class="next-button mx-3 d-none d-sm-block">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
     
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
@@ -144,7 +176,7 @@ export default {
             </div>
             <div class="mb-3">
                 <label for="servicesCheckbox" class="form-label fw-bold">Services</label>
-                <div v-for="service in services" :key="service.id" class="form-check">
+                <div v-for="service in store.services" :key="service.id" class="form-check">
                     <input
                         type="checkbox"
                         class="form-check-input"
@@ -160,9 +192,9 @@ export default {
             <button
                 class="btn btn-custom w-100 mt-4"
                 @click="resetFilters">
-                <strong>Remove all filters</strong>
+                Remove all filters
             </button>
-            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas"><strong>See Results</strong></button>
+            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
         </div>
     </div>
 </template>
@@ -257,10 +289,10 @@ export default {
     background-color: #ebada2;
 }
 
-.offcanvas {
+.offcanvas-header, .offcanvas-body {
     text-align: center;
     color: #f7ede2;
-    background: linear-gradient(360deg, #192033, #49919d);
+    background-color: #49919d;
     padding: 20px;
     border: none;
     .btn-custom{

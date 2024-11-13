@@ -184,6 +184,13 @@ export default {
                                 <h5 class="fw-bold">Weekly Price:</h5>
                                 <p class="ms-2">{{ store.formatPrice(store.property.price) }}</p>
                             </div>
+                            <ul class="list-unstyled d-flex text-light">
+                                <li v-for="service in store.property.services" :key="service.id">
+                                    <span class="pe-1">
+                                        <strong><i :class="service.icon" class="me-1"></i></strong>
+                                    </span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

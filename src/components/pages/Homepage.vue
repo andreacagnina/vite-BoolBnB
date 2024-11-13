@@ -15,19 +15,17 @@ export default {
     created() {
         this.getProperties();
         this.getPropertyTypes();
-        console.log(store.properties);
     },
     watch: {
         'store.searchTerm': 'getProperties',
         'store.filterType': 'getProperties',
         'store.current_page': 'getProperties',
-        'store.num_rooms': 'getProperties', // watch per le stanze
-        'store.num_beds': 'getProperties', // watch per le beds
-        'store.num_baths': 'getProperties', // watch per le baths
+        'store.num_rooms': 'getProperties',
+        'store.num_beds': 'getProperties',
+        'store.num_baths': 'getProperties',
         'store.mq': 'getProperties',
         'store.price': 'getProperties',
         'store.selectedServices': 'getProperties'
-
     },
     methods: {
         getProperties() {
@@ -35,17 +33,20 @@ export default {
                 page: store.current_page,
                 type: store.filterType || null,
                 search: store.searchTerm || null,
-                num_rooms: store.num_rooms || null, // filtro num_rooms
-                num_beds: store.num_beds || null, // filtro num_beds
-                num_baths: store.num_baths || null, // filtro num_baths   
+                num_rooms: store.num_rooms || null,
+                num_beds: store.num_beds || null,
+                num_baths: store.num_baths || null,
                 mq: store.mq || null,
                 price: store.price || null,
-                selectedServices: store.selectedServices           
+                selectedServices: store.selectedServices.length > 0 ? store.selectedServices.join(',') : null
             };
             axios.get(`${store.baseUrl}/properties`, { params })
                 .then(response => {
                     store.properties = response.data.results.data;
                     store.last_page = response.data.results.last_page;
+                })
+                .catch(error => {
+                    console.error("Errore nel recupero delle proprietà:", error);
                 });
         },
         getPropertyTypes() {
@@ -53,6 +54,9 @@ export default {
                 .then((response) => {
                     this.propertyTypes = response.data.types.map(type => type.type);
                 })
+                .catch(error => {
+                    console.error("Errore nel recupero dei tipi di proprietà:", error);
+                });
         },
         goToPage(page) {
             if (page > 0 && page <= store.last_page) {
@@ -62,6 +66,7 @@ export default {
     },
 };
 </script>
+
 
 <template>
     <section class="homepage">
