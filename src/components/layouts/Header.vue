@@ -123,6 +123,11 @@ export default {
         .logo {
             width: 100px;
             height: 67px;
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.2);
+                transition: all 0.3s ease-in-out;
+            }
         }
     }
 
@@ -138,8 +143,10 @@ export default {
             margin: 0px 20px;
 
             &:hover {
-                color: #f6bd60;
-                transform: scale(1.2);
+                background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+                background-clip: text;
+                color: transparent;
+                transform: scale(1.15);
                 transition: all 0.3s ease-in-out;
             }
         }

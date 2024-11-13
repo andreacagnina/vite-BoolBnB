@@ -47,19 +47,19 @@ export default {
             <ul class="filter-list">
                 <li @click="setFilter('')" :class="{ active: store.filterType === '' }">
                     <img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
-                    <span>All</span>
+                    <span class="fw-bold">All</span>
                 </li>
                 <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
                     <!-- Icona sopra il nome del tipo -->
                     <img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
-                    <span>{{ type }}</span>
+                    <span class="fw-bold">{{ type }}</span>
                 </li>
             </ul>
     
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
                 <img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter">
-                <span class="d-none d-sm-block">Filter</span>
+                <span class="d-none d-sm-block fw-bold">Filter</span>
             </button>
         </div>
     </div>

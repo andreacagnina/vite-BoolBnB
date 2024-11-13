@@ -188,10 +188,9 @@ export default {
                     </div>
                 </div>
             </div>
-
             <div class="col-12 mb-5">
                 <div class="row gx-5">
-                    <div class="col-12 mt-5">
+                    <div class="col-8 mt-5 text-center">
                         <h2 class="fw-bold">Here’s where you can find us!</h2>
                         <p>{{ store.property.address }}</p>
                     </div>
@@ -347,15 +346,19 @@ export default {
 h1,
 h2,
 h3,
-h5,
+h5{
+    color: #f7ede2;
+    &:hover {
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transform: scale(1.05);
+        transition: all 0.3s ease-in-out;  
+    }
+}
 p,
 label {
     color: #f7ede2;
-    &:hover {
-        background: linear-gradient(45deg, #ce6a6c, #ebada2);
-        -webkit-background-clip: text;
-        color: transparent;
-    }
 }
 
 .modal-backdrop {
