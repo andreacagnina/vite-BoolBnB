@@ -40,7 +40,7 @@ export default {
                 num_baths: store.num_baths || null, // filtro num_baths   
                 mq: store.mq || null,
                 price: store.price || null,
-                selectedServices: store.selectedServices           
+                selectedServices: store.selectedServices
             };
             axios.get(`${store.baseUrl}/properties`, { params })
                 .then(response => {
@@ -72,7 +72,7 @@ export default {
 
 <template>
     <section class="homepage">
-        <div class="container-fluid px-4">
+        <div class="container">
             <!-- Filtro sopra le schede -->
             <div class="row">
                 <div class="col-12 mb-4">
@@ -91,13 +91,15 @@ export default {
                     <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3 mt-4">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" :class="{ disabled: store.current_page === 1 }" href="#" @click.prevent="goToPage(store.current_page - 1)">Previous</a>
+                                <a class="page-link" :class="{ disabled: store.current_page === 1 }" href="#"
+                                    @click.prevent="goToPage(store.current_page - 1)">Previous</a>
                             </li>
                             <li class="page-item" v-for="index in store.last_page" :key="index">
                                 <a class="page-link" href="#" @click.prevent="goToPage(index)">{{ index }}</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" :class="{ disabled: store.current_page === store.last_page }" href="#" @click.prevent="goToPage(store.current_page + 1)">Next</a>
+                                <a class="page-link" :class="{ disabled: store.current_page === store.last_page }"
+                                    href="#" @click.prevent="goToPage(store.current_page + 1)">Next</a>
                             </li>
                         </ul>
                     </nav>
@@ -107,60 +109,59 @@ export default {
     </section>
 </template>
 <style lang="scss" scoped>
+.homepage {
+    padding: 30px 0;
+}
 
-    .homepage {
-        padding: 30px 0;    
-    }
+.filter-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
 
-    .filter-list {
-        display: flex;
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+.filter-list li {
+    margin-right: 15px;
+    padding: 5px 10px;
+    background: linear-gradient(360deg, #ce6a6c, #ebada2);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 
-    .filter-list li {
-        margin-right: 15px;
-        padding: 5px 10px;
-        background: linear-gradient(360deg, #ce6a6c, #ebada2);
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-
-        &:hover {
-            transform: scale(1.15);
-            transition: all 0.3s ease-in-out;
-            color: #f7ede2;
-        }
-    }
-
-    .filter-list li.active {
-        color: #f7ede2;
+    &:hover {
         transform: scale(1.15);
+        transition: all 0.3s ease-in-out;
+        color: #f7ede2;
     }
+}
 
-    ul.pagination {
-        background-color: transparent !important;
-        background: linear-gradient(45deg, #ce6a6c, #ebada2);
-        border-radius: 10px;
-    }
+.filter-list li.active {
+    color: #f7ede2;
+    transform: scale(1.15);
+}
 
-    ul.pagination .page-item {
-        background-color: transparent !important;
-    }
+ul.pagination {
+    background-color: transparent !important;
+    background: linear-gradient(45deg, #ce6a6c, #ebada2);
+    border-radius: 10px;
+}
 
-    ul.pagination .page-item .page-link {
-        background-color: transparent !important;
-        color: #f6bd60 !important;
-        border: none !important;
-        margin: 0 5px !important;
-    }
+ul.pagination .page-item {
+    background-color: transparent !important;
+}
 
-    ul.pagination .page-item .page-link {
-        color: #f7ede2 !important;
-    }
+ul.pagination .page-item .page-link {
+    background-color: transparent !important;
+    color: #f6bd60 !important;
+    border: none !important;
+    margin: 0 5px !important;
+}
 
-    ul.pagination .page-item .page-link:hover {
-        color: #192033 !important;
-    }
+ul.pagination .page-item .page-link {
+    color: #f7ede2 !important;
+}
+
+ul.pagination .page-item .page-link:hover {
+    color: #192033 !important;
+}
 </style>

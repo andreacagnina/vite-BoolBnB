@@ -126,7 +126,7 @@ export default {
             const imagesCopy = [...this.images]; //Creazione di una copia dell'array delle immagini
             const temp = imagesCopy[0]; //Salvataggio temporaneo della cover image
             imagesCopy[0] = imagesCopy[index + 1]; // Scambio dell'immaginee con indice 0 con l'immagine selezionata
-            
+
             imagesCopy[index + 1] = temp; //L'image viene inserita nella posizione da cui è stata prelevata l'immagine selezionata, ossia nella posizione index + 1
 
             // Aggiorna l'array delle immagini nel store
@@ -154,14 +154,9 @@ export default {
             <div class="col-lg-5 my-5">
                 <div class="small-images d-flex flex-column h-100">
                     <div class="d-flex flex-grow-1">
-                        <img 
-                            v-for="(image, index) in store.property.images" 
-                            :key="image.id" 
-                            :src="image.path" 
-                            alt="Additional Property Image" 
-                            class="img-fluid w-50 small-image m-1 rounded-4"
-                            @click="swapImages(index)"
-                        />
+                        <img v-for="(image, index) in store.property.images" :key="image.id" :src="image.path"
+                            alt="Additional Property Image" class="img-fluid w-50 small-image m-1 rounded-4"
+                            @click="swapImages(index)" />
                     </div>
                 </div>
             </div>
@@ -170,111 +165,115 @@ export default {
 
     <!-- DETAILS -->
     <div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div v-if="!isLoading">
-                <hr>
-                <div class="row justify-content-evenly">
-                    
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <div class="card p-3 mb-3 h-100">
-                            <h3 class="fw-bold text-center mb-4">Services:</h3>
-                            <ul class="list-unstyled text-center">
-                                <li v-for="service in store.property.services" :key="service.id" class="d-flex">
-                                    <div class="icon-line">
-                                        <i :class="service.icon" class="me-2 icon-custom"></i>
-                                        <span class="ms-2">
-                                            {{ service.name }}
-                                        </span>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-md-6 col-lg-3">
-                        <!-- Dettagli Proprieta' -->
-                        <div class="card p-3 mb-3 h-100">
-                            <h3 class="fw-bold text-center mb-4">Property Details:</h3>
-                            <div class="align-details">
-                                <p><strong class="pe-2">Rooms:</strong>{{ store.property.num_rooms }}</p>
-                            </div>
-                            <div class="align-details">
-                                <p><strong class="pe-2">Beds:</strong>{{ store.property.num_beds }}</p>
-                            </div>
-                            <div class="align-details">
-                                <p><strong class="pe-2">Bathrooms:</strong>{{ store.property.num_baths }}</p>
-                            </div>
-                            <div class="align-details">
-                                <p><strong class="pe-2">M<sup>2</sup></strong>{{ store.property.mq }}</p>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div v-if="!isLoading">
+                    <hr>
+                    <div class="row justify-content-evenly">
+
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <div class="card p-3 mb-3 h-100">
+                                <h3 class="fw-bold text-center mb-4">Services:</h3>
+                                <ul class="list-unstyled text-center">
+                                    <li v-for="service in store.property.services" :key="service.id"
+                                        class="d-flex text-start text-nowrap">
+                                        <div class="icon-line">
+                                            <i :class="service.icon" class="me-2 icon-custom"></i>
+                                            <span class="ms-2">
+                                                {{ service.name }}
+                                            </span>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-3">
-                        <div class="card p-3 mb-3 h-100">
-                            <h3 class="fw-bold mb-3 text-center">Weekly Price:</h3>
-                            <p class="fw-bold align-price">{{ store.formatPrice(store.property.price) }}</p>
+                        <div class="col-sm-12 col-md-6 col-lg-3">
+                            <!-- Dettagli Proprieta' -->
+                            <div class="card p-3 mb-3 h-100 text-center">
+                                <h3 class="fw-bold mb-4">Property Details:</h3>
+                                <div class="align-details">
+                                    <p><strong class="pe-2">Rooms:</strong>{{ store.property.num_rooms }}</p>
+                                </div>
+                                <div class="align-details">
+                                    <p><strong class="pe-2">Beds:</strong>{{ store.property.num_beds }}</p>
+                                </div>
+                                <div class="align-details">
+                                    <p><strong class="pe-2">Bathrooms:</strong>{{ store.property.num_baths }}</p>
+                                </div>
+                                <div class="align-details">
+                                    <p><strong class="pe-2">M<sup>2</sup></strong>{{ store.property.mq }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-3">
+                            <div class="card p-3 mb-3 h-100 text-center">
+                                <h3 class="fw-bold mb-3">Weekly Price:</h3>
+                                <p class="fw-bold align-price">{{ store.formatPrice(store.property.price) }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-            </div>
-            <div class="col-12 mb-5">
-                <hr>
-                <div class="row gx-5">
-                    <div class="col-8 mt-5 text-center">
-                        <h2 class="fw-bold">Here’s where you can find us!</h2>
-                        <p>{{ store.property.address }}</p>
-                    </div>
-                    <div class="col-8 d-flex justify-content-center mb-4">
-                        <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
-                    </div>
-                    <div class="col-4 text-center">
-                        <!-- Messaggio di successo -->
-                        <div v-if="isMessageSent" :class="['success-message', showMessageClass]">
-                            <div class="d-flex align-items-center">
-                                <!-- Icona di successo -->
-                                <i class="fa-solid fa-check"></i>
-                                <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
-                            </div>
+        <div class="col-12 mb-5">
+            <hr>
+            <div class="row gx-5">
+                <div class="col-sm-12 col-md-8 mt-5 text-center">
+                    <h2 class="fw-bold">Here’s where you can find us!</h2>
+                    <p>{{ store.property.address }}</p>
+                </div>
+                <div class="col-sm-12 col-md-4 mt-5 text-center order-sm-last">
+                    <div v-if="isMessageSent" :class="['success-message', showMessageClass]" class="mb-2">
+                        <div class="d-flex align-items-center">
+                            <!-- Icona di successo -->
+                            <i class="fa-solid fa-check"></i>
+                            <p class="ms-3 mb-0">Messaggio inviato con successo!</p>
                         </div>
-                        <h2 class="fw-bold">Contact Us!</h2>
-                        <form @submit.prevent="submitForm">
-                            <div class="mb-2">
-                                <label for="firstName" class="form-label">First Name</label>
-                                <input type="text" class="form-control" v-model="form.firstName" id="firstName"
-                                    placeholder="Enter your first name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-2">
-                                <label for="lastName" class="form-label">Last Name</label>
-                                <input type="text" class="form-control" v-model="form.lastName" id="lastName"
-                                    placeholder="Enter your last name" :disabled="isLoading" />
-                            </div>
-                            <div class="mb-2">
-                                <label for="email" class="form-label">Email address</label>
-                                <input type="email" class="form-control" v-model="form.email" id="email"
-                                    placeholder="Enter your email" :disabled="isLoading" required />
-                            </div>
-                            <div class="mb-2">
-                                <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" v-model="form.message" id="message" rows="3"
-                                    placeholder="Enter your message" :disabled="isLoading" required></textarea>
-                            </div>
-                            <button type="submit" class="btn-custom w-100 mt-2" :disabled="isLoading">
-                                <span v-if="isLoading">Sending Message...</span>
-                                <span v-else>Send Message</span>
-                            </button>
-                        </form>
                     </div>
                 </div>
+                <div class="col-sm-12 col-md-8 d-flex justify-content-center mb-4">
+                    <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
+                </div>
+                <div class="col-sm-12 col-md-4 text-center">
+                    <!-- Messaggio di successo -->
+                    <h2 class="fw-bold">Contact Us!</h2>
+                    <form @submit.prevent="submitForm">
+                        <div class="mb-2">
+                            <label for="firstName" class="form-label">First Name *</label>
+                            <input type="text" class="form-control" v-model="form.firstName" id="firstName"
+                                placeholder="Enter your first name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="lastName" class="form-label">Last Name *</label>
+                            <input type="text" class="form-control" v-model="form.lastName" id="lastName"
+                                placeholder="Enter your last name" :disabled="isLoading" />
+                        </div>
+                        <div class="mb-2">
+                            <label for="email" class="form-label">Email address *</label>
+                            <input type="email" class="form-control" v-model="form.email" id="email"
+                                placeholder="Enter your email" :disabled="isLoading" required />
+                        </div>
+                        <div class="mb-2">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea class="form-control" v-model="form.message" id="message" rows="3"
+                                placeholder="Enter your message" :disabled="isLoading" required></textarea>
+                        </div>
+                        <p class="text-start">Required fields (*)</p>
+                        <button type="submit" class="btn-custom w-100 mt-2" :disabled="isLoading">
+                            <span v-if="isLoading">Sending Message...</span>
+                            <span v-else>Send Message</span>
+                        </button>
+
+                    </form>
+                </div>
             </div>
-            
         </div>
+
+    </div>
 </template>
 
 
 <style lang="scss" scoped>
-
 hr {
     color: #f7ede2;
     border: 1.5px solid #f7ede2;
@@ -284,17 +283,20 @@ hr {
     border: none;
     background-color: transparent;
 }
-.icon-line{
+
+.icon-line {
     margin-left: 30%;
     color: #f7ede2;
 }
-.icon-custom{
+
+.icon-custom {
     width: 30px;
     height: 30px;
     font-size: 1.5rem;
     color: #f7ede2;
     margin: 0px 0px 15px 0px;
-    &:hover{
+
+    &:hover {
         background: linear-gradient(45deg, #f6bd60, #ce6a6c);
         background-clip: text;
         color: transparent;
@@ -303,26 +305,25 @@ hr {
     }
 }
 
-.align-details{
-    margin-left: 13%;
-}
 
-.align-price{
+
+.align-price {
     font-size: 1.2rem;
     color: #f7ede2;
-    margin-left: 21%;
-    &:hover{
+
+
+    &:hover {
         background: linear-gradient(45deg, #f6bd60, #ce6a6c);
         background-clip: text;
         color: transparent;
         transform: scale(1.05);
         transition: all 0.3s ease-in-out;
     }
-    
+
 }
 
 .main-image {
-    height:550px;
+    height: 550px;
     width: 100%;
     object-fit: cover;
 }
@@ -348,12 +349,14 @@ hr {
 }
 
 .price {
-    h5, p {
+
+    h5,
+    p {
         display: inline-block;
     }
 }
 
-.btn-custom{
+.btn-custom {
     color: #f7ede2;
     background: linear-gradient(45deg, #ce6a6c, #ebada2);
     border-radius: 10px;
@@ -361,10 +364,12 @@ hr {
     padding: 10px 20px;
     cursor: pointer;
     transition: all 0.3s ease;
-    &:hover{
+
+    &:hover {
         transform: scale(1.05);
     }
 }
+
 /* Messaggio di successo */
 .success-message {
     background-color: #49919d;
@@ -425,16 +430,18 @@ hr {
 h1,
 h2,
 h3,
-h5{
+h5 {
     color: #f7ede2;
+
     &:hover {
         background: linear-gradient(45deg, #f6bd60, #ce6a6c);
         background-clip: text;
         color: transparent;
         transform: scale(1.05);
-        transition: all 0.3s ease-in-out;  
+        transition: all 0.3s ease-in-out;
     }
 }
+
 p,
 label {
     color: #f7ede2;

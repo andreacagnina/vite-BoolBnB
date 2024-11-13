@@ -37,7 +37,7 @@ export default {
 
         return { store, setFilter, setAdvancedFilter, resetFilters };
     },
-    
+
 };
 </script>
 
@@ -50,18 +50,20 @@ export default {
                     <img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
                     <span>All</span>
                 </li>
-                <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
+                <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)"
+                    :class="{ active: store.filterType === type }">
                     <!-- Icona sopra il nome del tipo -->
                     <img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
                     <span>{{ type }}</span>
                 </li>
             </ul>
-            <button class="next-button mx-3 d-none d-sm-block">
+            <!-- <button class="next-button mx-3 d-none d-sm-block">
                 <i class="fa-solid fa-angle-right"></i>
-            </button>
-    
+            </button> -->
+
             <!-- Bottone Offcanvas -->
-            <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
+            <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas"
+                aria-controls="roomsOffcanvas">
                 <img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter">
                 <span class="d-none d-sm-block">Filter</span>
             </button>
@@ -69,80 +71,55 @@ export default {
     </div>
 
     <!-- Offcanvas per il filtro avanzato -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
-    <div class="offcanvas-header">
-        <h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
-    </div>
-    <div class="offcanvas-body">
-        <!-- Gruppo di label per stanze e letti -->
-        <div class="d-flex justify-content-between mb-3">
-            <div class="w-50 me-2 mb-2">
-                <label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
-                <input
-                    id="numRoomsInput"
-                    type="number"
-                    class="form-control"
-                    min="1"
-                    max="50"
-                    v-model="store.num_rooms"
-                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="">
-            </div>
-
-            <div class="w-50 mb-2">
-                <label for="numBedsInput" class="form-label fw-bold">Beds</label>
-                <input
-                    id="numBedsInput"
-                    type="number"
-                    class="form-control"
-                    min="1"
-                    max="20"
-                    v-model="store.num_beds"
-                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="">
-            </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel"
+        data-bs-scroll="true">
+        <div class="offcanvas-header">
+            <h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"
+                @click="resetFilters"></button>
         </div>
+        <div class="offcanvas-body">
+            <!-- Gruppo di label per stanze e letti -->
+            <div class="d-flex justify-content-between mb-3">
+                <div class="w-50 me-2 mb-2">
+                    <label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
+                    <input id="numRoomsInput" type="number" class="form-control" min="1" max="50"
+                        v-model="store.num_rooms"
+                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                        placeholder="">
+                </div>
 
-        <!-- Gruppo di label per bagni e mq -->
-        <div class="d-flex justify-content-between mb-3">
-            <div class="w-50 me-2 mb-2">
-                <label for="numBathsInput" class="form-label fw-bold">Baths</label>
-                <input
-                    id="numBathsInput"
-                    type="number"
-                    class="form-control"
-                    min="0"
-                    max="5"
-                    v-model="store.num_baths"
-                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="">
+                <div class="w-50 mb-2">
+                    <label for="numBedsInput" class="form-label fw-bold">Beds</label>
+                    <input id="numBedsInput" type="number" class="form-control" min="1" max="20"
+                        v-model="store.num_beds"
+                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                        placeholder="">
+                </div>
             </div>
 
-            <div class="w-50 mb-2">
-                <label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
-                <input
-                    id="mqInput"
-                    type="number"
-                    class="form-control"
-                    min="0"
-                    max="5000"
-                    v-model="store.mq"
-                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
-                    placeholder="">
+            <!-- Gruppo di label per bagni e mq -->
+            <div class="d-flex justify-content-between mb-3">
+                <div class="w-50 me-2 mb-2">
+                    <label for="numBathsInput" class="form-label fw-bold">Baths</label>
+                    <input id="numBathsInput" type="number" class="form-control" min="0" max="5"
+                        v-model="store.num_baths"
+                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                        placeholder="">
+                </div>
+
+                <div class="w-50 mb-2">
+                    <label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
+                    <input id="mqInput" type="number" class="form-control" min="0" max="5000" v-model="store.mq"
+                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                        placeholder="">
+                </div>
             </div>
-        </div>
 
             <!-- Filtro per prezzo -->
             <div class="mb-4">
                 <label for="priceInput" class="form-label fw-bold">Price</label>
-                <input
-                    id="priceInput"
-                    type="number"
-                    class="form-control"
-                    min="0"
-                    max="1000000"
-                    v-model="store.price"
+                <input id="priceInput" type="number" class="form-control" min="0" max="1000000" v-model="store.price"
                     @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)"
                     placeholder="">
             </div>
@@ -150,25 +127,19 @@ export default {
                 <label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
                 <div class="row">
                     <div class="col-md-6">
-                        <div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
-                            <input
-                                type="checkbox"
-                                class="form-check-input me-1"
-                                :id="'service-' + service.id"
-                                :value="service.id"
-                                v-model="store.selectedServices"
+                        <div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 2))"
+                            :key="service.id" class="form-check d-flex">
+                            <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
+                                :value="service.id" v-model="store.selectedServices"
                                 @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
                             <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
-                            <input
-                                type="checkbox"
-                                class="form-check-input me-1"
-                                :id="'service-' + service.id"
-                                :value="service.id"
-                                v-model="store.selectedServices"
+                        <div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 2))"
+                            :key="service.id" class="form-check d-flex">
+                            <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
+                                :value="service.id" v-model="store.selectedServices"
                                 @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
                             <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
                         </div>
@@ -177,9 +148,7 @@ export default {
             </div>
 
             <!-- Pulsante per rimuovere i filtri -->
-            <button
-                class="btn btn-custom w-100 mt-4"
-                @click="resetFilters">
+            <button class="btn btn-custom w-100 mt-4" @click="resetFilters">
                 Remove all filters
             </button>
             <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
@@ -196,12 +165,14 @@ export default {
     overflow-x: auto;
     padding: 0;
     margin: 0;
-    scrollbar-width: none;  /* Nasconde la scrollbar in Firefox */
+    scrollbar-width: none;
+    /* Nasconde la scrollbar in Firefox */
     -webkit-overflow-scrolling: touch; // Aggiungi per supporto su iOS
 }
 
 .filter-list::-webkit-scrollbar {
-    display: none; /* Nasconde la scrollbar in Chrome, Safari e Edge */
+    display: none;
+    /* Nasconde la scrollbar in Chrome, Safari e Edge */
 }
 
 .filter-list li {
@@ -277,13 +248,15 @@ export default {
     background-color: #ebada2;
 }
 
-.offcanvas-header, .offcanvas-body {
+.offcanvas-header,
+.offcanvas-body {
     text-align: center;
     color: #f7ede2;
     background-color: #49919d;
     padding: 20px;
     border: none;
-    .btn-custom{
+
+    .btn-custom {
         color: #f7ede2;
         background: linear-gradient(45deg, #ce6a6c, #ebada2);
         border-radius: 10px;
@@ -291,11 +264,13 @@ export default {
         padding: 10px 20px;
         cursor: pointer;
         transition: all 0.3s ease;
-        &:hover{
+
+        &:hover {
             transform: scale(1.05);
         }
     }
-    .btn-custom-two{
+
+    .btn-custom-two {
         color: #f7ede2;
         background: linear-gradient(250deg, #ce6a6c, #ebada2);
         border-radius: 10px;
@@ -303,7 +278,8 @@ export default {
         padding: 10px 20px;
         cursor: pointer;
         transition: all 0.3s ease;
-        &:hover{
+
+        &:hover {
             transform: scale(1.05);
         }
     }
@@ -341,16 +317,18 @@ export default {
         text-align: center;
         filter: brightness(0) invert(1);
     }
-    
+
     &:hover {
         transform: scale(1.1);
         color: #ce6a6c;
+
         img {
             filter: brightness(0) saturate(100%) invert(48%) sepia(33%) saturate(545%) hue-rotate(300deg) brightness(96%) contrast(94%);
         }
     }
 }
-.form-control{
+
+.form-control {
     background-color: #f7ede2;
 }
 </style>
