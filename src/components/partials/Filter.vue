@@ -132,7 +132,9 @@ export default {
                             <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
                                 :value="service.id" v-model="store.selectedServices"
                                 @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
-                            <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+                            <label class="form-check-label" :for="'service-' + service.id">
+                                <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -141,7 +143,9 @@ export default {
                             <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
                                 :value="service.id" v-model="store.selectedServices"
                                 @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
-                            <label class="form-check-label" :for="'service-' + service.id">{{ service.name }}</label>
+                                <label class="form-check-label" :for="'service-' + service.id">
+                                <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -157,6 +161,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.form-check-input{
+    cursor: pointer;
+    &:checked{
+        background:linear-gradient(45deg, #ce6a6c, #ebada2);
+        border: none;
+    }
+    .filter-icon{
+        color: #f7ede2;
+    }
+}
+
 .filter-list {
     display: flex;
     align-items: center;

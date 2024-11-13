@@ -269,12 +269,12 @@ export default {
                     <h2 class="fw-bold">Contact Us!</h2>
                     <form @submit.prevent="submitForm">
                         <div class="mb-2">
-                            <label for="firstName" class="form-label">First Name *</label>
+                            <label for="firstName" class="form-label">First Name</label>
                             <input type="text" class="form-control" v-model="form.firstName" id="firstName"
                                 placeholder="Enter your first name" :disabled="isLoading" />
                         </div>
                         <div class="mb-2">
-                            <label for="lastName" class="form-label">Last Name *</label>
+                            <label for="lastName" class="form-label">Last Name</label>
                             <input type="text" class="form-control" v-model="form.lastName" id="lastName"
                                 placeholder="Enter your last name" :disabled="isLoading" />
                         </div>
