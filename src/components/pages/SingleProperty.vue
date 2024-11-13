@@ -23,7 +23,7 @@ export default {
             currentImageIndex: 0,  // indice dell'immagine attualmente visualizzata
 
             isFavorite: window.isFavorite, // Inizializza con il valore fornito dal backend
-            isLoading: false,
+            isLoadingFavorite: false,
 
         };
     },
@@ -51,6 +51,9 @@ export default {
 
                         this.lat = store.property.lat;
                         this.long = store.property.long;
+
+                        // Imposta lo stato iniziale di isFavorite
+                        this.isFavorite = response.data.results.is_favorite || false;
                     } else {
                         console.error("Dati non validi ricevuti:", response);
                     }
@@ -137,25 +140,26 @@ export default {
             store.property.cover_image = imagesCopy[0].path;
             store.property.images = imagesCopy.slice(1).map(image => ({ path: image.path }));
         },
-        // addToFavorites() {
-        //     this.isLoading = true;
+        toggleFavorite() {
+            this.isLoadingFavorite = true;
 
-        //     axios.post(`${store.baseUrl}/favorites`, {
-        //         property_id: store.property.id,
-        //     })
-        //         .then(response => {
-        //             if (response.data.success) {
-        //                 this.isFavorite = true; // Cambia lo stato locale
-        //             }
-        //         })
-        //         .catch(error => {
-        //             console.error("Errore nell'aggiunta ai preferiti:", error);
-        //             alert("C'è stato un errore. Riprova.");
-        //         })
-        //         .finally(() => {
-        //             this.isLoading = false;
-        //         });
-        // }
+            // Invio della richiesta al backend
+            axios.post(`${store.baseUrl}/properties/${store.property.id}/favorite`)
+                .then(response => {
+                    if (response.data.success) {
+                        this.isFavorite = !this.isFavorite; // Aggiorna lo stato
+                    }
+
+                })
+                .catch(error => {
+                    console.error("Errore durante l'aggiornamento del preferito:", error);
+                    alert("Errore durante l'aggiornamento del preferito. Riprova più tardi.");
+                })
+                .finally(() => {
+                    this.isLoadingFavorite = false;
+                });
+        },
+
     }
 }
 </script>
@@ -174,10 +178,11 @@ export default {
             <!-- Immagine principale (immagine attiva selezionata) -->
             <div class="col-lg-7 my-4 position-relative">
                 <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
-                <button class="rounded-2 text-center fs-3 p-3 btn position-absolute top-0 end-0 border-0 me-4"
-                    @click="addToFavorites" :disabled="isLoading"><i v-if="!isFavorite" class="fa-regular fa-heart"
-                        style="color: #ff0000;"></i><i v-else class="fa-solid fa-heart"
-                        style="color: #ff0000;"></i></button>
+                <button @click="toggleFavorite" class="btn position-absolute top-0 end-0 me-4 fs-1 border-0"
+                    :disabled="isLoadingFavorite">
+                    <i v-if="this.isFavorite" class="fa-solid fa-heart" style=" color: #ff0000;"></i><i v-else
+                        class="fa-regular fa-heart" style=" color: #ff0000;"></i>
+                </button>
             </div>
 
             <!-- Immagini aggiuntive (layout 2x2) -->

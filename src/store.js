@@ -23,6 +23,8 @@ export const store = reactive({
     price: null,
     selectedServices: [],
 
+
+
     // Mappatura delle icone per ciascun tipo di proprietà
     iconMap: {
         mansion: '/public/icon/castle-fortress-svgrepo-com.svg',
