@@ -22,6 +22,7 @@ export const store = reactive({
     mq: null,
     price: null,
     selectedServices: [],
+    isLoaded: false, // Stato di caricamento inizialmente false
     
     // Aggiunta di minMaxValues per i valori minimi e massimi recuperati dal backend
     minMaxValues: {
@@ -52,5 +53,16 @@ export const store = reactive({
     },
     formatPrice(price) {
         return price.toFixed(2).replace('.', ',') + ' €';
-    }
+    },
+    async fetchStoreData() {
+        try {
+          // Simula una chiamata API per caricare i dati (sostituisci con la tua API)
+          const response = await fetch('http://127.0.0.1:8000/api/properties');
+          this.properties = await response.json();
+          this.isLoaded = true; // Imposta isLoaded a true solo dopo il caricamento
+        } catch (error) {
+          console.error("Errore nel caricamento dei dati", error);
+          this.isLoaded = true; // Imposta isLoaded a true anche in caso di errore per evitare loop
+        }
+      }
 });
