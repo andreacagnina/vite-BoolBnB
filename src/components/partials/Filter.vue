@@ -1,31 +1,46 @@
 <script>
 import { store } from '../../store';
+import { ref } from 'vue';
 import axios from 'axios';
 
 export default {
     name: 'Filter',
     props: ['propertyTypes'],
     setup() {
-        // Funzione per impostare il filtro tipo
-        const setFilter = (type) => {
-            store.filterType = type;
+        // Variabili locali per i filtri
+        const numRooms = ref('');
+        const numBeds = ref('');
+        const numBaths = ref('');
+        const mq = ref('');
+        const price = ref('');
+        const selectedServices = ref([]);
+
+        // Funzione per applicare i filtri al clic su "See Results"
+        const applyFilters = () => {
+            store.num_rooms = numRooms.value;
+            store.num_beds = numBeds.value;
+            store.num_baths = numBaths.value;
+            store.mq = mq.value;
+            store.price = price.value;
+            store.selectedServices = selectedServices.value;
             store.current_page = 1;
         };
 
-        // Funzione per impostare il filtro numero stanze
-        const setAdvancedFilter = (numRooms, numBeds, numBaths, mq, price, selectedServices) => {
-            store.num_rooms = numRooms;
-            store.num_beds = numBeds;
-            store.num_baths = numBaths;
-            store.mq = mq;
-            store.price = price;
-            store.selectedServices = selectedServices;
+        // Funzione per impostare il filtro per tipo di proprietà
+        const setFilter = (type) => {
+            store.filterType = type;
             store.current_page = 1;
         };
 
         // Funzione per resettare tutti i filtri
         const resetFilters = () => {
             store.filterType = '';
+            numRooms.value = '';
+            numBeds.value = '';
+            numBaths.value = '';
+            mq.value = '';
+            price.value = '';
+            selectedServices.value = [];
             store.num_rooms = '';
             store.num_beds = '';
             store.num_baths = '';
@@ -35,9 +50,35 @@ export default {
             store.current_page = 1;
         };
 
-        return { store, setFilter, setAdvancedFilter, resetFilters };
-    },
+        // Funzione per caricare i valori minimi e massimi dal backend
+        const loadMinMaxValues = async () => {
+            try {
+                const response = await axios.get(`${store.baseUrl}/properties`);
+                if (response.data.success) {
+                    store.minMaxValues = response.data.minMaxValues;
+                }
+            } catch (error) {
+                console.error("Errore nel caricamento dei valori min/max:", error);
+            }
+        };
 
+        // Carica i valori minimi e massimi all'inizio
+        loadMinMaxValues();
+
+        return {
+            store,
+            numRooms,
+            numBeds,
+            numBaths,
+            mq,
+            price,
+            selectedServices,
+            setFilter,
+            applyFilters,
+            resetFilters,
+            loadMinMaxValues,
+        };
+    },
 };
 </script>
 
@@ -52,14 +93,10 @@ export default {
                 </li>
                 <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)"
                     :class="{ active: store.filterType === type }">
-                    <!-- Icona sopra il nome del tipo -->
                     <img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
                     <span>{{ type }}</span>
                 </li>
             </ul>
-            <!-- <button class="next-button mx-3 d-none d-sm-block">
-                <i class="fa-solid fa-angle-right"></i>
-            </button> -->
 
             <!-- Bottone Offcanvas -->
             <button class="btn btn-filter ms-4" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas"
@@ -83,17 +120,19 @@ export default {
             <div class="d-flex justify-content-between mb-3">
                 <div class="w-50 me-2 mb-2">
                     <label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
-                    <input id="numRoomsInput" type="number" class="form-control" min="1" max="50"
-                        v-model="store.num_rooms"
-                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    <input id="numRoomsInput" type="number" class="form-control"
+                        :min="store.minMaxValues.min_rooms || 1"
+                        :max="store.minMaxValues.max_rooms || 10"
+                        v-model="numRooms"
                         placeholder="">
                 </div>
 
                 <div class="w-50 mb-2">
                     <label for="numBedsInput" class="form-label fw-bold">Beds</label>
-                    <input id="numBedsInput" type="number" class="form-control" min="1" max="20"
-                        v-model="store.num_beds"
-                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    <input id="numBedsInput" type="number" class="form-control"
+                        :min="store.minMaxValues.min_beds || 1"
+                        :max="store.minMaxValues.max_beds || 10"
+                        v-model="numBeds"
                         placeholder="">
                 </div>
             </div>
@@ -102,16 +141,19 @@ export default {
             <div class="d-flex justify-content-between mb-3">
                 <div class="w-50 me-2 mb-2">
                     <label for="numBathsInput" class="form-label fw-bold">Baths</label>
-                    <input id="numBathsInput" type="number" class="form-control" min="0" max="5"
-                        v-model="store.num_baths"
-                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    <input id="numBathsInput" type="number" class="form-control"
+                        :min="store.minMaxValues.min_baths || 1"
+                        :max="store.minMaxValues.max_baths || 5"
+                        v-model="numBaths"
                         placeholder="">
                 </div>
 
                 <div class="w-50 mb-2">
                     <label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
-                    <input id="mqInput" type="number" class="form-control" min="0" max="5000" v-model="store.mq"
-                        @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price)"
+                    <input id="mqInput" type="number" class="form-control"
+                        :min="store.minMaxValues.min_mq || 20"
+                        :max="store.minMaxValues.max_mq || 500"
+                        v-model="mq"
                         placeholder="">
                 </div>
             </div>
@@ -119,10 +161,14 @@ export default {
             <!-- Filtro per prezzo -->
             <div class="mb-4">
                 <label for="priceInput" class="form-label fw-bold">Price</label>
-                <input id="priceInput" type="number" class="form-control" min="0" max="1000000" v-model="store.price"
-                    @input="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)"
+                <input id="priceInput" type="number" class="form-control"
+                    :min="store.minMaxValues.min_price || 50"
+                    :max="store.minMaxValues.max_price || 1000"
+                    v-model="price"
                     placeholder="">
             </div>
+
+            <!-- Checkbox per i servizi -->
             <div class="mb-4">
                 <label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
                 <div class="row">
@@ -130,8 +176,7 @@ export default {
                         <div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 2))"
                             :key="service.id" class="form-check d-flex">
                             <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
-                                :value="service.id" v-model="store.selectedServices"
-                                @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
+                                :value="service.id" v-model="selectedServices">
                             <label class="form-check-label" :for="'service-' + service.id">
                                 <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
                             </label>
@@ -141,9 +186,8 @@ export default {
                         <div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 2))"
                             :key="service.id" class="form-check d-flex">
                             <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id"
-                                :value="service.id" v-model="store.selectedServices"
-                                @change="setAdvancedFilter(store.num_rooms, store.num_beds, store.num_baths, store.mq, store.price, store.selectedServices)">
-                                <label class="form-check-label" :for="'service-' + service.id">
+                                :value="service.id" v-model="selectedServices">
+                            <label class="form-check-label" :for="'service-' + service.id">
                                 <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
                             </label>
                         </div>
@@ -155,7 +199,11 @@ export default {
             <button class="btn btn-custom w-100 mt-4" @click="resetFilters">
                 Remove all filters
             </button>
-            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas">See Results</button>
+
+            <!-- Pulsante per applicare i filtri -->
+            <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas" @click="applyFilters">
+                See Results
+            </button>
         </div>
     </div>
 </template>
