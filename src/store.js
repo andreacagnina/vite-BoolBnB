@@ -22,8 +22,20 @@ export const store = reactive({
     mq: null,
     price: null,
     selectedServices: [],
-
-
+    
+    // Aggiunta di minMaxValues per i valori minimi e massimi recuperati dal backend
+    minMaxValues: {
+        min_rooms: 1,
+        max_rooms: 10,
+        min_beds: 1,
+        max_beds: 10,
+        min_baths: 1,
+        max_baths: 5,
+        min_mq: 20,
+        max_mq: 500,
+        min_price: 50,
+        max_price: 1000
+    },
 
     // Mappatura delle icone per ciascun tipo di proprietà
     iconMap: {
