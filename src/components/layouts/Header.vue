@@ -98,7 +98,7 @@ export default {
                             v-model="searchQuery" 
                             @input="fetchAddressSuggestions" 
                             @keyup.enter="onSearch" 
-                            placeholder="Cerca una BnB..." 
+                            placeholder="Search by city or address..." 
                             class="input-search" 
                         />
                         <div v-if="showSuggestions" class="suggestions-box">

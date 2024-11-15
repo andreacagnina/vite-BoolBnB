@@ -118,7 +118,7 @@ export default {
 		<div class="offcanvas-body">
 			
 			<div class="mb-4">
-				<label for="priceInput" class="form-label fw-bold">Price</label>
+				<label for="priceInput" class="form-label fw-bold">Price (Max)</label>
 				<input id="priceInput" type="range" class="form-range"
 				:min="store.minMaxValues.min_price || 50"
 				:max="store.minMaxValues.max_price || 1000"
@@ -128,24 +128,25 @@ export default {
 				<p>€ {{ price }} </p>
 			</div>
 			
+			<div class="mb-2">
+				<label for="mqInput" class="form-label fw-bold">Square meters</label>
+				<input id="mqInput" type="range" class="form-range"
+				:min="store.minMaxValues.min_mq || 20"
+				:max="store.minMaxValues.max_mq || 500"
+				v-model="mq"
+				:step="0.01"
+				placeholder="min:20 max:500">
+				<p>{{ mq }} m<sup>2</sup></p>
+			</div>
+
 			<div class="mb-4">
-				<label for="radiusInput" class="form-label fw-bold">Radius (km)</label>
+				<label for="radiusInput" class="form-label fw-bold">Radius</label>
 				<input id="radiusInput" type="range" class="form-range" 
 				:min="20" 
-				:max="maxRadius" 
+				:max="200" 
 				v-model="radius" 
 				placeholder="20" />
-				<p>{{ radius }} </p>
-			</div>
-			<div class="mb-2">
-				<label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
-				<input id="mqInput" type="range" class="form-range"
-					:min="store.minMaxValues.min_mq || 20"
-					:max="store.minMaxValues.max_mq || 500"
-					v-model="mq"
-					:step="0.01"
-					placeholder="min:20 max:500">
-				<p>{{ mq }} m<sup>2</sup></p>
+				<p>{{ radius }} Km</p>
 			</div>
 			
 			<div class="d-flex justify-content-between mb-3">
