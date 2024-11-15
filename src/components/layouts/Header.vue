@@ -1,18 +1,87 @@
 <script>
 import { store } from '../../store';
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
 
 export default {
-    store,
     name: 'Header',
     setup() {
-        const onSearch = () => {
-            store.current_page = 1; // Resetto alla prima pagina
+        const route = useRoute();
+        const searchQuery = ref('');
+        const suggestions = ref([]);
+        const showSuggestions = ref(false);
+        const TOMTOM_API_KEY = 'Kk87PKMPOPLJLWGTTGUP57nMaGxn8A1b';
+
+        // Controllo se la route attiva è 'homepage'
+        const isHomepage = computed(() => route.name === 'homepage');
+
+        const fetchAddressSuggestions = async () => {
+            if (searchQuery.value.length > 2) {
+                try {
+                    const response = await axios.get(`https://api.tomtom.com/search/2/search/${encodeURIComponent(searchQuery.value)}.json`, {
+                        params: {
+                            key: TOMTOM_API_KEY,
+                            countrySet: 'IT',
+                            typeahead: true,
+                            limit: 5
+                        }
+                    });
+                    suggestions.value = response.data.results.map(result => ({
+                        address: result.address.freeformAddress,
+                        position: result.position
+                    }));
+                    showSuggestions.value = suggestions.value.length > 0;
+                } catch (error) {
+                    console.error('Errore nel recupero dei suggerimenti degli indirizzi:', error);
+                }
+            } else {
+                suggestions.value = [];
+                showSuggestions.value = false;
+            }
         };
-        return { store, onSearch };
-    },
+
+        const selectSuggestion = (suggestion) => {
+            searchQuery.value = suggestion.address;
+            store.searchTerm = suggestion.address;
+            store.latitude = suggestion.position.lat;
+            store.longitude = suggestion.position.lon;
+            showSuggestions.value = false;
+            onSearch();
+        };
+
+        const onSearch = () => {
+            store.current_page = 1;
+        };
+
+        const handleClickOutside = (event) => {
+            const searchBox = document.querySelector('.search-box');
+            if (searchBox && !searchBox.contains(event.target)) {
+                showSuggestions.value = false;
+            }
+        };
+
+        onMounted(() => {
+            document.addEventListener('click', handleClickOutside);
+        });
+
+        onBeforeUnmount(() => {
+            document.removeEventListener('click', handleClickOutside);
+        });
+
+        return {
+            store,
+            searchQuery,
+            suggestions,
+            showSuggestions,
+            fetchAddressSuggestions,
+            selectSuggestion,
+            onSearch,
+            isHomepage
+        };
+    }
 };
 </script>
-<input v-model="store.searchTerm" @keyup.enter="onSearch" placeholder="Cerca una BnB..." class="search-input" />
 
 <template>
     <header class="app-header">
@@ -23,10 +92,22 @@ export default {
                 </div>
 
                 <div class="col-sm-12 col-md-4">
-                    <div class="search-box">
+                    <div v-if="isHomepage" class="search-box">
                         <button class="btn-search"><i class="fas fa-search"></i></button>
-                        <input v-model="store.searchTerm" @keyup.enter="onSearch" placeholder="Cerca una BnB..."
-                            class="input-search" />
+                        <input 
+                            v-model="searchQuery" 
+                            @input="fetchAddressSuggestions" 
+                            @keyup.enter="onSearch" 
+                            placeholder="Cerca una BnB..." 
+                            class="input-search" 
+                        />
+                        <div v-if="showSuggestions" class="suggestions-box">
+                            <ul>
+                                <li v-for="(suggestion, index) in suggestions" :key="index" @mousedown.prevent="selectSuggestion(suggestion)">
+                                    {{ suggestion.address }}
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -53,6 +134,33 @@ export default {
             width: fit-content;
             height: fit-content;
             position: relative;
+
+            .suggestions-box {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                z-index: 1000;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            .suggestions-box ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .suggestions-box li {
+                padding: 8px 12px;
+                cursor: pointer;
+            }
+
+            .suggestions-box li:hover {
+                background-color: #f0f0f0;
+            }
         }
 
         .input-search {
@@ -64,9 +172,7 @@ export default {
             outline: none;
             border-radius: 25px;
             transition: all .5s ease-in-out;
-            background: linear-gradient(45deg,
-                    #49919d,
-                    #84a59d);
+            background: linear-gradient(45deg, #49919d, #84a59d);
             padding-right: 40px;
             color: #f7ede2;
         }
@@ -150,11 +256,9 @@ export default {
                 transition: all 0.3s ease-in-out;
             }
         }
-
     }
 }
 
-/* Su dispositivi mobile (fino a 767px) */
 @media (max-width: 767px) {
     .col-sm-hide {
         display: none !important;
@@ -170,9 +274,7 @@ export default {
     }
 }
 
-/* Su dispositivi tablet (da 768px a 991px) */
 @media (min-width: 768px) and (max-width: 991px) {
-
     .search-box .btn-search:focus~.input-search,
     .search-box .input-search:focus {
         width: 300px !important;
