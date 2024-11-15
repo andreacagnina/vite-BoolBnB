@@ -13,8 +13,8 @@ export default {
 		const mq = ref('');
 		const price = ref('');
 		const selectedServices = ref([]);
-		const radius = ref(store.radius || 20); // Default a 20 km e minimo di 20 km
-		const maxRadius = 100;
+		const radius = ref(store.radius || 20); // Valore di default 20 km
+		const maxRadius = 200; // Massimo valore selezionabile dall'utente
 
 		const applyFilters = () => {
 			store.num_rooms = numRooms.value;
@@ -23,7 +23,8 @@ export default {
 			store.mq = mq.value;
 			store.price = price.value;
 			store.selectedServices = selectedServices.value;
-			store.radius = Math.max(20, Math.min(radius.value, maxRadius)); // Limite tra 20 e 100 km
+			// Limitiamo il raggio al massimo selezionabile, senza minimo
+			store.radius = Math.min(radius.value, maxRadius);
 			store.current_page = 1;
 		};
 
