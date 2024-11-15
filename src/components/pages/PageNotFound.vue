@@ -5,8 +5,8 @@ export default {
 }
 </script>
 <template>
-    <section class="d-flex justify-content-center align-items-center">
-        <div class="text-center">
+    <section class="d-flex justify-content-center align-items-center ">
+        <div class="text-center text-white">
             <h1>404 - Pagina Non Trovata</h1>
             <p>La pagina che stai cercando non esiste.</p>
             <router-link to="/">Torna alla Home</router-link>
@@ -17,4 +17,5 @@ export default {
 a {
     text-decoration: underline;
 }
+
 </style>

@@ -12,11 +12,6 @@ export default {
         }
     },
 
-    // methods: {
-    //     formatPrice(price) {
-    //         return price.toFixed(2);
-    //     }
-    // }
 };
 </script>
 
@@ -61,11 +56,9 @@ export default {
                 <div class="card-body d-flex flex-column mt-auto">
                     <h3>{{ property.title }}</h3>
                     <p>{{ property.address }}</p>
-                    <ul class="list-unstyled d-flex" v-if="property.services">
+                    <ul class="list-unstyled d-flex justify-content-around" v-if="property.services">
                         <li v-for="service in property.services" :key="property.id">
-                            <span class="pe-1"><strong>
-                                    <i :class="service.icon" class="me-1"></i>
-                                </strong></span>
+                                    <i :class="service.icon"></i>
                         </li>
                     </ul>
                     <p class="mt-auto"><strong>Weekly price: </strong>{{ store.formatPrice(property.price) }}</p>
