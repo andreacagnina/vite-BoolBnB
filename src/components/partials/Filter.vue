@@ -111,31 +111,20 @@ export default {
 	</div>
 
 	<div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
-		<div class="offcanvas-header">
+		<div class="offcanvas-header pt-2">
 			<h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
 		</div>
-		<div class="offcanvas-body">
-			
-			<div class="mb-4">
+		<div class="offcanvas-body pb-2">
+			<div class="mb-2">
 				<label for="priceInput" class="form-label fw-bold">Price</label>
 				<input id="priceInput" type="range" class="form-range"
-				:min="store.minMaxValues.min_price || 50"
-				:max="store.minMaxValues.max_price || 1000"
-				:step="0.01"
-				v-model="price"
-				placeholder="min:50 max:1000">
-				<p>€ {{ price }} </p>
-			</div>
-			
-			<div class="mb-4">
-				<label for="radiusInput" class="form-label fw-bold">Radius (km)</label>
-				<input id="radiusInput" type="range" class="form-range" 
-				:min="20" 
-				:max="maxRadius" 
-				v-model="radius" 
-				placeholder="20" />
-				<p>{{ radius }} </p>
+					:min="store.minMaxValues.min_price || 50"
+					:max="store.minMaxValues.max_price || 1000"
+					:step="0.01"
+					v-model="price"
+					placeholder="min:50 max:1000">
+					<p>€ {{ price }} </p>
 			</div>
 			<div class="mb-2">
 				<label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
@@ -147,24 +136,33 @@ export default {
 					placeholder="min:20 max:500">
 				<p>{{ mq }} m<sup>2</sup></p>
 			</div>
-			
+
+			<div class="mb-2">
+				<label for="radiusInput" class="form-label fw-bold">Radius (km)</label>
+				<input id="radiusInput" type="range" class="form-range" 
+					:min="20" 
+					:max="maxRadius" 
+					v-model="radius" 
+					placeholder="20" />
+					<p>{{ radius }} </p>
+			</div>
 			<div class="d-flex justify-content-between mb-3">
 				<div class="w-33 px-1 mb-2">
 					<label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
 					<input id="numRoomsInput" type="number" class="form-control"
-					:min="store.minMaxValues.min_rooms || 1"
-					:max="store.minMaxValues.max_rooms || 10"
-					v-model="numRooms"
-					placeholder=" 1 - 15">
+						:min="store.minMaxValues.min_rooms || 1"
+						:max="store.minMaxValues.max_rooms || 10"
+						v-model="numRooms"
+						placeholder=" 1 - 10">
 				</div>
-				
+
 				<div class="w-33 px-1 mb-2">
 					<label for="numBedsInput" class="form-label fw-bold">Beds</label>
 					<input id="numBedsInput" type="number" class="form-control"
-					:min="store.minMaxValues.min_beds || 1"
-					:max="store.minMaxValues.max_beds || 10"
+						:min="store.minMaxValues.min_beds || 1"
+						:max="store.minMaxValues.max_beds || 10"
 						v-model="numBeds"
-						placeholder=" 1 - 15">
+						placeholder=" 1 - 10">
 				</div>
 				<div class="w-33 px-1 mb-2">
 					<label for="numBathsInput" class="form-label fw-bold">Baths</label>
@@ -172,11 +170,11 @@ export default {
 						:min="store.minMaxValues.min_baths || 1"
 						:max="store.minMaxValues.max_baths || 5"
 						v-model="numBaths"
-						placeholder="1 - 6">
+						placeholder="1 - 5">
 				</div>
 			</div>
 
-			<div class="mb-4">
+			<div class="mb-2">
 				<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
 				<div class="row">
 					<div class="col-md-6">
@@ -323,7 +321,7 @@ export default {
 		text-align: center;
 		color: #f7ede2;
 		background-color: #49919d;
-		padding: 20px;
+		padding: 0px 20px;
 		border: none;
 
 		.btn-custom {
