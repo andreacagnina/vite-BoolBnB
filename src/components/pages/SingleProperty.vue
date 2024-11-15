@@ -178,10 +178,10 @@ export default {
             <!-- Immagine principale (immagine attiva selezionata) -->
             <div class="col-lg-7 my-4 position-relative">
                 <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
-                <button @click="toggleFavorite" class="btn position-absolute top-0 end-0 me-4 fs-1 border-0"
+                <button @click="toggleFavorite" class="btn position-absolute top-0 start-0 ms-3 fs-1 border-0"
                     :disabled="isLoadingFavorite">
                     <i v-if="this.isFavorite" class="fa-solid fa-heart" style=" color: #ff0000;"></i><i v-else
-                        class="fa-regular fa-heart" style=" color: #ff0000;"></i>
+                        class="fa-regular fa-heart" style=" color: #fff;"></i>
                 </button>
             </div>
 

@@ -116,58 +116,64 @@ export default {
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
 		</div>
 		<div class="offcanvas-body">
+			
+			<div class="mb-4">
+				<label for="priceInput" class="form-label fw-bold">Price</label>
+				<input id="priceInput" type="range" class="form-range"
+				:min="store.minMaxValues.min_price || 50"
+				:max="store.minMaxValues.max_price || 1000"
+				:step="0.01"
+				v-model="price"
+				placeholder="min:50 max:1000">
+				<p>€ {{ price }} </p>
+			</div>
+			
+			<div class="mb-4">
+				<label for="radiusInput" class="form-label fw-bold">Radius (km)</label>
+				<input id="radiusInput" type="range" class="form-range" 
+				:min="20" 
+				:max="maxRadius" 
+				v-model="radius" 
+				placeholder="20" />
+				<p>{{ radius }} </p>
+			</div>
+			<div class="mb-2">
+				<label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
+				<input id="mqInput" type="range" class="form-range"
+					:min="store.minMaxValues.min_mq || 20"
+					:max="store.minMaxValues.max_mq || 500"
+					v-model="mq"
+					:step="0.01"
+					placeholder="min:20 max:500">
+				<p>{{ mq }} m<sup>2</sup></p>
+			</div>
+			
 			<div class="d-flex justify-content-between mb-3">
-				<div class="w-50 me-2 mb-2">
+				<div class="w-33 px-1 mb-2">
 					<label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
 					<input id="numRoomsInput" type="number" class="form-control"
-						:min="store.minMaxValues.min_rooms || 1"
-						:max="store.minMaxValues.max_rooms || 10"
-						v-model="numRooms"
-						placeholder="">
+					:min="store.minMaxValues.min_rooms || 1"
+					:max="store.minMaxValues.max_rooms || 10"
+					v-model="numRooms"
+					placeholder=" 1 - 15">
 				</div>
-
-				<div class="w-50 mb-2">
+				
+				<div class="w-33 px-1 mb-2">
 					<label for="numBedsInput" class="form-label fw-bold">Beds</label>
 					<input id="numBedsInput" type="number" class="form-control"
-						:min="store.minMaxValues.min_beds || 1"
-						:max="store.minMaxValues.max_beds || 10"
+					:min="store.minMaxValues.min_beds || 1"
+					:max="store.minMaxValues.max_beds || 10"
 						v-model="numBeds"
-						placeholder="">
+						placeholder=" 1 - 15">
 				</div>
-			</div>
-
-			<div class="d-flex justify-content-between mb-3">
-				<div class="w-50 me-2 mb-2">
+				<div class="w-33 px-1 mb-2">
 					<label for="numBathsInput" class="form-label fw-bold">Baths</label>
 					<input id="numBathsInput" type="number" class="form-control"
 						:min="store.minMaxValues.min_baths || 1"
 						:max="store.minMaxValues.max_baths || 5"
 						v-model="numBaths"
-						placeholder="">
+						placeholder="1 - 6">
 				</div>
-
-				<div class="w-50 mb-2">
-					<label for="mqInput" class="form-label fw-bold">m<sup>2</sup></label>
-					<input id="mqInput" type="number" class="form-control"
-						:min="store.minMaxValues.min_mq || 20"
-						:max="store.minMaxValues.max_mq || 500"
-						v-model="mq"
-						placeholder="">
-				</div>
-			</div>
-
-			<div class="mb-4">
-				<label for="priceInput" class="form-label fw-bold">Price</label>
-				<input id="priceInput" type="number" class="form-control"
-					:min="store.minMaxValues.min_price || 50"
-					:max="store.minMaxValues.max_price || 1000"
-					v-model="price"
-					placeholder="">
-			</div>
-
-			<div class="mb-4">
-				<label for="radiusInput" class="form-label fw-bold">Radius (km)</label>
-				<input id="radiusInput" type="number" class="form-control" v-model="radius" :min="20" :max="maxRadius" placeholder="e.g., 20" />
 			</div>
 
 			<div class="mb-4">
@@ -208,6 +214,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+	.w-33 {
+		width: calc(100% / 3);
+	}
+
 	.form-check-input {
 		cursor: pointer;
 		&:checked {
