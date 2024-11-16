@@ -81,9 +81,7 @@ computed: {
       }
     },
   },
-//   watch: {
-//     radius: 'applyFilters',
-//   },
+
   mounted() {
     this.loadMinMaxValues();
   },
@@ -191,6 +189,9 @@ computed: {
 </template>
 
 <style lang="scss" scoped>
+@use "../../styles/partials/partials.scss" as *;
+
+
 	.w-33 {
 		width: calc(100% / 3);
 	}

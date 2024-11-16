@@ -132,7 +132,7 @@ export default {
         swapImages(index) {
             const imagesCopy = [...this.images]; //Creazione di una copia dell'array delle immagini
             const temp = imagesCopy[0]; //Salvataggio temporaneo della cover image
-            imagesCopy[0] = imagesCopy[index + 1]; // Scambio dell'immaginee con indice 0 con l'immagine selezionata
+            imagesCopy[0] = imagesCopy[index + 1]; // Scambio dell'immagine con indice 0 con l'immagine selezionata
 
             imagesCopy[index + 1] = temp; //L'image viene inserita nella posizione da cui è stata prelevata l'immagine selezionata, ossia nella posizione index + 1
 

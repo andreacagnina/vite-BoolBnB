@@ -1,19 +1,19 @@
 <script>
-import { store } from '../../store';
+import { store } from "../../store";
 
 export default {
-    name: 'PropertyCard',
-    props: {
-        property: Object
-    },
-    data() {
-        return {
-            store,
-        }
-    },
-
+  name: "PropertyCard",
+  props: {
+    property: Object,
+  },
+  data() {
+    return {
+      store,
+    };
+  },
 };
 </script>
+
 
 <template>
     <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3 px-2 my-3">
@@ -54,11 +54,11 @@ export default {
                 </div>
 
                 <div class="card-body d-flex flex-column mt-auto">
-                    <h3>{{ property.title }}</h3>
-                    <p>{{ property.address }}</p>
+                    <h3 class="text-truncate">{{ property.title }}</h3>
+                    <p class="text-truncate">{{ property.address }}</p>
                     <ul class="list-unstyled d-flex justify-content-around" v-if="property.services">
-                        <li v-for="service in property.services" :key="property.id">
-                                    <i :class="service.icon"></i>
+                        <li v-for="service in property.services" :key="service.id">
+                                    <i :class="service.icon" v-tooltip:top :title="service.name" class="icon-custom"></i>
                         </li>
                     </ul>
                     <p class="mt-auto"><strong>Weekly price: </strong>{{ store.formatPrice(property.price) }}</p>
@@ -99,12 +99,14 @@ export default {
             font-weight: bolder;
             font-size: 1.1rem;
             color: $text-color;
+
         }
 
         p {
             font-size: 0.9rem;
             margin: 0 0 10px;
             color: $text-color;
+
         }
     }
 
@@ -130,6 +132,15 @@ export default {
         color: #f7ede2;
     }
 }
+
+.icon-custom:hover {
+        background: linear-gradient(45deg, #f6bd60, #ce6a6c);
+        background-clip: text;
+        color: transparent;
+        transition: all 0.1s ease-in-out;
+ 
+}
+
 
 /* Su dispositivi mobile (fino a 767px) */
 @media screen and (max-width: 767px) {
