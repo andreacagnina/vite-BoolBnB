@@ -29,6 +29,7 @@ export const store = reactive({
 	longitude: null,
 	radius: 20,  // Raggio di ricerca predefinito (km)
 
+
 	// Valori minimi e massimi per i filtri
 	minMaxValues: {
 		min_rooms: 1, max_rooms: 10,

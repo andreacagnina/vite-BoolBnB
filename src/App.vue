@@ -1,14 +1,16 @@
 <script>
-  import Header from './components/layouts/Header.vue'
+  import Header from './components/layouts/Header.vue';
   import Sidebar from './components/layouts/Sidebar.vue';
-  import Footer from './components/layouts/Footer.vue'
+  import Footer from './components/layouts/Footer.vue';
+
   import { store } from './store';
 
   export default {
     components:{
       Header,
       Sidebar,
-      Footer
+      Footer,
+
     },
     data() {
       return {
@@ -26,10 +28,9 @@
 
     <!-- Sidebar -->
     <!--<Sidebar />-->
-
     <!-- Main Content -->
-    <main class="main-content">
-      <router-view />
+    <main  class="main-content">
+      <router-view  />
     </main>
 
     <!-- Footer -->
@@ -40,26 +41,19 @@
 
 <style lang="scss" scoped>
 @use "./styles/partials/partials.scss" as *;
-#app 
-  {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
 
-  .main-content {
-    flex: 1;
+  main {
     overflow: auto;
+    height: calc(100vh - 87px);
   }
 
   footer {
-    margin-top: auto;
+    
+
   }
 
   header {
-    position: sticky;
-    top: 0;
-  background-color: $background-color;
-  z-index: 100;
+    height: 87px;
+    background-color: $background-color;
   }
 </style>
