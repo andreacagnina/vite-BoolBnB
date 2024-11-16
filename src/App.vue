@@ -38,7 +38,8 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@use "./styles/partials/partials.scss" as *;
 #app 
   {
     display: flex;
@@ -53,5 +54,12 @@
 
   footer {
     margin-top: auto;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+  background-color: $background-color;
+  z-index: 100;
   }
 </style>

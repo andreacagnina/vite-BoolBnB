@@ -84,7 +84,7 @@ export default {
             <!-- Filtro sopra le schede -->
             <div class="row">
                 <div class="col-12 mb-4">
-                    <Filter :propertyTypes="propertyTypes" />
+                    <Filter :propertyTypes="propertyTypes"/>
                 </div>
             </div>
 

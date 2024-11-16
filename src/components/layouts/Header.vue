@@ -120,7 +120,7 @@ export default {
 
 <style lang="scss" scoped>
 .app-header {
-  padding-top: 20px;
+  padding: 10px 0;
 
   .col-sm-12 {
     display: flex;
