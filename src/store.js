@@ -28,6 +28,7 @@ export const store = reactive({
 	latitude: null,
 	longitude: null,
 	radius: 20,  // Raggio di ricerca predefinito (km)
+	total_results: 0,
 
 
 	// Valori minimi e massimi per i filtri

@@ -66,6 +66,7 @@ export default {
             .then(response => {
                 store.properties = response.data.results.data;
                 store.last_page = response.data.results.last_page;
+                store.total_results = response.data.results.total;
                 this.loadinge=false;
             })
             .catch(error => {
@@ -92,7 +93,7 @@ export default {
 </script>
 
 <template>
-    <Loader v-if="loading" class="h-100"/>
+    <Loader v-if="loading" class="h-100 middle"/>
     <section v-else class="homepage h-100">
         <div class="container h-100 position-relative">
             <!-- Filtro sopra le schede -->
@@ -103,16 +104,16 @@ export default {
             </div>
 
             <!-- Contenuto delle schede -->
-            <Loader v-if="loadinge" class="h-100 middle"/>
+                <Loader v-if="loadinge" class="h-cust" />
+    
             <div v-else class="wrapper">
-
                 <div class="row g-3 h-100">
-                    <PropertyCard  v-for="property in store.properties" :key="property.id" :property="property" />
+
+                    <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
+                        <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
                 </div>
-                
-                
                 <!-- Paginazione -->
-                <div class="row">
+                <div v-if="store.total_results > 24" class="row">
                     <div class="col-12">
                 </div>
                     <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3 mt-4">
@@ -142,12 +143,10 @@ export default {
     padding: 30px 0;
 }
 
-.middle{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);   
+.h-cust {
+    height: calc(100% - 115px);
 }
+
 
 .filter-list {
     display: flex;

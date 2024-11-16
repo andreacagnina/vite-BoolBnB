@@ -22,16 +22,18 @@
 
 <template>
   <div id="app">
+<div id="wrapper">
 
-    <!-- Header -->
-    <Header />
-
-    <!-- Sidebar -->
-    <!--<Sidebar />-->
-    <!-- Main Content -->
-    <main  class="main-content">
-      <router-view  />
-    </main>
+  <!-- Header -->
+  <Header />
+  
+  <!-- Sidebar -->
+  <!--<Sidebar />-->
+  <!-- Main Content -->
+  <main  class="main-content">
+    <router-view  />
+  </main>
+</div>
 
     <!-- Footer -->
     <Footer />
@@ -42,13 +44,18 @@
 <style lang="scss" scoped>
 @use "./styles/partials/partials.scss" as *;
 
+#wrapper {
+  height: 100vh;
+}
+
+
   main {
     overflow: auto;
-    height: calc(100vh - 87px);
+    height: calc(100% - 87px);
   }
 
   footer {
-    
+min-height: 101px;    
 
   }
 
