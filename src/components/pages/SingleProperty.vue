@@ -2,9 +2,10 @@
 import { store } from '../../store';
 import axios from 'axios';
 import TomTomMap from '../partials/TomTomMap.vue';
+import Loader from '../partials/Loader.vue';
 
 export default {
-    components: { TomTomMap },
+    components: { TomTomMap, Loader, },
     data() {
         return {
             store,
@@ -24,6 +25,7 @@ export default {
 
             isFavorite: window.isFavorite, // Inizializza con il valore fornito dal backend
             isLoadingFavorite: false,
+            loading:true
 
         };
     },
@@ -42,7 +44,7 @@ export default {
         // Funzione per recuperare la proprietà
         getProperty() {
             const slug = this.$route.params.slug;
-            this.isLoading = true;
+            this.loading = true;
 
             axios.get(`${store.baseUrl}/property/${slug}`)
                 .then(response => {
@@ -54,6 +56,7 @@ export default {
 
                         // Imposta lo stato iniziale di isFavorite
                         this.isFavorite = response.data.results.is_favorite || false;
+                        this.loading = false;
                     } else {
                         console.error("Dati non validi ricevuti:", response);
                     }
@@ -166,6 +169,10 @@ export default {
 
 
 <template>
+    <section class="h-100" v-if="loading">
+        <Loader  />
+    </section>
+    <section v-else>
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mt-4">
@@ -305,10 +312,18 @@ export default {
         </div>
 
     </div>
+</section>
 </template>
 
 
 <style lang="scss" scoped>
+
+section.h-100 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 hr {
     color: #f7ede2;
     border: 1.5px solid #f7ede2;

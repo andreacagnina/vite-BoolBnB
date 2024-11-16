@@ -3,19 +3,23 @@ import { store } from '../../store';
 import PropertyCard from '../partials/PropertyCard.vue';
 import Filter from '../partials/Filter.vue';
 import axios from 'axios';
+import Loader from '../partials/Loader.vue';
 
 export default {
-    components: { Filter, PropertyCard },
+    components: { Filter, PropertyCard, Loader },
     data() {
         return {
             store,
             propertyTypes: [],
+            loading: true,
+            loadinge: true,
         };
     },
     created() {
         this.getProperties();
         this.getPropertyTypes();
         this.getServices();
+
     },
     watch: {
         'store.searchTerm': 'getProperties',
@@ -32,6 +36,15 @@ export default {
         'store.radius': 'getProperties'
     },
     methods: {
+
+        getPropertyTypes() {
+            this.loading = true;
+            axios.get(`${store.baseUrl}/properties`)
+                .then(response => {
+                    this.propertyTypes = response.data.types.map(type => type.type);
+                    this.loading = false;
+                });
+        },
         getProperties() {
             const params = {
                 page: store.current_page,
@@ -46,32 +59,32 @@ export default {
                 latitude: store.latitude,
                 longitude: store.longitude,
                 radius: store.radius || 20 
+                
             };
-
+            this.loadinge = true;
             axios.get(`${store.baseUrl}/properties`, { params })
-                .then(response => {
-                    store.properties = response.data.results.data;
-                    store.last_page = response.data.results.last_page;
-                })
-                .catch(error => {
-                    console.error('Errore nel caricamento delle proprietà:', error);
-                });
-        },
-        getPropertyTypes() {
-            axios.get(`${store.baseUrl}/properties`)
-                .then(response => {
-                    this.propertyTypes = response.data.types.map(type => type.type);
-                });
+            .then(response => {
+                store.properties = response.data.results.data;
+                store.last_page = response.data.results.last_page;
+                this.loadinge=false;
+            })
+            .catch(error => {
+                console.error('Errore nel caricamento delle proprietà:', error);
+            });
         },
         getServices() {
+
             axios.get(`${store.baseUrl}/services`)
                 .then(response => {
                     store.services = response.data.results;
+
                 });
         },
         goToPage(page) {
+  
             if (page > 0 && page <= store.last_page) {
                 store.current_page = page;
+ 
             }
         },
     },
@@ -79,8 +92,9 @@ export default {
 </script>
 
 <template>
-    <section class="homepage">
-        <div class="container">
+    <Loader v-if="loading" class="h-100"/>
+    <section v-else class="homepage h-100">
+        <div class="container h-100 position-relative">
             <!-- Filtro sopra le schede -->
             <div class="row">
                 <div class="col-12 mb-4">
@@ -89,13 +103,18 @@ export default {
             </div>
 
             <!-- Contenuto delle schede -->
-            <div class="row g-3">
-                <PropertyCard v-for="property in store.properties" :key="property.id" :property="property" />
-            </div>
+            <Loader v-if="loadinge" class="h-100 middle"/>
+            <div v-else class="wrapper">
 
-            <!-- Paginazione -->
-            <div class="row">
-                <div class="col-12">
+                <div class="row g-3 h-100">
+                    <PropertyCard  v-for="property in store.properties" :key="property.id" :property="property" />
+                </div>
+                
+                
+                <!-- Paginazione -->
+                <div class="row">
+                    <div class="col-12">
+                </div>
                     <nav aria-label="Page navigation example" class="d-flex justify-content-center py-3 mt-4">
                         <ul class="pagination">
                             <li class="page-item">
@@ -114,12 +133,20 @@ export default {
                 </div>
             </div>
         </div>
+
     </section>
 </template>
 
 <style lang="scss" scoped>
 .homepage {
     padding: 30px 0;
+}
+
+.middle{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
 }
 
 .filter-list {

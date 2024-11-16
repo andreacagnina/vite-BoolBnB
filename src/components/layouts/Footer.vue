@@ -84,7 +84,7 @@ export default {
         padding: 20px;
         text-align: center;
         position: relative;
-        z-index: 6;
+        z-index: 0;
     }
 
     .footer-content {
