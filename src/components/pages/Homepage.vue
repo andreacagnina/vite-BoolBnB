@@ -95,10 +95,9 @@ export default {
 </script>
 
 <template>
-
     <Loader v-if="loading" class="h-100 middle"/>
     
-    <section v-else class="homepage h-100">
+    <section v-else class="homepage h-100" id="index">
         <div class="container h-100 position-relative">
             <!-- Filtro sopra le schede -->
             <div class="row">

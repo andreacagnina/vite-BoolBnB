@@ -17,16 +17,15 @@ export default {
                             <p class="lead">Stop wasting valuable time with projects that just isn't you. <br> Set out for your destination, knowing that home is there.</p>
                         </div>
                         <p>
-                            <a href="#index" class="btn btn-light btn-lg mt-3">Start Now</a>
+                            <a href="#index" class="btn btn-custom btn-lg mt-3">Start Now</a>
                         </p>
                     </div>
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div id="index"></div>
-                </div>
+                </div> -->
             </div>
         </div>
-
 </section>
 
 
@@ -43,9 +42,12 @@ export default {
   }
 
   .bg-cust{
-    background-color: $background-color;
+    background-color: #19203352;
     padding: 20px;
-    opacity: 0.7;
+  }
+
+  .btn-custom{
+    background-color: $darkpink-color;
   }
 
 
