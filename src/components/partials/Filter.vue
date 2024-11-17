@@ -43,6 +43,12 @@ export default {
 	},
 
 	methods: {
+		goToResults() {
+    const target = document.getElementById('results');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  },
 		applyFilters() {
 			store.num_rooms = this.numRooms;
 			store.num_beds = this.numBeds;
@@ -111,14 +117,14 @@ export default {
 			<li @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
 				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
-				<span>All</span> 
+				<span class="d-none d-lg-block">All</span> 
 
 			</li>
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
-			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
+			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToResults()" :class="{ active: store.filterType === type }">
 
 				<img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
-				<span>{{ type }}</span>
+				<span class="d-none d-lg-block">{{ type }}</span>
 
 			</li>
 		</ul>
@@ -126,14 +132,14 @@ export default {
 		<button @click="resetFilters" class="btn btn-filter ms-5">
 
 			<i class="fa-solid fa-eraser mb-1"></i>
-			<span class="d-none d-sm-block">Reset</span>
+			<span class="d-none d-lg-block">Reset</span>
 
 		</button>
 		<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
 		<button class="btn btn-filter" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
 
 			<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
-			<span class="d-none d-sm-block">Filter</span>
+			<span class="d-none d-lg-block">Filter</span>
 
 		</button>
 

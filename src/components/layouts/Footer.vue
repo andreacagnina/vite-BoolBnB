@@ -134,7 +134,7 @@ export default {
 
     background: linear-gradient(360deg, #49919d, #84a59d);
     position: absolute;
-    bottom: 100%;
+    bottom: 99%;
     left: 0;
     width: 100%;
     height: 150px;
