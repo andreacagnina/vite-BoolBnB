@@ -169,18 +169,16 @@ export default {
 
 
 <template>
-    <section class="h-100" v-if="loading">
+    <section class="h-100 " v-if="loading">
         <Loader  />
     </section>
-    <section v-else>
+    <section v-else class="mt-cust">
     <div class="container">
         <div class="row">
             <div class="col-12 text-center mt-4">
                 <h1 class="fw-bold">{{ store.property.title }}</h1>
                 <p>{{ store.property.description }}</p>
             </div>
-
-
 
             <!-- Immagine principale (immagine attiva selezionata) -->
             <div class="col-lg-7 my-4 position-relative">
@@ -317,6 +315,10 @@ export default {
 
 
 <style lang="scss" scoped>
+
+.mt-cust {
+    margin-top: 87px;
+}
 
 section.h-100 {
     display: flex;

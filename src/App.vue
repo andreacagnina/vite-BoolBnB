@@ -3,14 +3,14 @@ import { store } from './store';
 import Header from './components/layouts/Header.vue';
 import Sidebar from './components/layouts/Sidebar.vue';
 import Footer from './components/layouts/Footer.vue';
-import Jumbotron from './components/partials/Jumbotron.vue';
+
 
 export default {
   components:{
     Header,
     Sidebar,
     Footer,
-    Jumbotron,
+
   },
   data() {
     return {
@@ -27,7 +27,7 @@ export default {
   <div id="wrapper">
     <!-- Header -->
     <Header />
-    <Jumbotron />
+
     <!-- Main Content -->
     <main >
       <router-view  />

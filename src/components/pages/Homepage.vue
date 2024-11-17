@@ -4,11 +4,12 @@ import PropertyCard from '../partials/PropertyCard.vue';
 import Filter from '../partials/Filter.vue';
 import axios from 'axios';
 import Loader from '../partials/Loader.vue';
+import Jumbotron from '../partials/Jumbotron.vue';
 
 
 
 export default {
-    components: { Filter, PropertyCard, Loader },
+    components: { Filter, PropertyCard, Loader, Jumbotron },
     data() {
         return {
             store,
@@ -97,8 +98,9 @@ export default {
 <template>
     <Loader v-if="loading" class="h-100 middle"/>
     
-    <section v-else class="homepage h-100" id="index">
-        <div class="container h-100 position-relative">
+    <section v-else class="homepage h-100">
+        <Jumbotron />
+        <div class="container mt-5">
             <!-- Filtro sopra le schede -->
             <div class="row">
                 <Filter :propertyTypes="propertyTypes"/>
