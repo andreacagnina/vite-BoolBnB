@@ -1,6 +1,9 @@
 <script>
+
+
 export default {
     name: 'Jumbotron',
+
     
 }
 </script>
@@ -19,9 +22,9 @@ export default {
                     </div>
                 </div>
             </div>
+            
         </div>
 </section>
-
 
 
 </template>
@@ -43,6 +46,8 @@ min-height: 100vh;
   mt-cust {
     margin-top: 208px;
   }
+
+
 
 
 </style>

@@ -43,6 +43,12 @@ export default {
 	},
 
 	methods: {
+		goToResults() {
+    const target = document.getElementById('results');
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  },
 		applyFilters() {
 			store.num_rooms = this.numRooms;
 			store.num_beds = this.numBeds;
@@ -115,7 +121,7 @@ export default {
 
 			</li>
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
-			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
+			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToResults()" :class="{ active: store.filterType === type }">
 
 				<img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
 				<span class="d-none d-lg-block">{{ type }}</span>

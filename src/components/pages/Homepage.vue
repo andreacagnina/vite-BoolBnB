@@ -5,11 +5,12 @@ import Filter from '../partials/Filter.vue';
 import axios from 'axios';
 import Loader from '../partials/Loader.vue';
 import Jumbotron from '../partials/Jumbotron.vue';
+import Marker from '../partials/Marker.vue';
 
 
 
 export default {
-    components: { Filter, PropertyCard, Loader, Jumbotron },
+    components: { Filter, PropertyCard, Loader, Jumbotron, Marker, },
     data() {
         return {
             store,
@@ -110,7 +111,10 @@ export default {
                 <Loader v-if="loadinge" class="h-cust" />
     
             <div v-else class="wrapper">
-                <div class="row g-3 h-100">
+                
+                        <Marker />
+                
+                <div class="row g-3 h-100" >
 
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
                         <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
