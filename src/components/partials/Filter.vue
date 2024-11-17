@@ -1,196 +1,267 @@
 <script>
+
 import axios from 'axios';
 import { store } from '../../store';
 
 export default {
-name: 'Filter',
-props: ['propertyTypes'],
-data() {
-    return {
-		store,
-    numRooms: '',
-    numBeds: '',
-    numBaths: '',
-    mq: '',
-    price: '',
-    selectedServices: [],
-    radius: store.radius || 20,
-    maxRadius: 200,
-    };
-},
-computed: {
-    minMaxValues() {
-      return store.minMaxValues || {
-        min_price: 50,
-        max_price: 1000,
-        min_mq: 20,
-        max_mq: 500,
-        min_rooms: 1,
-        max_rooms: 10,
-        min_beds: 1,
-        max_beds: 10,
-        min_baths: 1,
-        max_baths: 5,
-      };
-    },
-  },
-  methods: {
-    applyFilters() {
-      store.num_rooms = this.numRooms;
-      store.num_beds = this.numBeds;
-      store.num_baths = this.numBaths;
-      store.mq = this.mq;
-      store.price = this.price;
-      store.selectedServices = this.selectedServices;
-      store.radius = Math.min(this.radius, this.maxRadius);
-      store.current_page = 1;
-    },
-    setFilter(type) {
-      store.filterType = type;
-      store.current_page = 1;
-    },
-    resetFilters() {
-      store.filterType = '';
-      this.numRooms = '';
-      this.numBeds = '';
-      this.numBaths = '';
-      this.mq = '';
-      this.price = '';
-      this.selectedServices = [];
-      this.radius = 20;
-      store.latitude = null;
-      store.longitude = null;
-      store.searchTerm = '';
-      store.num_rooms = '';
-      store.num_beds = '';
-      store.num_baths = '';
-      store.mq = '';
-      store.price = '';
-      store.selectedServices = [];
-      store.radius = 20;
-      store.current_page = 1;
-    },
-    async loadMinMaxValues() {
-      try {
-        const response = await axios.get(`${store.baseUrl}/properties`);
-        if (response.data.success) {
-          store.minMaxValues = response.data.minMaxValues;
-        }
-      } catch (error) {
-        console.error('Errore nel caricamento dei valori min/max:', error);
-      }
-    },
-  },
 
-  mounted() {
-    this.loadMinMaxValues();
-  },
+	name: 'Filter',
+	props: ['propertyTypes'],
+	
+	data() {
+		return {
+
+		store,
+		numRooms: '',
+		numBeds: '',
+		numBaths: '',
+		mq: '',
+		price: '',
+		selectedServices: [],
+		radius: store.radius || 20,
+		maxRadius: 200,
+
+		};
+	},
+
+	computed: {
+		minMaxValues() {
+			return store.minMaxValues || {
+				min_price: 50,
+				max_price: 1000,
+				min_mq: 20,
+				max_mq: 500,
+				min_rooms: 1,
+				max_rooms: 10,
+				min_beds: 1,
+				max_beds: 10,
+				min_baths: 1,
+				max_baths: 5,
+
+			};
+		},
+	},
+
+	methods: {
+		applyFilters() {
+			store.num_rooms = this.numRooms;
+			store.num_beds = this.numBeds;
+			store.num_baths = this.numBaths;
+			store.mq = this.mq;
+			store.price = this.price;
+			store.selectedServices = this.selectedServices;
+			store.radius = Math.min(this.radius, this.maxRadius);
+			store.current_page = 1;
+		},
+
+		setFilter(type) {
+			store.filterType = type;
+			store.current_page = 1;
+		},
+
+		resetFilters() {
+			store.filterType = '';
+			this.numRooms = '';
+			this.numBeds = '';
+			this.numBaths = '';
+			this.mq = '';
+			this.price = '';
+			this.selectedServices = [];
+			this.radius = 20;
+			store.latitude = null;
+			store.longitude = null;
+			store.searchTerm = '';
+			store.num_rooms = '';
+			store.num_beds = '';
+			store.num_baths = '';
+			store.mq = '';
+			store.price = '';
+			store.selectedServices = [];
+			store.radius = 20;
+			store.current_page = 1;
+		},
+
+		async loadMinMaxValues() {
+			try {
+				const response = await axios.get(`${store.baseUrl}/properties`);
+				if (response.data.success) {
+					store.minMaxValues = response.data.minMaxValues;
+				}
+			} catch (error) {
+				console.error('Errore nel caricamento dei valori min/max:', error);
+			}
+		},
+	},
+
+	mounted() {
+		this.loadMinMaxValues();
+	},
 };
+
 </script>
 
+
 <template>
-  <div class="col-sm-12 col-lg-12">
-    <div class="d-flex justify-content-center align-items-center mt-1 mb-3">
-      <ul class="filter-list">
-        <li @click="setFilter('')" :class="{ active: store.filterType === '' }">
-          <img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
-          <span>All</span>
-        </li>
-        <li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
-          <img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
-          <span>{{ type }}</span>
-        </li>
-      </ul>
-	  
-	  
-      <button @click="resetFilters" class="btn btn-filter ms-5">
-        <i class="fa-solid fa-eraser mb-1"></i>
-        <span class="d-none d-sm-block">Reset</span>
-      </button>
-      <button class="btn btn-filter" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
-        <img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
-        <span class="d-none d-sm-block">Filter</span>
-      </button>
-    </div>
-  </div>
+<!-- FILTRO PER TIPO DI PROPIETà -->
+<div class="col-sm-12 col-lg-12">
+	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center">
 
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
-    <div class="offcanvas-header">
-      <h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div class="mb-4">
-        <label for="priceInput" class="form-label fw-bold">Price (Max)</label>
-        <input id="priceInput" type="range" class="form-range" :min="minMaxValues.min_price" :max="minMaxValues.max_price" :step="0.01" v-model="price" />
-        <p>€ {{ price }}</p>
-      </div>
+		<ul class="filter-list">
+			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPIETà  -->
+			<li @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
-      <div class="mb-2">
-        <label for="mqInput" class="form-label fw-bold">Square meters</label>
-        <input id="mqInput" type="range" class="form-range" :min="minMaxValues.min_mq" :max="minMaxValues.max_mq" :step="0.01" v-model="mq" />
-        <p>{{ mq }} m<sup>2</sup></p>
-      </div>
+				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
+				<span>All</span> 
 
-      <div class="mb-4">
-        <label for="radiusInput" class="form-label fw-bold">Radius</label>
-        <input id="radiusInput" type="range" class="form-range" :min="20" :max="200" v-model="radius" />
-        <p>{{ radius }} Km</p>
-      </div>
+			</li>
+			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
+			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type)" :class="{ active: store.filterType === type }">
 
-      <div class="d-flex justify-content-between mb-3">
-        <div class="w-33 px-1 mb-2">
-          <label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
-          <input id="numRoomsInput" type="number" class="form-control" :min="minMaxValues.min_rooms" :max="minMaxValues.max_rooms" v-model="numRooms" placeholder="1 - 15" />
-        </div>
+				<img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
+				<span>{{ type }}</span>
 
-        <div class="w-33 px-1 mb-2">
-          <label for="numBedsInput" class="form-label fw-bold">Beds</label>
-          <input id="numBedsInput" type="number" class="form-control" :min="minMaxValues.min_beds" :max="minMaxValues.max_beds" v-model="numBeds" placeholder="1 - 15" />
-        </div>
+			</li>
+		</ul>
+		<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
+		<button @click="resetFilters" class="btn btn-filter ms-5">
 
-        <div class="w-33 px-1 mb-2">
-          <label for="numBathsInput" class="form-label fw-bold">Baths</label>
-          <input id="numBathsInput" type="number" class="form-control" :min="minMaxValues.min_baths" :max="minMaxValues.max_baths" v-model="numBaths" placeholder="1 - 6" />
-        </div>
-      </div>
+			<i class="fa-solid fa-eraser mb-1"></i>
+			<span class="d-none d-sm-block">Reset</span>
 
-      <div class="mb-4">
-        <label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
-        <div class="row">
-          <div class="col-md-6">
-            <div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
-              <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id" :value="service.id" v-model="selectedServices" />
-              <label class="form-check-label" :for="'service-' + service.id">
-                <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
-              </label>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 2))" :key="service.id" class="form-check d-flex">
-              <input type="checkbox" class="form-check-input me-1" :id="'service-' + service.id" :value="service.id" v-model="selectedServices" />
-              <label class="form-check-label" :for="'service-' + service.id">
-                <i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
+		</button>
+		<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
+		<button class="btn btn-filter" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
 
-      <button class="btn btn-custom w-100 mt-4" @click="resetFilters">
-        Remove all filters
-      </button>
+			<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
+			<span class="d-none d-sm-block">Filter</span>
 
-      <button type="button" class="btn btn-custom-two w-100 mt-4" data-bs-dismiss="offcanvas" @click="applyFilters">
-        See Results
-      </button>
-    </div>
-  </div>
+		</button>
+
+	</div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
+
+	<div class="offcanvas-header">
+
+		<h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
+		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
+
+	</div>
+	<div class="offcanvas-body">
+
+		<div class="mb-4">
+			<label for="priceInput" class="form-label fw-bold">Price (Max)</label>
+			<input id="priceInput" type="range" class="form-range" :min="minMaxValues.min_price" :max="minMaxValues.max_price" :step="0.01" v-model="price" />
+			<p>€ {{ price }}</p>
+		</div>
+
+		<div class="mb-2">
+			<label for="mqInput" class="form-label fw-bold">Square meters</label>
+			<input id="mqInput" type="range" class="form-range" :min="minMaxValues.min_mq" :max="minMaxValues.max_mq" :step="0.01" v-model="mq" />
+			<p>{{ mq }} m<sup>2</sup></p>
+		</div>
+
+		<div class="mb-4">
+			<label for="radiusInput" class="form-label fw-bold">Radius</label>
+			<input id="radiusInput" type="range" class="form-range" :min="20" :max="200" v-model="radius" />
+			<p>{{ radius }} Km</p>
+		</div>
+
+		<div class="d-flex justify-content-between mb-3">
+			<div class="w-33 px-1 mb-2">
+				<label for="numRoomsInput" class="form-label fw-bold">Rooms</label>
+				<input id="numRoomsInput" type="number" class="form-control" :min="minMaxValues.min_rooms" :max="minMaxValues.max_rooms" v-model="numRooms" placeholder="1 - 15" />
+			</div>
+
+			<div class="w-33 px-1 mb-2">
+				<label for="numBedsInput" class="form-label fw-bold">Beds</label>
+				<input id="numBedsInput" type="number" class="form-control" :min="minMaxValues.min_beds" :max="minMaxValues.max_beds" v-model="numBeds" placeholder="1 - 15" />
+			</div>
+
+			<div class="w-33 px-1 mb-2">
+				<label for="numBathsInput" class="form-label fw-bold">Baths</label>
+				<input id="numBathsInput" type="number" class="form-control" :min="minMaxValues.min_baths" :max="minMaxValues.max_baths" v-model="numBaths" placeholder="1 - 6" />
+			</div>
+		</div>
+
+		<div class="mb-2">
+			<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
+			<div class="row">
+			  <!-- Prima colonna -->
+			  <div class="col-md-4">
+				<div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 3))" 
+					 :key="service.id" 
+					 class="form-check d-flex">
+				  <input 
+					type="checkbox" 
+					class="form-check-input me-1" 
+					:id="'service-' + service.id" 
+					:value="service.id" 
+					v-model="selectedServices" />
+				  <label class="form-check-label" :for="'service-' + service.id">
+					<i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
+				  </label>
+				</div>
+			  </div>
+		  
+			  <!-- Seconda colonna -->
+			  <div class="col-md-4">
+				<div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 3), Math.ceil((store.services.length * 2) / 3))" 
+					 :key="service.id" 
+					 class="form-check d-flex">
+				  <input 
+					type="checkbox" 
+					class="form-check-input me-1" 
+					:id="'service-' + service.id" 
+					:value="service.id" 
+					v-model="selectedServices" />
+				  <label class="form-check-label" :for="'service-' + service.id">
+					<i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
+				  </label>
+				</div>
+			  </div>
+		  
+			  <!-- Terza colonna -->
+			  <div class="col-md-4">
+				<div v-for="(service, index) in store.services.slice(Math.ceil((store.services.length * 2) / 3))" 
+					 :key="service.id" 
+					 class="form-check d-flex">
+				  <input 
+					type="checkbox" 
+					class="form-check-input me-1" 
+					:id="'service-' + service.id" 
+					:value="service.id" 
+					v-model="selectedServices" />
+				  <label class="form-check-label" :for="'service-' + service.id">
+					<i :class="service.icon" class="me-1 filter-icon"></i> {{ service.name }}
+				  </label>
+				</div>
+			  </div>
+			</div>
+		  </div>
+
+		<button type="button" class="btn btn-custom-two mt-4 me-4" data-bs-dismiss="offcanvas" @click="applyFilters">
+			See Results
+		</button>
+		<button class="btn btn-custom mt-4" @click="resetFilters">
+			Remove all filters
+		</button>
+
+	</div>
+</div>
+
 </template>
 
 <style lang="scss" scoped>
-@use "../../styles/partials/partials.scss" as *;
+	@use "../../styles/partials/partials.scss" as *;
 
+	.filter-by-type {
+		top: 87px;
+		left: 0;
+		background-color: $background-color;
+		padding: 10px 0px;
+	}
 
 	.w-33 {
 		width: calc(100% / 3);
@@ -296,6 +367,13 @@ computed: {
 		background-color: #ebada2;
 	}
 
+	.offcanvas {
+		padding: 0; /* Rimuove il padding interno */
+		margin: 0;  /* Rimuove il margine esterno */
+		border: none; /* Rimuove eventuali bordi */
+		background-color: #49919d; /* Assicura che il background sia uniforme */
+		width: 35%;
+	  }
 	.offcanvas-header,
 	.offcanvas-body {
 		text-align: center;

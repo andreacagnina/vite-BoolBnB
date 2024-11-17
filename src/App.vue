@@ -1,66 +1,67 @@
 <script>
-  import Header from './components/layouts/Header.vue';
-  import Sidebar from './components/layouts/Sidebar.vue';
-  import Footer from './components/layouts/Footer.vue';
 
-  import { store } from './store';
+import { store } from './store'; 
+import Header from './components/layouts/Header.vue';
+import Sidebar from './components/layouts/Sidebar.vue';
+import Footer from './components/layouts/Footer.vue';
 
-  export default {
-    components:{
-      Header,
-      Sidebar,
-      Footer,
+export default {
 
-    },
-    data() {
-      return {
-        store
-      }
-    },
-  }
-</script>
+  components:{
 
-<template>
-  <div id="app">
-<div id="wrapper">
+    Header,
+    Sidebar,
+    Footer,
 
-  <!-- Header -->
-  <Header />
-  
-  <!-- Sidebar -->
-  <!--<Sidebar />-->
-  <!-- Main Content -->
-  <main  class="main-content">
-    <router-view  />
-  </main>
-</div>
+  },
+  data() {
+    return {
 
-    <!-- Footer -->
-    <Footer />
+      store
 
-  </div>
-</template>
-
-<style lang="scss" scoped>
-@use "./styles/partials/partials.scss" as *;
-
-#wrapper {
-  height: 100vh;
+    }
+  },
 }
 
+</script>
 
-  main {
-    overflow: auto;
-    height: calc(100% - 87px);
-  }
 
-  footer {
-min-height: 101px;    
+<template>
+<div id="app">
 
-  }
+  <div id="wrapper">
+    <!-- Header -->
+    <Header />
+    
+    <!-- Main Content -->
+    <main>
+      <router-view  />
+    </main>
+    
+    <!-- Footer -->
+    <Footer />
+  </div>
 
-  header {
-    height: 87px;
-    background-color: $background-color;
-  }
+</div>
+</template>
+
+
+<style lang="scss" scoped>
+  @use "./styles/partials/partials.scss" as *;
+
+#wrapper {
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+main {
+
+  padding-top: 87px; /* Altezza dell'header */
+  flex: 1;
+
+}
+
 </style>

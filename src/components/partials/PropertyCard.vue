@@ -1,17 +1,26 @@
 <script>
+
 import { store } from "../../store";
 
 export default {
-  name: "PropertyCard",
-  props: {
-    property: Object,
-  },
-  data() {
-    return {
-      store,
-    };
-  },
+
+    name: "PropertyCard",
+
+    props: {
+        property: Object,
+
+    },
+
+    data() {
+        return {
+
+            store,
+
+        };
+    },
+
 };
+
 </script>
 
 
