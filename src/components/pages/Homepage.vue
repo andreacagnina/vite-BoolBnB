@@ -98,16 +98,14 @@ export default {
         <div class="container h-100 position-relative">
             <!-- Filtro sopra le schede -->
             <div class="row">
-                <div class="col-12 mb-4">
-                    <Filter :propertyTypes="propertyTypes"/>
-                </div>
+                <Filter :propertyTypes="propertyTypes"/>
             </div>
 
             <!-- Contenuto delle schede -->
                 <Loader v-if="loadinge" class="h-cust" />
     
             <div v-else class="wrapper">
-                <div class="row g-3 h-100">
+                <div class="row g-3 h-100 mt-55">
 
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
                         <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
@@ -139,6 +137,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+.mt-55 {
+    margin-top: 70px;
+}
+
 .homepage {
     padding: 30px 0;
 }
