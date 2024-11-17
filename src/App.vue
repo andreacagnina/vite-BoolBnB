@@ -4,6 +4,7 @@ import { store } from './store';
 import Header from './components/layouts/Header.vue';
 import Sidebar from './components/layouts/Sidebar.vue';
 import Footer from './components/layouts/Footer.vue';
+import Jumbotron from './components/partials/Jumbotron.vue';
 
 export default {
 
@@ -12,6 +13,7 @@ export default {
     Header,
     Sidebar,
     Footer,
+    Jumbotron,
 
   },
   data() {
@@ -32,9 +34,10 @@ export default {
   <div id="wrapper">
     <!-- Header -->
     <Header />
+    <Jumbotron />
     
     <!-- Main Content -->
-    <main>
+    <main >
       <router-view  />
     </main>
     
@@ -49,18 +52,17 @@ export default {
 <style lang="scss" scoped>
   @use "./styles/partials/partials.scss" as *;
 
-#wrapper {
+  #wrapper {
 
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-}
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  
+  }
 
 main {
-
-  padding-top: 87px; /* Altezza dell'header */
   flex: 1;
+
 
 }
 

@@ -25,14 +25,15 @@ export default {
 
 
 <template>
-        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3 px-2 my-3" id="property-card">
+
+        <div class="col-xs-12 col-sm-6 col-lg-4 col-xl-3 px-2">
             <div class="card h-100 d-flex flex-column">
                 <span v-if="property.sponsored" class="badge-sponsor"><i class="fa-solid fa-crown"></i>SPONSORED<i class="fa-solid fa-crown"></i></span>
-
-
+                
+                
                 <router-link class="text-reset text-decoration-none h-100 d-flex flex-column"
                 :to="{ name: 'property', params: { slug: property.slug } }">
-
+                
                 <div class="card-img-top">
                     <!-- Carosello di immagini senza scorrimento automatico -->
                     <div :id="'carousel-' + property.id" class="carousel slide">
@@ -41,7 +42,7 @@ export default {
                             <div class="carousel-item active">
                                 <img :src="property.cover_image" class="d-block w-100" alt="Cover Image">
                             </div>
-
+                            
                             <!-- Immagini aggiuntive dalla tabella 'images' -->
                             <div v-for="image in property.images" :key="image.id" class="carousel-item">
                                 <img :src="image.path" class="d-block w-100" alt="Property Image">
@@ -61,7 +62,7 @@ export default {
                         </button>
                     </div>
                 </div>
-
+                
                 <div class="card-body d-flex flex-column mt-auto">
                     <h3 class="text-truncate">{{ property.title }}</h3>
                     <p class="text-truncate">{{ property.address }}</p>
@@ -78,10 +79,13 @@ export default {
         </div>
     </div>
 
+    
 </template>
 
 <style lang="scss" scoped>
 @import "../../styles/partials/partials.scss";
+
+
 
 .card-img-top img {
     height: 280px;

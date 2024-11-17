@@ -4,11 +4,11 @@ import PropertyCard from '../partials/PropertyCard.vue';
 import Filter from '../partials/Filter.vue';
 import axios from 'axios';
 import Loader from '../partials/Loader.vue';
-import Jumbotron from '../partials/Jumbotron.vue';
+
 
 
 export default {
-    components: { Filter, PropertyCard, Loader, Jumbotron },
+    components: { Filter, PropertyCard, Loader },
     data() {
         return {
             store,
@@ -95,7 +95,6 @@ export default {
 </script>
 
 <template>
-    <Jumbotron />
 
     <Loader v-if="loading" class="h-100 middle"/>
     
@@ -110,7 +109,7 @@ export default {
                 <Loader v-if="loadinge" class="h-cust" />
     
             <div v-else class="wrapper">
-                <div class="row g-3 h-100 mt-55">
+                <div class="row g-3 h-100">
 
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
                         <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
@@ -142,9 +141,6 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.mt-55 {
-    margin-top: 70px;
-}
 
 .homepage {
     padding: 30px 0;
@@ -153,6 +149,7 @@ export default {
 .h-cust {
     height: calc(100% - 115px);
 }
+
 
 
 .filter-list {
