@@ -113,12 +113,24 @@ export default {
 	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center py-3">
 
 		<ul class="filter-list">
-			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPIETà  -->
+			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPRIETà  -->
 			<li class="mb-3 mb-md-0" @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
-				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
+				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="showAll">
 				<span class="d-none d-lg-block">All</span> 
 
+			</li>
+			<li class="mb-3 mb-md-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
+				<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
+					<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter">
+					<span class="d-none d-lg-block">Filter</span>
+					
+			</li>
+			<li @click="resetFilters" class="mb-3 mb-md-0" >
+				<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
+					<img src="https://cdn-icons-png.flaticon.com/512/175/175076.png" alt="reset">
+					<span class="d-none d-lg-block ">Reset</span>
+	
 			</li>
 			<div class="overflow-x-auto whitespace-nowrap">
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
@@ -129,21 +141,6 @@ export default {
 
 			</li>
 
-			<li >
-				<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
-				<button class="btn btn-filter mb-3 mb-md-0 m-0 p-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
-					
-					<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
-					<span class="d-none d-lg-block">Filter</span>
-					
-				</button>
-			</li>
-			<li @click="resetFilters" class="mb-3 mb-md-0" >
-				<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
-					<img src="https://cdn-icons-png.flaticon.com/512/175/175076.png" alt="reset">
-					<span class="d-none d-lg-block ">Reset</span>
-	
-			</li>
 		</div>
 		</ul>
 
@@ -151,14 +148,13 @@ export default {
 </div>
 
 <!-- OFFCANVAS -->
-<div class="offcanvas offcanvas-end d-flex flex-column" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
+<div class="offcanvas offcanvas-end d-flex flex-column " tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
 
-	<div class="offcanvas-header">
+	
 
-		<h3 id="roomsOffcanvasLabel" class="fw-bold">Filters</h3>
-		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
+		<button type="button" class="btn-close btn-close-white fs-6 mt-2" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
 
-	</div>
+
 	<div class="offcanvas-body">
 
 		<div class="mb-4">
@@ -197,10 +193,10 @@ export default {
 		</div>
 
 		<div class="mb-2 text-nowrap">
-			<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
-			<div class="row">
+			<label for="servicesCheckbox" class="form-label fw-bold mb-2">Services</label>
+			<div class="row flex-column">
 			  <!-- Prima colonna -->
-			  <div class="col-4">
+			  <div class="col-6 col-md-4">
 				<div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -217,7 +213,7 @@ export default {
 			  </div>
 		  
 			  <!-- Seconda colonna -->
-			  <div class="col-4">
+			  <div class="col-12 col-md-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 3), Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -234,7 +230,7 @@ export default {
 			  </div>
 		  
 			  <!-- Terza colonna -->
-			  <div class="col-4">
+			  <div class="col-6 col-md-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -252,8 +248,8 @@ export default {
 			</div>
 		  </div>
 		</div>
-		<div class="offcanvas-footer">
-			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()">
+		<div class="d-flex justify-content-center mb-3">
+			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()"><i class="fa-solid fa-arrow-left-long me-1"></i>
 				See Results
 			</button>
 			<button class="btn btn-custom-two " @click="resetFilters">
@@ -261,6 +257,7 @@ export default {
 			</button>
 		</div>
 </div>
+
 
 </template>
 
@@ -371,6 +368,7 @@ export default {
 		}
 	}
 
+
 	.filter-list li.active {
 		position: relative;
 		color: #ebada2;
@@ -399,25 +397,25 @@ export default {
 
 		
 	  }
-	  .offcanvas-footer, .offcanvas-header {
+	   .offcanvas-header {
 		text-align: center;
 		border: none;
 		color: #f7ede2;
 		padding: 20px;
 		background-color: $background-color;
-		.btn-custom-two {
-			color: #f7ede2;
-			background: linear-gradient(250deg, #ce6a6c, #ebada2);
-			border-radius: 10px;
-			border: none;
-			padding: 10px 20px;
-			cursor: pointer;
-			transition: all 0.3s ease;
+	}
+	.btn-custom-two {
+		color: #f7ede2;
+		background: linear-gradient(250deg, #ce6a6c, #ebada2);
+		border-radius: 10px;
+		border: none;
+		padding: 7px 20px;
+		cursor: pointer;
+		transition: all 0.3s ease;
 
-	
-			&:hover {
-				transform: scale(1.05);
-			}
+
+		&:hover {
+			transform: scale(1.05);
 		}
 	  }
 
@@ -430,22 +428,9 @@ export default {
 		border: none;
 		
 
-		.btn-custom {
-			color: #f7ede2;
-			background: linear-gradient(45deg, #ce6a6c, #ebada2);
-			border-radius: 10px;
-			border: none;
-			padding: 10px 20px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-
-			&:hover {
-				transform: scale(1.05);
-			}
-
 		}
 
-	}
+	
 
 	.list-group-item {
 		cursor: pointer;

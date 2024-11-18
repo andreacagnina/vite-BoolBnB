@@ -5,7 +5,7 @@ export default {
 }
 </script>
 <template>
-    <section class="d-flex justify-content-center align-items-center ">
+    <section class="d-flex justify-content-center align-items-center h-100 ">
         <div class="text-center text-white">
             <h1>404 - Pagina Non Trovata</h1>
             <p>La pagina che stai cercando non esiste.</p>

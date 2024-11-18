@@ -215,7 +215,7 @@ export default {
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-center">
                             
-                                <h4 class="fw-bold pe-2">Weekly {{ store.formatPrice(store.property.price) }}</h4>
+                                <h3 class="fw-bold pe-2 text-s">{{ store.formatPrice(store.property.price) }} for a week</h3>
                                 
                                 
                             </div>
@@ -249,7 +249,7 @@ export default {
                                 <li v-for="service in store.property.services" :key="service.id"
                                     class="d-flex text-nowrap">
                                     <div class="icon-line pe-4 ms-1">
-                                        <span class="">
+                                        <span>
                                             {{ service.name }}
                                         </span>
                                         <i :class="service.icon" class="ms-2 icon-custom"></i>

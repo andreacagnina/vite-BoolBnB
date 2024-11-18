@@ -115,7 +115,7 @@ export default {
 
         <div class="col-12 col-md-4 col-lg-4 order-0 order-md-1 justify-content-between justify-content-md-end">
           <a :href="`${store.clientUrl}/login`">Login</a>
-          <a :href="`${store.clientUrl}/register`">Register</a>
+          <a :href="`${store.clientUrl}/`">Register</a>
         </div>
 
         <div class="col-sm-12 col-md-4 order-1 order-md-0 my-3">

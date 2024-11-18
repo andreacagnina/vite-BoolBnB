@@ -92,29 +92,6 @@ export default {
                 </div>
             </transition>
         </div>
-    <!-- Menu per mobile -->
-    <!-- <div class="footer-menu">
-        <ul>
-            <li>
-                <router-link to="/" class="footer-link" active-class="active">
-                    <i class="fa-solid fa-house"></i>
-                    <p>Explore</p>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/favorites" class="footer-link" active-class="active">
-                    <i class="fa-regular fa-heart"></i>
-                    <p>Favorites</p>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/profile" class="footer-link" active-class="active">
-                    <i class="fa-regular fa-circle-user"></i>
-                    <p>Profile</p>
-                </router-link>
-            </li>
-        </ul>
-    </div> -->
 
     </footer>
 </template>
