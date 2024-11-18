@@ -309,7 +309,7 @@ export default {
 
   .search-box .btn-search:focus ~ .input-search,
   .search-box .input-search:focus {
-    width: 450px !important;
+    width: 400px !important;
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid #f7ede2;

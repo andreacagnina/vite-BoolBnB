@@ -36,7 +36,7 @@ export default {
                         <!-- Cover img -->
                         <div class="carousel-item active position-relative">
                             <img class="img-fluid" :src="property.cover_image"  alt="Cover Image" >
-                            <div class="position-absolute top-custom start-50" id="marker"></div>
+                            <div class="position-absolute top-50 start-50" id="marker"></div>
                         </div>
 
                         <!-- Immagini aggiuntive dalla tabella 'images' -->
