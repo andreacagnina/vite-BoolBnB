@@ -173,7 +173,7 @@ export default {
         <Loader  />
     </section>
     <section v-else class="mt-cust">
-    <div class="container">
+    <div class="custom-container">
         <div class="row">
             <div class="col-12 text-center mt-4">
                 <h1 class="fw-bold">{{ store.property.title }}</h1>
@@ -181,17 +181,17 @@ export default {
             </div>
 
             <!-- Immagine principale (immagine attiva selezionata) -->
-            <div class="col-lg-7 my-4 position-relative">
+            <div class="col-12 col-lg-7 my-4 position-relative">
                 <img :src="currentImage.path" alt="Main Property Image" class="img-fluid main-image rounded-4">
                 <button @click="toggleFavorite" class="btn position-absolute top-0 start-0 ms-3 fs-1 border-0"
                     :disabled="isLoadingFavorite">
                     <i v-if="this.isFavorite" class="fa-solid fa-heart" style=" color: #ff0000;"></i><i v-else
-                        class="fa-regular fa-heart" style=" color: #fff;"></i>
+                        class="fa-regular fa-heart" style=" color: #ff0000;"></i>
                 </button>
             </div>
 
             <!-- Immagini aggiuntive (layout 2x2) -->
-            <div class="col-lg-5 my-5">
+            <div class="col-12 col-lg-5 my-5">
                 <div class="small-images d-flex flex-column h-100">
                     <div class="d-flex flex-grow-1">
                         <img v-for="(image, index) in store.property.images" :key="image.id" :src="image.path"
@@ -208,61 +208,69 @@ export default {
         <div class="row justify-content-center">
             <div class="col-12">
                 <div v-if="!isLoading">
-                    <hr>
-                    <div class="row justify-content-evenly">
+                    
+                    <div class="row">
 
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <div class="card p-3 mb-3 h-100">
-                                <h3 class="fw-bold text-center mb-4">Services:</h3>
-                                <ul class="list-unstyled text-center">
-                                    <li v-for="service in store.property.services" :key="service.id"
-                                        class="d-flex text-start text-nowrap">
-                                        <div class="icon-line">
-                                            <i :class="service.icon" class="me-2 icon-custom"></i>
-                                            <span class="ms-2">
-                                                {{ service.name }}
-                                            </span>
-                                        </div>
-                                    </li>
-                                </ul>
+                        
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-center">
+                            
+                                <h4 class="fw-bold pe-2">Weekly</h4>
+                                <p class="fw-bold fs-4">{{ store.formatPrice(store.property.price) }}</p>
+                                
                             </div>
+                            <hr>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-3">
-                            <!-- Dettagli Proprieta' -->
-                            <div class="card p-3 mb-3 h-100 text-center">
-                                <h3 class="fw-bold mb-4">Property Details:</h3>
-                                <div class="align-details">
-                                    <p><strong class="pe-2">Rooms:</strong>{{ store.property.num_rooms }}</p>
-                                </div>
-                                <div class="align-details">
-                                    <p><strong class="pe-2">Beds:</strong>{{ store.property.num_beds }}</p>
-                                </div>
-                                <div class="align-details">
-                                    <p><strong class="pe-2">Bathrooms:</strong>{{ store.property.num_baths }}</p>
-                                </div>
-                                <div class="align-details">
-                                    <p><strong class="pe-2">M<sup>2</sup></strong>{{ store.property.mq }}</p>
-                                </div>
+                        <div class="col-sm-6 col-md-12">
+
+                            <h3 class="fw-bold d-flex justify-content-center pb-2 text-s mt-3">Details</h3>
+                            <div class="ul list-unstyled d-flex justify-content-center sm-column mb-3">
+
+                                <li>
+                                    <p>Rooms <span  class="fs-3 ms-1 fw-bold">{{ store.property.num_rooms }}</span></p>
+                                </li>
+                                <li>
+                                    <p class="ms-cust">Beds <span  class="fs-3 ms-1 fw-bold">{{ store.property.num_beds }}</span></p>
+                                </li>
+                                <li>
+                                    <p class="ms-cust">Bathrooms <span  class="fs-3 ms-1 fw-bold">{{ store.property.num_baths }}</span></p>
+                                </li>
+                                <li>
+                                    <p class="ms-cust">m<sup>2</sup> <span  class="fs-3 ms-1 fw-bold">{{ store.property.mq }}</span></p>
+                                </li>
                             </div>
+
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-3">
-                            <div class="card p-3 mb-3 h-100 text-center">
-                                <h3 class="fw-bold mb-3">Weekly Price:</h3>
-                                <p class="fw-bold align-price">{{ store.formatPrice(store.property.price) }}</p>
-                            </div>
+                        
+                        <div class="col-sm-6 col-md-12 ">
+                            
+                            <h3 class="fw-bold d-flex justify-content-center pb-3 text-s mt-3">Services</h3>
+                            <ul class="list-unstyled d-flex justify-content-center sm-column mb-3">
+                                <li v-for="service in store.property.services" :key="service.id"
+                                    class="d-flex text-nowrap">
+                                    <div class="icon-line pe-4 ms-1">
+                                        <span class="">
+                                            {{ service.name }}
+                                        </span>
+                                        <i :class="service.icon" class="ms-2 icon-custom"></i>
+                                    </div>
+                                </li>
+                            </ul>
+
                         </div>
+                        <hr>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-12 mb-5">
-            <hr>
+            
             <div class="row gx-5">
-                <div class="col-sm-12 col-md-8 mt-5 text-center">
+                <div class="col-12 col-md-7 col-lg-8 mt-5 text-center">
                     <h2 class="fw-bold">Here’s where you can find us!</h2>
                     <p>{{ store.property.address }}</p>
                 </div>
-                <div class="col-sm-12 col-md-4 mt-5 text-center order-sm-last order-md-0">
+                <div class="col-12 col-md-5 col-lg-4 mt-5 text-center order-sm-last order-md-0">
                     <div v-if="isMessageSent" :class="['success-message', showMessageClass]" class="mb-2">
                         <div class="d-flex align-items-center">
                             <!-- Icona di successo -->
@@ -271,10 +279,10 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-8 d-flex justify-content-center mb-4">
+                <div class="col-12 col-md-7 col-lg-8 d-flex justify-content-center mb-4">
                     <TomTomMap v-if="lat && long" :lat="lat" :long="long" />
                 </div>
-                <div class="col-sm-12 col-md-4 text-center">
+                <div class="col-12 col-md-5 col-lg-4 text-center">
                     <!-- Messaggio di successo -->
                     <h2 class="fw-bold">Contact Us!</h2>
                     <form @submit.prevent="submitForm">
@@ -316,6 +324,12 @@ export default {
 
 <style lang="scss" scoped>
 
+.custom-container {
+    max-width: 100%;
+    margin: 50px auto 0px auto;
+    padding: 0px 75px;
+}
+
 .mt-cust {
     margin-top: 87px;
 }
@@ -337,7 +351,6 @@ hr {
 }
 
 .icon-line {
-    margin-left: 30%;
     color: #f7ede2;
 }
 
@@ -482,7 +495,7 @@ hr {
 h1,
 h2,
 h3,
-h5 {
+h4 {
     color: #f7ede2;
 
     &:hover {
@@ -527,5 +540,38 @@ label {
     display: flex;
     align-items: center;
     animation: slideIn 1s ease-out forwards;
+}
+
+.ms-cust {
+    margin-left: 40px;
+}
+
+@media (max-width: 768px) {
+    .sm-column {
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        margin-left: 20px;
+    }
+
+    .ms-cust {
+        margin-left: 0px;
+    }
+
+    .text-s {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        margin-left: 20px;
+        margin-top: 0px;
+    }
+    
+}
+
+@media (max-width: 992px) {
+    .custom-container {
+        padding: 0px 15px;
+    }
 }
 </style>
