@@ -21,7 +21,7 @@ export default {
 <template>
 <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
 
-    <div class="card">
+    <div class="card pb-4">
 
         <span v-if="property.sponsored" class="badge-sponsor"><i class="fa-solid fa-crown"></i>SPONSORED</span>
             
