@@ -28,14 +28,15 @@ export default {
         <router-link class="text-reset text-decoration-none"
         :to="{ name: 'property', params: { slug: property.slug } }">
             
-            <div class="card-img">
+            <div class="card-img" >
                 <!-- Carosello di immagini -->
                 <div class="carousel slide" :id="'carousel-' + property.id">
 
                     <div class="carousel-inner">
                         <!-- Cover img -->
-                        <div class="carousel-item active">
-                            <img class="img-fluid" :src="property.cover_image"  alt="Cover Image">
+                        <div class="carousel-item active position-relative">
+                            <img class="img-fluid" :src="property.cover_image"  alt="Cover Image" >
+                            <div class="position-absolute top-custom start-50" id="marker"></div>
                         </div>
 
                         <!-- Immagini aggiuntive dalla tabella 'images' -->
@@ -81,6 +82,10 @@ export default {
 
 <style lang="scss" scoped>
     @import "../../styles/partials/partials.scss";
+
+    .top-custom {
+        top: 65%;
+    }
 
 .card-img {
     overflow: hidden;

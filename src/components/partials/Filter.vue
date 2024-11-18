@@ -46,7 +46,7 @@ export default {
 		goToMarker() {
     const target = document.getElementById('marker');
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   },
 		applyFilters() {
