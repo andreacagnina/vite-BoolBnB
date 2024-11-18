@@ -317,7 +317,7 @@ export default {
 <style lang="scss" scoped>
 
 .mt-cust {
-    margin-top: 87px;
+    margin-top: 110px;
 }
 
 section.h-100 {
