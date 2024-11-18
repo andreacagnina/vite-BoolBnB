@@ -110,7 +110,7 @@ export default {
 <template>
 <!-- FILTRO PER TIPO DI PROPIETà -->
 <div class="col-sm-12 col-lg-12">
-	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center">
+	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center py-3">
 
 		<ul class="filter-list">
 			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPIETà  -->
@@ -148,7 +148,7 @@ export default {
 	</div>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
+<div class="offcanvas offcanvas-end d-flex flex-column" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
 
 	<div class="offcanvas-header">
 
@@ -193,7 +193,7 @@ export default {
 			</div>
 		</div>
 
-		<div class="mb-2">
+		<div class="mb-2 text-nowrap">
 			<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
 			<div class="row">
 			  <!-- Prima colonna -->
@@ -248,15 +248,15 @@ export default {
 			  </div>
 			</div>
 		  </div>
-
-		<button type="button" class="btn btn-custom-two mt-4 me-4" data-bs-dismiss="offcanvas" @click="applyFilters">
-			See Results
-		</button>
-		<button class="btn btn-custom mt-4" @click="resetFilters">
-			Remove all filters
-		</button>
-
-	</div>
+		</div>
+		<div class="offcanvas-footer">
+			<button type="button" class="btn btn-custom-two mt-4 me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()">
+				See Results
+			</button>
+			<button class="btn btn-custom mt-4" @click="resetFilters">
+				Remove all filters
+			</button>
+		</div>
 </div>
 
 </template>
@@ -266,7 +266,7 @@ export default {
 
 	.overflow-x-auto {
 		display: flex;
-		overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+		overflow-x: scroll; /* Abilita lo scorrimento orizzontale */
 		scrollbar-color: $pink-color #e0e0e000; /* Colore del thumb e del track per browser moderni */
 		scrollbar-width: thin; /* Spessore sottile */
 	}
@@ -392,15 +392,18 @@ export default {
 		margin: 0;  /* Rimuove il margine esterno */
 		border: none; /* Rimuove eventuali bordi */
 		background-color: #49919d; /* Assicura che il background sia uniforme */
+		height: 100vh;
 		
 	  }
 	.offcanvas-header,
-	.offcanvas-body {
+	.offcanvas-body, .offcanvas-footer {
 		text-align: center;
 		color: #f7ede2;
 		background-color: #49919d;
 		padding: 20px;
 		border: none;
+		overflow-y: hidden;
+
 
 		.btn-custom {
 			color: #f7ede2;
@@ -480,6 +483,12 @@ export default {
 
 	.offcanvas {
 		width: 50%; /* Personalizza la larghezza */
+	}
+
+	@media (max-width: 1024px) {
+		.offcanvas {
+			width: 75%; /* Larghezza piena per dispositivi mobili */
+		}
 	}
 	
 	@media (max-width: 768px) {
