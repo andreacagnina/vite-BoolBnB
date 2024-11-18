@@ -84,7 +84,13 @@ export default {
     @import "../../styles/partials/partials.scss";
 
     .top-custom {
-        top: 65%;
+        top: 70%;
+    }
+
+    @media (max-width: 992px) {
+        .top-custom {
+            top: 60%;
+        }
     }
 
 .card-img {

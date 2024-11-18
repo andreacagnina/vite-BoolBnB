@@ -128,26 +128,29 @@ export default {
 				<span class="d-none d-lg-block">{{ type }}</span>
 
 			</li>
+
+			<li >
+				<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
+				<button class="btn btn-filter mb-3 mb-md-0 m-0 p-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
+					
+					<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
+					<span class="d-none d-lg-block">Filter</span>
+					
+				</button>
+			</li>
+			<li @click="resetFilters" class="mb-3 mb-md-0" >
+				<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
+					<img src="https://cdn-icons-png.flaticon.com/512/175/175076.png" alt="reset">
+					<span class="d-none d-lg-block ">Reset</span>
+	
+			</li>
 		</div>
 		</ul>
-		<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
-		<button @click="resetFilters" class="btn btn-filter ms-md-5 mb-3 mb-md-0">
-
-			<i class="fa-solid fa-eraser mb-1"></i>
-			<span class="d-none d-lg-block">Reset</span>
-
-		</button>
-		<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
-		<button class="btn btn-filter mb-3 mb-md-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
-
-			<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
-			<span class="d-none d-lg-block">Filter</span>
-
-		</button>
 
 	</div>
 </div>
 
+<!-- OFFCANVAS -->
 <div class="offcanvas offcanvas-end d-flex flex-column" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
 
 	<div class="offcanvas-header">
@@ -197,7 +200,7 @@ export default {
 			<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
 			<div class="row">
 			  <!-- Prima colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -214,7 +217,7 @@ export default {
 			  </div>
 		  
 			  <!-- Seconda colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 3), Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -231,7 +234,7 @@ export default {
 			  </div>
 		  
 			  <!-- Terza colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -250,10 +253,10 @@ export default {
 		  </div>
 		</div>
 		<div class="offcanvas-footer">
-			<button type="button" class="btn btn-custom-two mt-4 me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()">
+			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()">
 				See Results
 			</button>
-			<button class="btn btn-custom mt-4" @click="resetFilters">
+			<button class="btn btn-custom-two " @click="resetFilters">
 				Remove all filters
 			</button>
 		</div>
@@ -277,10 +280,10 @@ export default {
 	}
 
 	.filter-by-type {
-		top: 87px;
+		top: 110px;
 		left: 0;
 		background-color: $background-color;
-		padding: 10px 0px;
+		padding: 40px 0px;
 	}
 
 	.w-33 {
@@ -322,6 +325,7 @@ export default {
 		justify-content: center;
 		border: none;
 		margin: 0 20px;
+		padding: 0;
 		cursor: pointer;
 
 		span {
@@ -329,8 +333,8 @@ export default {
 		}
 
 		img {
-			width: 24px;
-			height: 24px;
+			width: 30px;
+			height: 30px;
 			margin-bottom: 5px;
 			text-align: center;
 			filter: brightness(0) invert(1);
@@ -392,18 +396,39 @@ export default {
 		margin: 0;  /* Rimuove il margine esterno */
 		border: none; /* Rimuove eventuali bordi */
 		background-color: #49919d; /* Assicura che il background sia uniforme */
-		height: 100vh;
+
 		
 	  }
-	.offcanvas-header,
-	.offcanvas-body, .offcanvas-footer {
+	  .offcanvas-footer, .offcanvas-header {
+		text-align: center;
+		border: none;
+		color: #f7ede2;
+		background-color: $darkgreen-color;
+		padding: 20px;
+		.btn-custom-two {
+			color: #f7ede2;
+			background: linear-gradient(250deg, #ce6a6c, #ebada2);
+			border-radius: 10px;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+
+	
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+	  }
+
+	
+	.offcanvas-body  {
 		text-align: center;
 		color: #f7ede2;
 		background-color: #49919d;
 		padding: 20px;
 		border: none;
-		overflow-y: hidden;
-
+		
 
 		.btn-custom {
 			color: #f7ede2;
@@ -417,21 +442,9 @@ export default {
 			&:hover {
 				transform: scale(1.05);
 			}
+
 		}
 
-		.btn-custom-two {
-			color: #f7ede2;
-			background: linear-gradient(250deg, #ce6a6c, #ebada2);
-			border-radius: 10px;
-			border: none;
-			padding: 10px 20px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-
-			&:hover {
-				transform: scale(1.05);
-			}
-		}
 	}
 
 	.list-group-item {
