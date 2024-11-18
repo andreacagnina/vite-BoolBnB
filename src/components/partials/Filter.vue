@@ -150,11 +150,6 @@ export default {
 <!-- OFFCANVAS -->
 <div class="offcanvas offcanvas-end d-flex flex-column " tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
 
-	
-
-		<button type="button" class="btn-close btn-close-white fs-6 mt-2" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
-
-
 	<div class="offcanvas-body">
 
 		<div class="mb-4">
@@ -277,7 +272,7 @@ export default {
 	}
 
 	.filter-by-type {
-		top: 110px;
+		top: 109px;
 		left: 0;
 		background-color: $background-color;
 		padding: 40px 0px;

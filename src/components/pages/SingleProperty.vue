@@ -195,7 +195,7 @@ export default {
                 <div class="small-images d-flex flex-column h-100">
                     <div class="d-flex flex-grow-1">
                         <img v-for="(image, index) in store.property.images" :key="image.id" :src="image.path"
-                            alt="Additional Property Image" class="img-fluid w-50 small-image m-1 rounded-4"
+                            alt="Additional Property Image" class="img-fluid w-25 small-image m-1 rounded-4"
                             @click="swapImages(index)" />
                     </div>
                 </div>
