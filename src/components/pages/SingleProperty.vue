@@ -215,8 +215,8 @@ export default {
                         <div class="col-12">
                             <div class="d-flex align-items-center justify-content-center">
                             
-                                <h4 class="fw-bold pe-2">Weekly</h4>
-                                <p class="fw-bold fs-4">{{ store.formatPrice(store.property.price) }}</p>
+                                <h4 class="fw-bold pe-2">Weekly {{ store.formatPrice(store.property.price) }}</h4>
+                                
                                 
                             </div>
                             <hr>
