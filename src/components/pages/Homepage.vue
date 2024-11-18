@@ -101,24 +101,24 @@ export default {
     
     <section v-else class="homepage h-100">
         <Jumbotron />
-        <div class="container mt-5">
+        <div class="custom-container">
             <!-- Filtro sopra le schede -->
             <div class="row">
                 <Filter :propertyTypes="propertyTypes"/>
             </div>
 
             <!-- Contenuto delle schede -->
-                <Loader v-if="loadinge" class="h-cust" />
+            <Loader v-if="loadinge" class="h-cust" />
     
             <div v-else class="wrapper">
                 
-                        <Marker />
+                <Marker />
                 
-                <div class="row g-3 h-100" >
-
+                <div class="row g-4" >
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
                         <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
                 </div>
+
                 <!-- Paginazione -->
                 <div v-if="store.total_results > 24" class="row">
                     <div class="col-12">
@@ -146,6 +146,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+.custom-container {
+    max-width: 100%; /* Imposta una larghezza massima */
+    margin: 50px auto 0px auto; /* Centra il container */
+    padding: 0px 75px;
+}
 
 .homepage {
     padding: 30px 0;
@@ -208,4 +214,11 @@ ul.pagination .page-item .page-link {
 ul.pagination .page-item .page-link:hover {
     color: #192033 !important;
 }
+
+@media (max-width: 992px) {
+    .custom-container {
+        padding: 0px 15px;
+    }
+}
+
 </style>
