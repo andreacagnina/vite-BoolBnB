@@ -145,6 +145,10 @@ export default {
 
 <style lang="scss" scoped>
 
+.wrapper {
+    height: 100%;
+}
+
 .custom-container {
     max-width: 100%; /* Imposta una larghezza massima */
     margin: 50px auto 0px auto; /* Centra il container */

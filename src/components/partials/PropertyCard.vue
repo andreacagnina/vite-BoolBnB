@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
     @import "../../styles/partials/partials.scss";
 
-    .top-custom {
+/*    .top-custom {
         top: 70%;
     }
 
@@ -91,7 +91,7 @@ export default {
         .top-custom {
             top: 60%;
         }
-    }
+    }*/
 
 .card-img {
     overflow: hidden;

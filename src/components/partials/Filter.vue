@@ -155,7 +155,7 @@ export default {
 
 	<div class="offcanvas-header">
 
-		<h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
+		<h3 id="roomsOffcanvasLabel" class="fw-bold">Filters</h3>
 		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
 
 	</div>
@@ -403,8 +403,8 @@ export default {
 		text-align: center;
 		border: none;
 		color: #f7ede2;
-		background-color: $darkgreen-color;
 		padding: 20px;
+		background-color: $background-color;
 		.btn-custom-two {
 			color: #f7ede2;
 			background: linear-gradient(250deg, #ce6a6c, #ebada2);
