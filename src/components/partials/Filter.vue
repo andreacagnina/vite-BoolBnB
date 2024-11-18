@@ -392,7 +392,7 @@ export default {
 		margin: 0;  /* Rimuove il margine esterno */
 		border: none; /* Rimuove eventuali bordi */
 		background-color: #49919d; /* Assicura che il background sia uniforme */
-		width: 35%;
+		
 	  }
 	.offcanvas-header,
 	.offcanvas-body {
@@ -476,5 +476,15 @@ export default {
 
 	.form-control {
 		background-color: #f7ede2;
+	}
+
+	.offcanvas {
+		width: 50%; /* Personalizza la larghezza */
+	}
+	
+	@media (max-width: 768px) {
+		.offcanvas {
+			width: 100%; /* Larghezza piena per dispositivi mobili */
+		}
 	}
 </style>
