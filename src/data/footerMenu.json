@@ -12,6 +12,19 @@
         ]
     },
     {
+    "section": "About",
+        "links": [
+            { "name": "How Boolbnb works", "url": "/how-airbnb-works" },
+            { "name": "Newsroom", "url": "/newsroom" },
+            { "name": "Investors", "url": "/investors" },
+            { "name": "Boolbnb Plus", "url": "/boolbnb-plus" },
+            { "name": "Boolbnb Luxe", "url": "/boolbnb-luxe" },
+            { "name": "HotelTonight", "url": "/hoteltonight" },
+            { "name": "Boolbnb for Work", "url": "/boolbnb-for-work" },
+            { "name": "Made possible by Hosts", "url": "/made-possible-by-hosts" }
+        ]
+    },
+    {
     "section": "Hosting",
         "links": [
             { "name": "Try hosting", "url": "/try-hosting" },
@@ -27,21 +40,6 @@
             { "name": "Boolbnb.org: disaster relief housing", "url": "/airbnb-org" },
             { "name": "Support Afghan refugees", "url": "/support-afghan-refugees" },
             { "name": "Combating discrimination", "url": "/combat-discrimination" }
-        ]
-    },
-    {
-    "section": "About",
-        "links": [
-            { "name": "How Boolbnb works", "url": "/how-airbnb-works" },
-            { "name": "Newsroom", "url": "/newsroom" },
-            { "name": "Investors", "url": "/investors" },
-            { "name": "Boolbnb Plus", "url": "/boolbnb-plus" },
-            { "name": "Boolbnb Luxe", "url": "/boolbnb-luxe" },
-            { "name": "HotelTonight", "url": "/hoteltonight" },
-            { "name": "Boolbnb for Work", "url": "/boolbnb-for-work" },
-            { "name": "Made possible by Hosts", "url": "/made-possible-by-hosts" },
-            { "name": "Careers", "url": "/careers" },
-            { "name": "Founders' Letter", "url": "/founders-letter" }
         ]
     }
 ]

@@ -108,15 +108,13 @@ export default {
             </div>
 
             <!-- Contenuto delle schede -->
-                <Loader v-if="loadingResults" class="h-cust" />
+                <Loader v-if="loadingResults" class="h-cust mt-md-3 pt-md-1" />
     
             <div v-else class="wrapper">
                 
-                <div class=" mt-3 pt-1"  id="marker"></div>
-                
-                <div class="row g-4" >
+                <div class="row" >
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />
-                        <h3 v-else class="text-center text-light mt-5">No results found. Please try again with different filters.</h3>
+                        <h3 v-else class="text-center text-light my-0 py-5">***No results found. Please try again with different filters.***</h3>
                 </div>
 
                 <!-- Paginazione -->
@@ -146,6 +144,10 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+
+.wrapper {
+    height: 100%;
+}
 
 .custom-container {
     max-width: 100%; /* Imposta una larghezza massima */

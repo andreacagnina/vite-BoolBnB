@@ -102,21 +102,24 @@ export default {
 
 
 <template>
-  <header class="app-header pt-3">
-
+  <div class="app-header pt-3">
     <div class="container-fluid">
-      <div class="row">
+      <div class="row flex-sm-column flex-md-row align-items-center">
 
-        <div class="col-sm-hide col-md-4">
-
+        <div class="d-none d-md-block col-md-4">
           <router-link to="/">
             <img class="logo" src="../../../public/logo.png" alt="Logo" />
           </router-link>
 
         </div>
 
-        <div class="col-sm-12 col-md-4">
-          <div v-if="isHomepage" class="search-box">
+        <div class="col-12 col-md-4 col-lg-4 order-0 order-md-1 justify-content-between justify-content-md-end">
+          <a :href="`${store.clientUrl}/login`">Login</a>
+          <a :href="`${store.clientUrl}/register`">Register</a>
+        </div>
+
+        <div class="col-sm-12 col-md-4 order-1 order-md-0 my-3">
+          <div  v-if="isHomepage" class="search-box">
 
             <button class="btn-search">
               <i class="fas fa-search"></i>
@@ -145,15 +148,12 @@ export default {
           </div>
         </div>
 
-        <div class="col-sm-hide col-md-4 col-lg-4 justify-content-end">
-          <a :href="`${store.clientUrl}/login`">Login</a>
-          <a :href="`${store.clientUrl}/register`">Register</a>
-        </div>
+
 
       </div>
     </div>
 
-  </header>
+  </div>
 
 </template>
 
@@ -162,7 +162,7 @@ export default {
   @use "../../styles/partials/partials.scss" as *;
 
 .app-header {
-  height: 87px;
+  height: 110px;
   position: fixed;
   top: 0;
   left: 0;
@@ -305,9 +305,7 @@ export default {
 }
 
 @media (max-width: 767px) {
-  .col-sm-hide {
-    display: none !important;
-  }
+
 
   .search-box .btn-search:focus ~ .input-search,
   .search-box .input-search:focus {

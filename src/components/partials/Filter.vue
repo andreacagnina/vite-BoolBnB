@@ -46,7 +46,7 @@ export default {
 		goToMarker() {
     const target = document.getElementById('marker');
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   },
 		applyFilters() {
@@ -110,47 +110,52 @@ export default {
 <template>
 <!-- FILTRO PER TIPO DI PROPIETà -->
 <div class="col-sm-12 col-lg-12">
-	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center">
+	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center py-3">
 
 		<ul class="filter-list">
 			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPIETà  -->
-			<li @click="setFilter('')" :class="{ active: store.filterType === '' }">
+			<li class="mb-3 mb-md-0" @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
 				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
 				<span class="d-none d-lg-block">All</span> 
 
 			</li>
+			<div class="overflow-x-auto whitespace-nowrap">
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
-			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToMarker()" :class="{ active: store.filterType === type }">
+			<li class="mb-3 mb-md-0" v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToMarker()" :class="{ active: store.filterType === type }">
 
 				<img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
 				<span class="d-none d-lg-block">{{ type }}</span>
 
 			</li>
+
+			<li >
+				<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
+				<button class="btn btn-filter mb-3 mb-md-0 m-0 p-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
+					
+					<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
+					<span class="d-none d-lg-block">Filter</span>
+					
+				</button>
+			</li>
+			<li @click="resetFilters" class="mb-3 mb-md-0" >
+				<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
+					<img src="https://cdn-icons-png.flaticon.com/512/175/175076.png" alt="reset">
+					<span class="d-none d-lg-block ">Reset</span>
+	
+			</li>
+		</div>
 		</ul>
-		<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
-		<button @click="resetFilters" class="btn btn-filter ms-5">
-
-			<i class="fa-solid fa-eraser mb-1"></i>
-			<span class="d-none d-lg-block">Reset</span>
-
-		</button>
-		<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
-		<button class="btn btn-filter" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
-
-			<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
-			<span class="d-none d-lg-block">Filter</span>
-
-		</button>
 
 	</div>
 </div>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
+<!-- OFFCANVAS -->
+<div class="offcanvas offcanvas-end d-flex flex-column" tabindex="-1" id="roomsOffcanvas" aria-labelledby="roomsOffcanvasLabel" data-bs-scroll="true">
 
 	<div class="offcanvas-header">
 
-		<h5 id="roomsOffcanvasLabel" class="fw-bold">Filters</h5>
+		<h3 id="roomsOffcanvasLabel" class="fw-bold">Filters</h3>
 		<button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close" @click="resetFilters"></button>
 
 	</div>
@@ -191,11 +196,11 @@ export default {
 			</div>
 		</div>
 
-		<div class="mb-2">
+		<div class="mb-2 text-nowrap">
 			<label for="servicesCheckbox" class="form-label fw-bold mb-3">Services</label>
 			<div class="row">
 			  <!-- Prima colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -212,7 +217,7 @@ export default {
 			  </div>
 		  
 			  <!-- Seconda colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil(store.services.length / 3), Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -229,7 +234,7 @@ export default {
 			  </div>
 		  
 			  <!-- Terza colonna -->
-			  <div class="col-md-4">
+			  <div class="col-4">
 				<div v-for="(service, index) in store.services.slice(Math.ceil((store.services.length * 2) / 3))" 
 					 :key="service.id" 
 					 class="form-check d-flex">
@@ -246,15 +251,15 @@ export default {
 			  </div>
 			</div>
 		  </div>
-
-		<button type="button" class="btn btn-custom-two mt-4 me-4" data-bs-dismiss="offcanvas" @click="applyFilters">
-			See Results
-		</button>
-		<button class="btn btn-custom mt-4" @click="resetFilters">
-			Remove all filters
-		</button>
-
-	</div>
+		</div>
+		<div class="offcanvas-footer">
+			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()">
+				See Results
+			</button>
+			<button class="btn btn-custom-two " @click="resetFilters">
+				Remove all filters
+			</button>
+		</div>
 </div>
 
 </template>
@@ -262,11 +267,23 @@ export default {
 <style lang="scss" scoped>
 	@use "../../styles/partials/partials.scss" as *;
 
+	.overflow-x-auto {
+		display: flex;
+		overflow-x: scroll; /* Abilita lo scorrimento orizzontale */
+		scrollbar-color: $pink-color #e0e0e000; /* Colore del thumb e del track per browser moderni */
+		scrollbar-width: thin; /* Spessore sottile */
+	}
+	
+	
+	.inline-block {
+		flex-shrink: 0; /* Impedisce agli elementi di ridimensionarsi */
+	}
+
 	.filter-by-type {
-		top: 87px;
+		top: 110px;
 		left: 0;
 		background-color: $background-color;
-		padding: 10px 0px;
+		padding: 40px 0px;
 	}
 
 	.w-33 {
@@ -308,6 +325,7 @@ export default {
 		justify-content: center;
 		border: none;
 		margin: 0 20px;
+		padding: 0;
 		cursor: pointer;
 
 		span {
@@ -315,8 +333,8 @@ export default {
 		}
 
 		img {
-			width: 24px;
-			height: 24px;
+			width: 30px;
+			height: 30px;
 			margin-bottom: 5px;
 			text-align: center;
 			filter: brightness(0) invert(1);
@@ -378,15 +396,39 @@ export default {
 		margin: 0;  /* Rimuove il margine esterno */
 		border: none; /* Rimuove eventuali bordi */
 		background-color: #49919d; /* Assicura che il background sia uniforme */
-		width: 35%;
+
+		
 	  }
-	.offcanvas-header,
-	.offcanvas-body {
+	  .offcanvas-footer, .offcanvas-header {
+		text-align: center;
+		border: none;
+		color: #f7ede2;
+		padding: 20px;
+		background-color: $background-color;
+		.btn-custom-two {
+			color: #f7ede2;
+			background: linear-gradient(250deg, #ce6a6c, #ebada2);
+			border-radius: 10px;
+			border: none;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+
+	
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+	  }
+
+	
+	.offcanvas-body  {
 		text-align: center;
 		color: #f7ede2;
 		background-color: #49919d;
 		padding: 20px;
 		border: none;
+		
 
 		.btn-custom {
 			color: #f7ede2;
@@ -400,21 +442,9 @@ export default {
 			&:hover {
 				transform: scale(1.05);
 			}
+
 		}
 
-		.btn-custom-two {
-			color: #f7ede2;
-			background: linear-gradient(250deg, #ce6a6c, #ebada2);
-			border-radius: 10px;
-			border: none;
-			padding: 10px 20px;
-			cursor: pointer;
-			transition: all 0.3s ease;
-
-			&:hover {
-				transform: scale(1.05);
-			}
-		}
 	}
 
 	.list-group-item {
@@ -462,5 +492,21 @@ export default {
 
 	.form-control {
 		background-color: #f7ede2;
+	}
+
+	.offcanvas {
+		width: 50%; /* Personalizza la larghezza */
+	}
+
+	@media (max-width: 1024px) {
+		.offcanvas {
+			width: 75%; /* Larghezza piena per dispositivi mobili */
+		}
+	}
+	
+	@media (max-width: 768px) {
+		.offcanvas {
+			width: 100%; /* Larghezza piena per dispositivi mobili */
+		}
 	}
 </style>
