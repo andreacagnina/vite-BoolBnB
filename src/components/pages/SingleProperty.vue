@@ -25,7 +25,7 @@ export default {
 
             isFavorite: window.isFavorite, // Inizializza con il valore fornito dal backend
             isLoadingFavorite: false,
-            loading:true
+            loadingPage:true
 
         };
     },
@@ -44,7 +44,7 @@ export default {
         // Funzione per recuperare la proprietà
         getProperty() {
             const slug = this.$route.params.slug;
-            this.loading = true;
+            this.loadingPage = true;
 
             axios.get(`${store.baseUrl}/property/${slug}`)
                 .then(response => {
@@ -56,7 +56,7 @@ export default {
 
                         // Imposta lo stato iniziale di isFavorite
                         this.isFavorite = response.data.results.is_favorite || false;
-                        this.loading = false;
+                        this.loadingPage = false;
                     } else {
                         console.error("Dati non validi ricevuti:", response);
                     }
@@ -169,7 +169,7 @@ export default {
 
 
 <template>
-    <section class="h-100 " v-if="loading">
+    <section class="h-100 " v-if="loadingPage">
         <Loader  />
     </section>
     <section v-else class="mt-cust">

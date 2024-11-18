@@ -5,18 +5,18 @@ import Filter from '../partials/Filter.vue';
 import axios from 'axios';
 import Loader from '../partials/Loader.vue';
 import Jumbotron from '../partials/Jumbotron.vue';
-import Marker from '../partials/Marker.vue';
+
 
 
 
 export default {
-    components: { Filter, PropertyCard, Loader, Jumbotron, Marker, },
+    components: { Filter, PropertyCard, Loader, Jumbotron, },
     data() {
         return {
             store,
             propertyTypes: [],
-            loading: true,
-            loadinge: true,
+            loadingPage: true,
+            loadingResults: true,
         };
     },
     created() {
@@ -42,11 +42,11 @@ export default {
     methods: {
 
         getPropertyTypes() {
-            this.loading = true;
+            this.loadingPage = true;
             axios.get(`${store.baseUrl}/properties`)
                 .then(response => {
                     this.propertyTypes = response.data.types.map(type => type.type);
-                    this.loading = false;
+                    this.loadingPage = false;
                 });
         },
         getProperties() {
@@ -65,13 +65,13 @@ export default {
                 radius: store.radius || 20 
                 
             };
-            this.loadinge = true;
+            this.loadingResults = true;
             axios.get(`${store.baseUrl}/properties`, { params })
             .then(response => {
                 store.properties = response.data.results.data;
                 store.last_page = response.data.results.last_page;
                 store.total_results = response.data.results.total;
-                this.loadinge=false;
+                this.loadingResults=false;
             })
             .catch(error => {
                 console.error('Errore nel caricamento delle proprietà:', error);
@@ -97,7 +97,7 @@ export default {
 </script>
 
 <template>
-    <Loader v-if="loading" class="h-100 middle"/>
+    <Loader v-if="loadingPage" class="h-100 middle"/>
     
     <section v-else class="homepage h-100">
         <Jumbotron />
@@ -108,11 +108,11 @@ export default {
             </div>
 
             <!-- Contenuto delle schede -->
-            <Loader v-if="loadinge" class="h-cust" />
+                <Loader v-if="loadingResults" class="h-cust" />
     
             <div v-else class="wrapper">
                 
-                <Marker />
+                <div class=" mt-3 pt-1"  id="marker"></div>
                 
                 <div class="row g-4" >
                     <PropertyCard v-if="store.total_results>0"  v-for="property in store.properties" :key="property.id" :property="property" />

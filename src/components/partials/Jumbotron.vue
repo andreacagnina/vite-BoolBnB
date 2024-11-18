@@ -34,7 +34,7 @@ export default {
 .bgimg-1 {
     background-position: center;
     background-size: cover;
-    background-image: url("https://img.freepik.com/foto-gratuito/ragazza-felice-passa-il-tempo-a-casa-in-un-interno-accogliente_1321-1712.jpg?t=st=1731829396~exp=1731832996~hmac=2059347660d70f33bf7659f268540585a26c6ef45038193c7504fe0195d22dbb&w=1380");
+    background-image: url("https://media.istockphoto.com/id/1402924724/photo/luxury-house-and-resort-on-the-beach-for-sea-views-and-living-3d-rendering.jpg?s=612x612&w=0&k=20&c=_LDpoofw5H9yfSsAGshW5eHBUmcaAtRGRI88l_mRtlY=");
 min-height: 100vh;
   }
 
