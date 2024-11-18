@@ -114,29 +114,31 @@ export default {
 
 		<ul class="filter-list">
 			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPIETà  -->
-			<li @click="setFilter('')" :class="{ active: store.filterType === '' }">
+			<li class="mb-3 mb-md-0" @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
 				<img src="../../../public/icon/select-all-svgrepo-com.svg" alt="">
 				<span class="d-none d-lg-block">All</span> 
 
 			</li>
+			<div class="overflow-x-auto whitespace-nowrap">
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
-			<li v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToMarker()" :class="{ active: store.filterType === type }">
+			<li class="mb-3 mb-md-0" v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToMarker()" :class="{ active: store.filterType === type }">
 
 				<img :src="store.iconMap[type]" :alt="type" v-if="store.iconMap[type]" />
 				<span class="d-none d-lg-block">{{ type }}</span>
 
 			</li>
+		</div>
 		</ul>
 		<!-- BOTTONE PER RESETTARE TUTTI I FILTRI -->
-		<button @click="resetFilters" class="btn btn-filter ms-5">
+		<button @click="resetFilters" class="btn btn-filter ms-md-5 mb-3 mb-md-0">
 
 			<i class="fa-solid fa-eraser mb-1"></i>
 			<span class="d-none d-lg-block">Reset</span>
 
 		</button>
 		<!-- BOTTONE PER APRIRE IL CANVAS CON I FILTRI AVANZATI -->
-		<button class="btn btn-filter" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
+		<button class="btn btn-filter mb-3 mb-md-0" data-bs-toggle="offcanvas" data-bs-target="#roomsOffcanvas" aria-controls="roomsOffcanvas">
 
 			<img src="/public/icon/filters-2-svgrepo-com.svg" alt="filter" class="mb-1">
 			<span class="d-none d-lg-block">Filter</span>
@@ -261,6 +263,18 @@ export default {
 
 <style lang="scss" scoped>
 	@use "../../styles/partials/partials.scss" as *;
+
+	.overflow-x-auto {
+		display: flex;
+		overflow-x: auto; /* Abilita lo scorrimento orizzontale */
+		scrollbar-color: $pink-color #e0e0e000; /* Colore del thumb e del track per browser moderni */
+		scrollbar-width: thin; /* Spessore sottile */
+	}
+	
+	
+	.inline-block {
+		flex-shrink: 0; /* Impedisce agli elementi di ridimensionarsi */
+	}
 
 	.filter-by-type {
 		top: 87px;

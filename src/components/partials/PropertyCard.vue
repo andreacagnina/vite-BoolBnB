@@ -19,7 +19,7 @@ export default {
 
 
 <template>
-<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2">
+<div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 ">
 
     <div class="card">
 

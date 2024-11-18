@@ -153,6 +153,9 @@ export default {
     width: 100%;
     z-index: 1;
     overflow-x: hidden;
+    h4{
+        color: #f6bd60;
+    }
 
         ul {
             list-style: none;
@@ -163,8 +166,8 @@ export default {
                 padding: 5px 40px;
 
                 a {
-                    color: black;
-                    text-decoration: none;
+                    color: #f7ede2;
+                text-decoration: none;
 
                     &:hover {
                         text-decoration: underline;
