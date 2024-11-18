@@ -194,7 +194,7 @@ export default {
 
 		<div class="mb-2 text-nowrap">
 			<label for="servicesCheckbox" class="form-label fw-bold mb-2">Services</label>
-			<div class="row flex-column">
+			<div class="row flex-row">
 			  <!-- Prima colonna -->
 			  <div class="col-6 col-md-4">
 				<div v-for="(service, index) in store.services.slice(0, Math.ceil(store.services.length / 3))" 
@@ -249,7 +249,7 @@ export default {
 		  </div>
 		</div>
 		<div class="d-flex justify-content-center mb-3">
-			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters, goToMarker()"><i class="fa-solid fa-arrow-left-long me-1"></i>
+			<button type="button" class="btn btn-custom-two  me-4" data-bs-dismiss="offcanvas" @click="applyFilters"><i class="fa-solid fa-arrow-left-long me-1"></i>
 				See Results
 			</button>
 			<button class="btn btn-custom-two " @click="resetFilters">
