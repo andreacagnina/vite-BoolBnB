@@ -112,7 +112,7 @@ export default {
 <div class="col-sm-12 col-lg-12">
 	<div class="filter-by-type position-fixed z-2 w-100 d-flex justify-content-center align-items-center py-3">
 
-		<ul class="filter-list">
+		<ul class="filter-list overflow-hidden">
 			<!-- OPZIONE PER SETTARE SU "TUTTI" IL TIPO DI PROPRIETà  -->
 			<li class="mb-3 mb-md-0" @click="setFilter('')" :class="{ active: store.filterType === '' }">
 
@@ -132,7 +132,7 @@ export default {
 					<span class="d-none d-lg-block ">Reset</span>
 	
 			</li>
-			<div class="overflow-x-auto whitespace-nowrap">
+			<div class="overflow-x-auto overflow-y-hidden whitespace-nowrap">
 			<!-- CICLO PER I TIPI DI PROPIETà E METODO PER SETTARE IL FILTRO AL CLICK -->
 			<li class="mb-3 mb-md-0" v-for="type in propertyTypes" :key="type" @click="setFilter(type), goToMarker()" :class="{ active: store.filterType === type }">
 
