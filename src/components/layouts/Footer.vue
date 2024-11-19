@@ -130,7 +130,7 @@ export default {
 
     background: linear-gradient(360deg, #49919d, #84a59d);
     overflow-y: hidden;
-    height: 400px;
+    height: 450px;
     position: absolute;
     bottom: 99%;
     left: 0;
