@@ -1,28 +1,55 @@
 <script>
-import HelloWorld from './pages/HelloWorld.vue'
-import { router } from './router';
-export default {
-  components: {
-    HelloWorld,
-  }
+import { store } from './store'; 
+import Header from './components/layouts/Header.vue';
 
+import Footer from './components/layouts/Footer.vue';
+
+
+export default {
+  components:{
+    Header,
+
+    Footer,
+
+  },
+  data() {
+    return {
+      store
+    }
+  },
 }
+
 </script>
 
+
 <template>
-  <main>
-    <router-view></router-view>
-  </main>
+<div id="app">
+  <div id="wrapper">
+    <!-- Header -->
+    <Header />
+
+    <!-- Main Content -->
+    <main >
+      <router-view  />
+    </main>
+    <!-- Footer -->
+    <Footer />
+  </div>
+</div>
 </template>
 
-<style lang="scss">
-@use './styles/generals.scss';
+
+<style lang="scss" scoped>
+  @use "./styles/partials/partials.scss" as *;
+
+  #wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
 main {
-  height: 100vh;
+  flex: 1;
 }
 
-section {
-  height: 100%;
-}
 </style>

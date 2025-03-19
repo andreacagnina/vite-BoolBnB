@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HelloWorld from './pages/HelloWorld.vue';
-import PageNotFound from './pages/PageNotFound.vue';
+import Homepage from './components/pages/Homepage.vue';
+import  SingleProperty from './components/pages/SingleProperty.vue';
+import PageNotFound from './components/pages/PageNotFound.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -8,7 +9,13 @@ const router = createRouter({
         {
             path: '/',
             name: 'homepage',
-            component: HelloWorld
+            component: Homepage
+        },
+        {
+            path: '/properties/:slug',
+            name: 'property',
+            component:
+                SingleProperty,
         },
         {
             path: '/:pathMatch(.*)*',
